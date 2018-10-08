@@ -154,7 +154,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                2
+                3
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -183,7 +183,7 @@
 
             
             <section id="main">
-    <article id="post-categoriesTest/categoriesTest" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-photoTest" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -191,7 +191,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/10/08/categoriesTest/categoriesTest/">CategoriesTest</a>
+            <a class="article-title" href="/2018/10/09/photoTest/">photoTest</a>
         </h1>
     
 
@@ -200,7 +200,138 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/categoriesTest/categoriesTest/">
+        <a href="/2018/10/09/photoTest/">
+            <time datetime="2018-10-08T18:05:50.000Z" itemprop="datePublished">2018-10-09</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/hexo/">hexo</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/hexo/">hexo</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <img src="/2018/10/09/photoTest/example.jpg" title="This is an example image">
+<p>这是一个图片测试例子！</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/10/09/photoTest/" data-id="cjn0lz2fy0004m4vwloxwxo5t" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-categoriesTest" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/10/08/categoriesTest/">CategoriesTest</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/08/categoriesTest/">
             <time datetime="2018-10-08T15:54:32.000Z" itemprop="datePublished">2018-10-08</time>
         </a>
     </div>
@@ -226,7 +357,7 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            
+            <img src="/2018/10/08/categoriesTest/example.jpg" title="This is an example image">
 <p>这是一个hexo添加分类和标签的例子！</p>
 
         
@@ -238,7 +369,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/08/categoriesTest/categoriesTest/" data-id="cjn0lu12n0004xkvw1i7a3aci" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/08/categoriesTest/" data-id="cjn0lz2fu0002m4vwr92ov3ff" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -366,7 +497,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/08/hello-world/" data-id="cjn0lu0yc0001xkvwwg71xpxn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/08/hello-world/" data-id="cjn0lz2fo0000m4vwo4561aqa" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -455,7 +586,26 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/08/categoriesTest/categoriesTest/" class="thumbnail">
+                            <a href="/2018/10/09/photoTest/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/example.jpg)" alt="photoTest" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/hexo/">hexo</a></p>
+                            <p class="item-title"><a href="/2018/10/09/photoTest/" class="title">photoTest</a></p>
+                            <p class="item-date"><time datetime="2018-10-08T18:05:50.000Z" itemprop="datePublished">2018-10-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/08/categoriesTest/" class="thumbnail">
     
     
         <span style="background-image:url(/example.jpg)" alt="CategoriesTest" class="thumbnail-image"></span>
@@ -466,7 +616,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/hexo/">hexo</a></p>
-                            <p class="item-title"><a href="/2018/10/08/categoriesTest/categoriesTest/" class="title">CategoriesTest</a></p>
+                            <p class="item-title"><a href="/2018/10/08/categoriesTest/" class="title">CategoriesTest</a></p>
                             <p class="item-date"><time datetime="2018-10-08T15:54:32.000Z" itemprop="datePublished">2018-10-08</time></p>
                         </div>
                     </li>
@@ -499,7 +649,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -508,7 +658,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -517,7 +667,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 
