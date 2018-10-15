@@ -5,19 +5,19 @@
     
     <title>Java线程安全 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性  ####synchronized关键字synchronized关键字做为多线程并发环境的执行有序性的保证手段之一 synchronized(锁){           临界区代码   }    每个锁对象都有两个队列，一个是就绪队列，一个是阻塞队列，就绪队列存储了将要获得锁的线程，阻塞队列存储了被阻塞的线程，">
+    <meta name="description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性">
 <meta name="keywords" content="多线程,并发操作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java线程安全">
 <meta property="og:url" content="http://yoursite.com/2018/10/15/Java线程安全/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性  ####synchronized关键字synchronized关键字做为多线程并发环境的执行有序性的保证手段之一 synchronized(锁){           临界区代码   }    每个锁对象都有两个队列，一个是就绪队列，一个是阻塞队列，就绪队列存储了将要获得锁的线程，阻塞队列存储了被阻塞的线程，">
+<meta property="og:description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/10/15/Java线程安全/线程安全.png">
-<meta property="og:updated_time" content="2018-10-15T08:06:43.706Z">
+<meta property="og:updated_time" content="2018-10-15T08:09:03.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java线程安全">
-<meta name="twitter:description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性  ####synchronized关键字synchronized关键字做为多线程并发环境的执行有序性的保证手段之一 synchronized(锁){           临界区代码   }    每个锁对象都有两个队列，一个是就绪队列，一个是阻塞队列，就绪队列存储了将要获得锁的线程，阻塞队列存储了被阻塞的线程，">
+<meta name="twitter:description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性">
 <meta name="twitter:image" content="http://yoursite.com/2018/10/15/Java线程安全/线程安全.png">
     
 
@@ -237,6 +237,7 @@
 <li><strong>控制多个线程对某个资源的有序访问或修改</strong></li>
 <li><strong>解决两个主要的问题：<font color="red">可见性</font>和<font color="red">有序性</font></strong></li>
 </ul>
+<a id="more"></a>
 <p>####synchronized关键字<br>synchronized关键字做为多线程并发环境的执行<strong>有序性</strong>的保证手段之一</p>
 <pre><code>synchronized(锁){  
         临界区代码 
