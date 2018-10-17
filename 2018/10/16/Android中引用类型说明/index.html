@@ -3,22 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>CategoriesTest | Nowy_Blog</title>
+    <title>Android中引用类型说明 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="这是一个hexo添加分类和标签的例子！">
-<meta name="keywords" content="hexo">
+    <meta name="description" content="###前言在java中存在GC机制，会回收掉那些它认为不再被使用的的对象，从而释放内存空间。 ###在java中有4中引用类型  强引用(Strong References) 软引用(Soft References) 弱引用(Weak References) 虚引用(Phantom References)">
+<meta name="keywords" content="引用类型,Reference">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CategoriesTest">
-<meta property="og:url" content="http://yoursite.com/2018/10/08/categoriesTest/index.html">
+<meta property="og:title" content="Android中引用类型说明">
+<meta property="og:url" content="http://yoursite.com/2018/10/16/Android中引用类型说明/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="这是一个hexo添加分类和标签的例子！">
+<meta property="og:description" content="###前言在java中存在GC机制，会回收掉那些它认为不再被使用的的对象，从而释放内存空间。 ###在java中有4中引用类型  强引用(Strong References) 软引用(Soft References) 弱引用(Weak References) 虚引用(Phantom References)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/example.jpg">
-<meta property="og:updated_time" content="2018-10-08T17:45:03.607Z">
+<meta property="og:image" content="https://i.imgur.com/EcRrrRx.png">
+<meta property="og:image" content="https://i.imgur.com/dlys0b9.png">
+<meta property="og:image" content="https://i.imgur.com/P2MGgvo.png">
+<meta property="og:updated_time" content="2018-10-17T11:27:07.511Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CategoriesTest">
-<meta name="twitter:description" content="这是一个hexo添加分类和标签的例子！">
-<meta name="twitter:image" content="http://yoursite.com/example.jpg">
+<meta name="twitter:title" content="Android中引用类型说明">
+<meta name="twitter:description" content="###前言在java中存在GC机制，会回收掉那些它认为不再被使用的的对象，从而释放内存空间。 ###在java中有4中引用类型  强引用(Strong References) 软引用(Soft References) 弱引用(Weak References) 虚引用(Phantom References)">
+<meta name="twitter:image" content="https://i.imgur.com/EcRrrRx.png">
     
 
     
@@ -189,7 +191,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-categoriesTest" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Android中引用类型说明" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -197,7 +199,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            CategoriesTest
+            Android中引用类型说明
         </h1>
     
 
@@ -206,8 +208,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/categoriesTest/">
-            <time datetime="2018-10-08T15:54:32.000Z" itemprop="datePublished">2018-10-08</time>
+        <a href="/2018/10/16/Android中引用类型说明/">
+            <time datetime="2018-10-16T09:30:30.000Z" itemprop="datePublished">2018-10-16</time>
         </a>
     </div>
 
@@ -215,13 +217,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
+        <a class="tag-link" href="/tags/Reference/">Reference</a>, <a class="tag-link" href="/tags/引用类型/">引用类型</a>
     </div>
 
                     </div>
@@ -232,8 +234,136 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <img src="/2018/10/08/categoriesTest/example.jpg" title="This is an example image">
-<p>这是一个hexo添加分类和标签的例子！</p>
+            <p>###前言<br>在java中存在GC机制，会回收掉那些它认为不再被使用的的对象，从而释放内存空间。</p>
+<p>###在java中有4中引用类型</p>
+<ol>
+<li>强引用(Strong References)</li>
+<li>软引用(Soft References)</li>
+<li>弱引用(Weak References)</li>
+<li><p>虚引用(Phantom References)</p>
+<a id="more"></a>
+<h4 id="1-强引用"><a href="#1-强引用" class="headerlink" title="1.强引用"></a>1.强引用</h4><blockquote>
+<p>强引用的对象不会被GC回收.</p>
+</blockquote>
+<p> &lt;例1&gt;<br> class Test{</p>
+<pre><code>Object a = new Object();
+</code></pre><p> }</p>
+</li>
+</ol>
+<p>该对象被回收的情景：<br>1.a = null,变量a释放掉对象的引用<br>2.Test类的对象被销毁。</p>
+<h5 id="1-1扩展-静态的强引用"><a href="#1-1扩展-静态的强引用" class="headerlink" title="1.1扩展 静态的强引用"></a>1.1扩展 静态的强引用</h5><pre><code>&lt;例2&gt;
+class Test{
+    static Object a = new Object();
+}
+</code></pre><p>与&lt;例1&gt;不同就是在声明变量时添加了<strong>static</strong>关键字,从而把成员变量变成静态成员变量。</p>
+<p>该对象被回收的情景：</p>
+<ol>
+<li>a = null,变量a释放掉对象的引用</li>
+<li>Test类被回收。</li>
+</ol>
+<p>这里解释一下&lt;例1&gt;和&lt;例2&gt;的第二点<br>&lt;例1&gt; 变量a存在于Test类的对象中，例如：new Test()中就存在一个变量a,变量a引用着一个对象new Object();</p>
+<p> <img src="https://i.imgur.com/EcRrrRx.png" alt="&lt;例1&gt;变量引用图"></p>
+<p>&lt;例2&gt; 静态变量a存在于Test类中，只要Test.class被加载入内存，静态变量a就初始化完成，并生成、引用Object对象。</p>
+<p><img src="https://i.imgur.com/dlys0b9.png" alt="&lt;例2&gt;变量引用图"></p>
+<p>&lt;例1&gt;和&lt;例2&gt;的区别就在于，&lt;例1&gt;的变量a是由对象所持有的，&lt;例2&gt;的变量a是由类所持有的。</p>
+<p>由于类的回收比对象的回收更加麻烦，所以静态成员变量的生命周期普遍比对象的变量的生命周期长，所以需要注意静态变量a的初始化和释放工作。</p>
+<h4 id="2-软引用"><a href="#2-软引用" class="headerlink" title="2.软引用"></a>2.软引用</h4><blockquote>
+<p><strong>Android 2.3之前</strong>软引用只有在内存不足的时候才会被GC回收.<br>软引用在强引用释放了对象的引用后，会继续持有对象的引用，直到内存不足后才会释放。所在再做一些内存紧张时可以停止的工作时，可以使用软引用进行相关操作。<br>例如，Android的图片加载框架，通过软引用维护一个集合，保存一些最近常用的图片缓存（内存缓存）。在内存紧张的时候，这个集合的中的软引用所持有的对象被回收，达到释放内存的效果。</p>
+</blockquote>
+<pre><code>&lt;例3&gt;
+Object a = new Object();
+Log.e(&quot;ref&quot;,&quot;a所引用的对象的内存地址:&quot;+a.toString());
+Reference&lt;Object&gt; ref = new SoftReference&lt;&gt;(a);
+a = null;
+System.gc();
+if(ref.get() != null){
+    Log.e(&quot;ref&quot;,&quot;ref所引用的对象的内存地址:&quot;+ref.get().toString());
+}else{
+    Log.e(&quot;ref&quot;,&quot;aRef.get() 为空&quot;);
+}
+</code></pre><p>可以看到日志打印的结果：<br></p>
+<pre>
+a所引用的对象的内存地址:java.lang.Object@19579822
+aRef.get() 为空
+</pre>
+
+<blockquote>
+<p>从 Android 2.3 (API Level 9)开始，垃圾回收器会更倾向于回收持有软引用或弱引用的对象，这让<strong>软引用和弱引用变得不再可靠</strong>。另外，Android 3.0 (API Level 11)中，图片的数据会存储在本地的内存当中，因而无法用一种可预见的方式将其释放，这就有潜在的风险造成应用程序的内存溢出并崩溃。</p>
+</blockquote>
+<p>LruCache本质上是通过一个LinkedHashMap来维护内存缓存的数据，采用的是Lru(最近最少使用)算法。</p>
+<pre><code>LruCache&lt;String,Bitmap&gt; bitmapLruCache = new LruCache&lt;String,Bitmap&gt;(
+                                            (int) (Runtime.getRuntime().maxMemory()/8/1024)){
+    @Override
+    protected int sizeOf(String key, Bitmap value) {
+        return value.getByteCount()/1024;
+    }
+};
+</code></pre><p>注意： 因为初始化传入的maxSize = Runtime.getRuntime().maxMemory()/8,单位为<strong>字节</strong>(B)。maxSize/1024即转化单位为KB.<br>为了保持一致，<strong>sizeof</strong>里面的value.getByteCount()单位(B)也需要转化为KB.</p>
+<p><strong>所以，在Android2.3之后，软引用其实也很容易被回收，并不一定是在内存不足的情况下才会被回收。</strong></p>
+<h4 id="3-弱引用"><a href="#3-弱引用" class="headerlink" title="3.弱引用"></a>3.弱引用</h4><blockquote>
+<p>GC只要发现只具有软引用的对象，都会回收该对象的内存。</p>
+</blockquote>
+<p><img src="https://i.imgur.com/P2MGgvo.png" alt="Hander使用例子图"></p>
+<p>在Android的日常编码中，我们很多时候会使用到handler进行子线程与UI线程的通信。可是直接使用会如上图那样让我们使用静态类的模式，即：</p>
+<pre><code>&lt;例4&gt;    
+static class MyHandler extends Handler{
+    Reference&lt;Activity&gt; mAtyRef;
+    public MyHandler(Activity activity) {
+    this.mAtyRef = new WeakReference&lt;&gt;(activity);
+}
+@Override
+public void handleMessage(Message msg) {
+    super.handleMessage(msg);
+    if(mAtyRef.get() != null){
+        //...
+        }
+    }
+}
+</code></pre><p>主要原因就在于直接使用匿名内部类默认会挟持当前activity的上下文对象。而如果持有该handler的子线程在进行耗时操作，那么如果activity意外关闭了，子线程依然在执行并调用了handler发送消息给Ui线程。那么很可能会导致程序抛出异常。</p>
+<p>由于</p>
+<ol>
+<li><strong>子线程执行的不确定性</strong></li>
+<li><strong>handler本身可以发送延时信息（eg:mHandler.postDelayed(nRunnable,1000);）</strong></li>
+</ol>
+<p>所以在编码中需要假设当前<strong>activity == null</strong> 的情况下，代码的正确执行。</p>
+<p>&lt;例4&gt;中用到弱引用持有当前的activity对象，那么当activity被finish后，持有activity对象的强引用会在接下来的一定时间内被释放。那么当子线程使用handler与UI线程交互时，因为activity已经不存在强引用了，所以<strong>mAtyRef.get()为空</strong>，以下代码不再执行。</p>
+<p>注意：activity在finish后，对象不是立即被回收。</p>
+<p>在类中使用弱引用持有对象，主要是为了使本类不会成为被持有对象被回收的限制，同时可以在此对象存在是进行一些操作。<br>如：&lt;例4&gt;中MyHandler类不会阻碍activity的回收，同时在activity未被回收的时候可以进行一些操作。</p>
+<p>测试代码：</p>
+<pre><code>&lt;例5&gt;
+Object a = new Object();
+Object b = new Object();
+Log.e(&quot;ref&quot;,&quot;a所引用的对象的内存地址:&quot;+a.toString());
+Log.e(&quot;ref&quot;,&quot;b所引用的对象的内存地址:&quot;+b.toString());
+Reference&lt;Object&gt; aRef = new WeakReference&lt;&gt;(a);
+Reference&lt;Object&gt; bRef = new WeakReference&lt;&gt;(b);
+a = null; //释放了a的强引用
+System.gc();//注意System.gc()不是真正的执行GC，只是让JVM知道可以执行了.所以下面加个延时效果会更好。
+if(aRef.get() != null){
+    Log.e(&quot;ref&quot;,&quot;aRef所引用的对象的内存地址:&quot;+aRef.get().toString());
+}else {
+    Log.e(&quot;ref&quot;,&quot;aRef.get() 为空&quot;);
+}
+if(bRef.get() != null){
+    Log.e(&quot;ref&quot;,&quot;bRef所引用的对象的内存地址:&quot;+bRef.get().toString());
+}else {
+    Log.e(&quot;ref&quot;,&quot;bRef.get() 为空&quot;);
+}
+</code></pre><p>运行结果：</p>
+<pre>
+a所引用的对象的内存地址:java.lang.Object@1cb54ea3 
+b所引用的对象的内存地址:java.lang.Object@2c3a55a0 
+aRef.get() 为空
+bRef所引用的对象的内存地址:java.lang.Object@2c3a55a0
+</pre>
+
+<h4 id="4-虚引用"><a href="#4-虚引用" class="headerlink" title="4.虚引用"></a>4.虚引用</h4><pre><code>&lt;例6&gt;
+ReferenceQueue&lt;Object&gt; queue = new ReferenceQueue&lt;&gt;();
+PhantomReference&lt;Object&gt; ref = new PhantomReference&lt;&gt;(a,queue);
+</code></pre><blockquote>
+<p>程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p>
+</blockquote>
+<p>参考文章：<br><a href="https://www.cnblogs.com/baizhanshi/p/6272584.html" target="_blank" rel="noopener">java中四种引用类型</a></p>
 
         
         </div>
@@ -244,7 +374,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/08/categoriesTest/" data-id="cjnd29hiu0009pcvwrruho9co" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/16/Android中引用类型说明/" data-id="cjnd29hif0000pcvwm1lrz7sr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -319,19 +449,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/09/photoTest/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    photoTest
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/10/08/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/15/FrameLayout源码笔记/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Hello World</div>
+            <div class="article-nav-title">FrameLayout源码笔记</div>
         </a>
     
 </nav>
