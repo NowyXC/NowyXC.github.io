@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://i.imgur.com/EcRrrRx.png">
 <meta property="og:image" content="https://i.imgur.com/dlys0b9.png">
 <meta property="og:image" content="https://i.imgur.com/P2MGgvo.png">
-<meta property="og:updated_time" content="2018-10-17T11:27:07.511Z">
+<meta property="og:updated_time" content="2018-10-17T13:34:52.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中引用类型说明">
 <meta name="twitter:description" content="###前言在java中存在GC机制，会回收掉那些它认为不再被使用的的对象，从而释放内存空间。 ###在java中有4中引用类型  强引用(Strong References) 软引用(Soft References) 弱引用(Weak References) 虚引用(Phantom References)">
@@ -301,7 +301,7 @@ aRef.get() 为空
 </code></pre><p>注意： 因为初始化传入的maxSize = Runtime.getRuntime().maxMemory()/8,单位为<strong>字节</strong>(B)。maxSize/1024即转化单位为KB.<br>为了保持一致，<strong>sizeof</strong>里面的value.getByteCount()单位(B)也需要转化为KB.</p>
 <p><strong>所以，在Android2.3之后，软引用其实也很容易被回收，并不一定是在内存不足的情况下才会被回收。</strong></p>
 <h4 id="3-弱引用"><a href="#3-弱引用" class="headerlink" title="3.弱引用"></a>3.弱引用</h4><blockquote>
-<p>GC只要发现只具有软引用的对象，都会回收该对象的内存。</p>
+<p>GC只要发现只具有弱引用的对象，都会回收该对象的内存。</p>
 </blockquote>
 <p><img src="https://i.imgur.com/P2MGgvo.png" alt="Hander使用例子图"></p>
 <p>在Android的日常编码中，我们很多时候会使用到handler进行子线程与UI线程的通信。可是直接使用会如上图那样让我们使用静态类的模式，即：</p>
