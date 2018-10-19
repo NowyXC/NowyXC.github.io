@@ -225,114 +225,11 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>###前言<br>ListView<strong>快速滑动条FastScrolbar</strong>和<strong>滚动条scrollbar</strong>是两个！！！</p>
-<p>本文通过记录查找解决方法的思路和步骤。</p>
-<h3 id="快速定位查找"><a href="#快速定位查找" class="headerlink" title="快速定位查找"></a>快速定位查找</h3><p>在listView源码中可以找到以下方法：</p>
-<p>AbsListView类:</p>
-<pre><code>/**
- * Specifies the style of the fast scroller decorations.
- *
- * @param styleResId style resource containing fast scroller properties
- * @see android.R.styleable#FastScroll
- */
-public void setFastScrollStyle(int styleResId) {
-    if (mFastScroll == null) {
-        mFastScrollStyle = styleResId;
-    } else {
-        mFastScroll.setStyle(styleResId);
-    }
-}
-</code></pre><p>FastScroller类:</p>
-<pre><code>public void setStyle(@StyleRes int resId) {
-       final Context context = mList.getContext();
-       final TypedArray ta = context.obtainStyledAttributes(null,
-               R.styleable.FastScroll, R.attr.fastScrollStyle, resId);
-       //...省略
-   }
-</code></pre><p>可以看出，此方法就是listView用于设置快速滚动条样式的方法。那么下面我们需要知道的就是这个style里面有哪些属性是我们需要的。<br>可以通过<strong>R.attr.fastScrollStyle</strong>查看。</p>
-<p>可以在AS的extLib目录下面的SDK里面找</p>
-<p><img src="https://i.imgur.com/0RmZVAk.png" alt="SDK资源文件"></p>
-<p>↓↓↓↓</p>
-<p><img src="https://i.imgur.com/hySYMgJ.png" alt="values文件夹"></p>
-<p><img src="https://i.imgur.com/wDWS8LS.png" alt="values文件夹2"></p>
-<p>通过values目录底下的三个xml可以找到fastScrollStyle相关的属性说明和默认主题。</p>
-<p>找到默认主题：</p>
-<p>theme.xml</p>
-<pre><code>&lt;style name=&quot;Widget.FastScroll&quot;&gt;
-    &lt;item name=&quot;thumbDrawable&quot;&gt;?attr/fastScrollThumbDrawable&lt;/item&gt;
-    &lt;item name=&quot;trackDrawable&quot;&gt;?attr/fastScrollTrackDrawable&lt;/item&gt;
-    &lt;item name=&quot;backgroundLeft&quot;&gt;?attr/fastScrollPreviewBackgroundLeft&lt;/item&gt;
-    &lt;item name=&quot;backgroundRight&quot;&gt;?attr/fastScrollPreviewBackgroundRight&lt;/item&gt;
-    &lt;item name=&quot;position&quot;&gt;?attr/fastScrollOverlayPosition&lt;/item&gt;
-    &lt;item name=&quot;textColor&quot;&gt;?attr/fastScrollTextColor&lt;/item&gt;
-    &lt;item name=&quot;thumbMinWidth&quot;&gt;64dp&lt;/item&gt;
-    &lt;item name=&quot;thumbMinHeight&quot;&gt;52dp&lt;/item&gt;
-    &lt;item name=&quot;textSize&quot;&gt;52sp&lt;/item&gt;
-    &lt;item name=&quot;minWidth&quot;&gt;72dp&lt;/item&gt;
-    &lt;item name=&quot;minHeight&quot;&gt;72dp&lt;/item&gt;
-    &lt;item name=&quot;padding&quot;&gt;16dp&lt;/item&gt;
-&lt;/style&gt;
-</code></pre><p>默认主题里面的的属性也可以在attr.xml中找到注释说明</p>
-<p>attrs.xml</p>
-<pre><code> &lt;!-- Drawable to use as the fast scroll thumb. --&gt;
-&lt;attr name=&quot;fastScrollThumbDrawable&quot; format=&quot;reference&quot; /&gt;
-</code></pre><p>所以可以通过fastScrollThumbDrawable设置快速滑动条图标</p>
-<p>###方式一：theme修改。</p>
-<p>Style.xml</p>
-<pre><code>&lt;style name=&quot;cusFastScroll&quot; parent=&quot;BaseAppTheme&quot;&gt;
-    &lt;item name=&quot;android:fastScrollThumbDrawable&quot;&gt;@mipmap/ic_clock&lt;/item&gt;
-&lt;/style&gt;
-</code></pre><p>AndroidMainfest.xml</p>
-<pre><code>activity android:name=&quot;.ui.activity.MainActivity&quot;
-    android:theme=&quot;@style/cusFastScroll&quot;/&gt;
-</code></pre><p>通过主题设置滚动条样式，这种网络上蛮多例子的。这里就不做复述了。</p>
-<p>###方式二：代码设置样式<br>通常在SDK开发中,无法修改AndroidMainfest相关设置，只能通过代码去设置activity的样式。</p>
-<p>因为是主题设置，所以在getTheme()中查找相关的方法.找到如下方法：</p>
-<pre><code>/**
- * Place new attribute values into the theme.  The style resource
- * specified by &lt;var&gt;resid&lt;/var&gt; will be retrieved from this Theme&apos;s
- * resources, its values placed into the Theme object.
- * 
- * &lt;p&gt;The semantics of this function depends on the &lt;var&gt;force&lt;/var&gt;
- * argument:  If false, only values that are not already defined in
- * the theme will be copied from the system resource; otherwise, if
- * any of the style&apos;s attributes are already defined in the theme, the
- * current values in the theme will be overwritten.
- * 
- * @param resId The resource ID of a style resource from which to
- *              obtain attribute values.
- * @param force If true, values in the style resource will always be
- *              used in the theme; otherwise, they will only be used
- *              if not already defined in the theme.
- */
-public void applyStyle(int resId, boolean force) {
-    mThemeImpl.applyStyle(resId, force);
-}
-</code></pre><p>所以，我们可以通过applyStyle()在代码中动态设置样式。</p>
-<pre><code>getTheme().applyStyle(R.style.cusFastScroll,true);
-</code></pre><p>###方式三：反射设置样式</p>
-<pre><code>try {
-        Field f = AbsListView.class.getDeclaredField(&quot;mFastScroll&quot;);
-        f.setAccessible(true);
-        Object o=f.get(listView);
-        f=f.getType().getDeclaredField(&quot;mThumbImage&quot;);
-        //...
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-
-注:此方法没有经过测试
-</code></pre><p>注意点:通过源码可以看到，fstScrollbar是通过setFastScrollEnabled(true)设置启用后才实例化的，所以必须setFastScrollEnabled(true)后，mFastScroll对象才不为空。才能通过反射获取到值。</p>
-<p>##总结</p>
-<ol>
-<li>解决问题通常先定位问题</li>
-<li>找到解决问题的思路</li>
-<li>对思路进行求证</li>
-</ol>
-<p>上面就是对控件使用时候出现问题后的一个解决的步骤。</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy   <br><br>–2018.10.19</p>
-
+            <p><p>###前言<br>ListView<strong>快速滑动条FastScrolbar</strong>和<strong>滚动条scrollbar</strong>是两个！！！</p>
+<p>本文通过记录查找解决方法的思路和步骤。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
