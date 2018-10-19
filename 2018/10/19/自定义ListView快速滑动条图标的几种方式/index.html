@@ -3,22 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Android工作记录整理-控件篇(1)--TextView | Nowy_Blog</title>
+    <title>自定义ListView快速滑动条图标的几种方式 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Android工作记录整理-控件篇(1)——TextView0.引文 本文是实用性使用讲解为主，故会忽略部分详细的描述说明。如有需要，会附带一些说明文章的链接。  1.TextView的功能概述1. 常规文本展示 2. 图文混合展示 3. HTML格式读取展示">
-<meta name="keywords" content="Android工作记录,Android控件,TextView">
+    <meta name="description" content="###前言ListView快速滑动条FastScrolbar和滚动条scrollbar是两个！！！ 本文通过记录查找解决方法的思路和步骤。 快速定位查找在listView源码中可以找到以下方法： AbsListView类: /**  * Specifies the style of the fast scroller decorations.  *  * @param styleResId sty">
+<meta name="keywords" content="Android控件,ListView">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android工作记录整理-控件篇(1)--TextView">
-<meta property="og:url" content="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/index.html">
+<meta property="og:title" content="自定义ListView快速滑动条图标的几种方式">
+<meta property="og:url" content="http://yoursite.com/2018/10/19/自定义ListView快速滑动条图标的几种方式/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="Android工作记录整理-控件篇(1)——TextView0.引文 本文是实用性使用讲解为主，故会忽略部分详细的描述说明。如有需要，会附带一些说明文章的链接。  1.TextView的功能概述1. 常规文本展示 2. 图文混合展示 3. HTML格式读取展示">
+<meta property="og:description" content="###前言ListView快速滑动条FastScrolbar和滚动条scrollbar是两个！！！ 本文通过记录查找解决方法的思路和步骤。 快速定位查找在listView源码中可以找到以下方法： AbsListView类: /**  * Specifies the style of the fast scroller decorations.  *  * @param styleResId sty">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.imgur.com/BMovGHr.png">
-<meta property="og:updated_time" content="2018-10-14T15:45:25.403Z">
+<meta property="og:image" content="https://i.imgur.com/0RmZVAk.png">
+<meta property="og:image" content="https://i.imgur.com/hySYMgJ.png">
+<meta property="og:image" content="https://i.imgur.com/wDWS8LS.png">
+<meta property="og:updated_time" content="2018-10-19T17:08:28.830Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android工作记录整理-控件篇(1)--TextView">
-<meta name="twitter:description" content="Android工作记录整理-控件篇(1)——TextView0.引文 本文是实用性使用讲解为主，故会忽略部分详细的描述说明。如有需要，会附带一些说明文章的链接。  1.TextView的功能概述1. 常规文本展示 2. 图文混合展示 3. HTML格式读取展示">
-<meta name="twitter:image" content="https://i.imgur.com/BMovGHr.png">
+<meta name="twitter:title" content="自定义ListView快速滑动条图标的几种方式">
+<meta name="twitter:description" content="###前言ListView快速滑动条FastScrolbar和滚动条scrollbar是两个！！！ 本文通过记录查找解决方法的思路和步骤。 快速定位查找在listView源码中可以找到以下方法： AbsListView类: /**  * Specifies the style of the fast scroller decorations.  *  * @param styleResId sty">
+<meta name="twitter:image" content="https://i.imgur.com/0RmZVAk.png">
     
 
     
@@ -189,7 +191,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Android工作记录整理-控件篇-1-TextView" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-自定义ListView快速滑动条图标的几种方式" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -197,7 +199,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Android工作记录整理-控件篇(1)--TextView
+            自定义ListView快速滑动条图标的几种方式
         </h1>
     
 
@@ -206,8 +208,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">
-            <time datetime="2018-10-14T15:38:32.000Z" itemprop="datePublished">2018-10-14</time>
+        <a href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/">
+            <time datetime="2018-10-19T15:42:16.000Z" itemprop="datePublished">2018-10-19</time>
         </a>
     </div>
 
@@ -221,7 +223,7 @@
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/TextView/">TextView</a>
+        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/ListView/">ListView</a>
     </div>
 
                     </div>
@@ -232,83 +234,112 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="Android工作记录整理-控件篇-1-——TextView"><a href="#Android工作记录整理-控件篇-1-——TextView" class="headerlink" title="Android工作记录整理-控件篇(1)——TextView"></a>Android工作记录整理-控件篇(1)——TextView</h2><h3 id="0-引文"><a href="#0-引文" class="headerlink" title="0.引文"></a>0.引文</h3><blockquote>
-<p>本文是实用性使用讲解为主，故会忽略部分详细的描述说明。如有需要，会附带一些说明文章的链接。</p>
-</blockquote>
-<h3 id="1-TextView的功能概述"><a href="#1-TextView的功能概述" class="headerlink" title="1.TextView的功能概述"></a>1.TextView的功能概述</h3><pre><code>1. 常规文本展示
-2. 图文混合展示
-3. HTML格式读取展示
-</code></pre><a id="more"></a>
-<h4 id="1-1-常规文本显示"><a href="#1-1-常规文本显示" class="headerlink" title="1.1 常规文本显示"></a>1.1 常规文本显示</h4><h5 id="场景一：TableLayout中的TextView宽度问题"><a href="#场景一：TableLayout中的TextView宽度问题" class="headerlink" title="场景一：TableLayout中的TextView宽度问题"></a>场景一：TableLayout中的TextView宽度问题</h5><pre><code>在TableLayout中使用TextView作为最右边列的控件，可能会出现宽度超出屏幕，导致内容显示不全的问题。
-</code></pre><p>处理方法：<br>使用TextView的<strong>权重</strong>属性作为宽度限定。</p>
-<pre>
-android:layout_width="0dp"
-android:layout_weight="1"
-</pre>
+            <p>###前言<br>ListView<strong>快速滑动条FastScrolbar</strong>和<strong>滚动条scrollbar</strong>是两个！！！</p>
+<p>本文通过记录查找解决方法的思路和步骤。</p>
+<h3 id="快速定位查找"><a href="#快速定位查找" class="headerlink" title="快速定位查找"></a>快速定位查找</h3><p>在listView源码中可以找到以下方法：</p>
+<p>AbsListView类:</p>
+<pre><code>/**
+ * Specifies the style of the fast scroller decorations.
+ *
+ * @param styleResId style resource containing fast scroller properties
+ * @see android.R.styleable#FastScroll
+ */
+public void setFastScrollStyle(int styleResId) {
+    if (mFastScroll == null) {
+        mFastScrollStyle = styleResId;
+    } else {
+        mFastScroll.setStyle(styleResId);
+    }
+}
+</code></pre><p>FastScroller类:</p>
+<pre><code>public void setStyle(@StyleRes int resId) {
+       final Context context = mList.getContext();
+       final TypedArray ta = context.obtainStyledAttributes(null,
+               R.styleable.FastScroll, R.attr.fastScrollStyle, resId);
+       //...省略
+   }
+</code></pre><p>可以看出，此方法就是listView用于设置快速滚动条样式的方法。那么下面我们需要知道的就是这个style里面有哪些属性是我们需要的。<br>可以通过<strong>R.attr.fastScrollStyle</strong>查看。</p>
+<p>可以在AS的extLib目录下面的SDK里面找</p>
+<p><img src="https://i.imgur.com/0RmZVAk.png" alt="SDK资源文件"></p>
+<p>↓↓↓↓</p>
+<p><img src="https://i.imgur.com/hySYMgJ.png" alt="values文件夹"></p>
+<p><img src="https://i.imgur.com/wDWS8LS.png" alt="values文件夹2"></p>
+<p>通过values目录底下的三个xml可以找到fastScrollStyle相关的属性说明和默认主题。</p>
+<p>找到默认主题：</p>
+<p>theme.xml</p>
+<pre><code>&lt;style name=&quot;Widget.FastScroll&quot;&gt;
+    &lt;item name=&quot;thumbDrawable&quot;&gt;?attr/fastScrollThumbDrawable&lt;/item&gt;
+    &lt;item name=&quot;trackDrawable&quot;&gt;?attr/fastScrollTrackDrawable&lt;/item&gt;
+    &lt;item name=&quot;backgroundLeft&quot;&gt;?attr/fastScrollPreviewBackgroundLeft&lt;/item&gt;
+    &lt;item name=&quot;backgroundRight&quot;&gt;?attr/fastScrollPreviewBackgroundRight&lt;/item&gt;
+    &lt;item name=&quot;position&quot;&gt;?attr/fastScrollOverlayPosition&lt;/item&gt;
+    &lt;item name=&quot;textColor&quot;&gt;?attr/fastScrollTextColor&lt;/item&gt;
+    &lt;item name=&quot;thumbMinWidth&quot;&gt;64dp&lt;/item&gt;
+    &lt;item name=&quot;thumbMinHeight&quot;&gt;52dp&lt;/item&gt;
+    &lt;item name=&quot;textSize&quot;&gt;52sp&lt;/item&gt;
+    &lt;item name=&quot;minWidth&quot;&gt;72dp&lt;/item&gt;
+    &lt;item name=&quot;minHeight&quot;&gt;72dp&lt;/item&gt;
+    &lt;item name=&quot;padding&quot;&gt;16dp&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><p>默认主题里面的的属性也可以在attr.xml中找到注释说明</p>
+<p>attrs.xml</p>
+<pre><code> &lt;!-- Drawable to use as the fast scroll thumb. --&gt;
+&lt;attr name=&quot;fastScrollThumbDrawable&quot; format=&quot;reference&quot; /&gt;
+</code></pre><p>所以可以通过fastScrollThumbDrawable设置快速滑动条图标</p>
+<p>###方式一：theme修改。</p>
+<p>Style.xml</p>
+<pre><code>&lt;style name=&quot;cusFastScroll&quot; parent=&quot;BaseAppTheme&quot;&gt;
+    &lt;item name=&quot;android:fastScrollThumbDrawable&quot;&gt;@mipmap/ic_clock&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><p>AndroidMainfest.xml</p>
+<pre><code>activity android:name=&quot;.ui.activity.MainActivity&quot;
+    android:theme=&quot;@style/cusFastScroll&quot;/&gt;
+</code></pre><p>通过主题设置滚动条样式，这种网络上蛮多例子的。这里就不做复述了。</p>
+<p>###方式二：代码设置样式<br>通常在SDK开发中,无法修改AndroidMainfest相关设置，只能通过代码去设置activity的样式。</p>
+<p>因为是主题设置，所以在getTheme()中查找相关的方法.找到如下方法：</p>
+<pre><code>/**
+ * Place new attribute values into the theme.  The style resource
+ * specified by &lt;var&gt;resid&lt;/var&gt; will be retrieved from this Theme&apos;s
+ * resources, its values placed into the Theme object.
+ * 
+ * &lt;p&gt;The semantics of this function depends on the &lt;var&gt;force&lt;/var&gt;
+ * argument:  If false, only values that are not already defined in
+ * the theme will be copied from the system resource; otherwise, if
+ * any of the style&apos;s attributes are already defined in the theme, the
+ * current values in the theme will be overwritten.
+ * 
+ * @param resId The resource ID of a style resource from which to
+ *              obtain attribute values.
+ * @param force If true, values in the style resource will always be
+ *              used in the theme; otherwise, they will only be used
+ *              if not already defined in the theme.
+ */
+public void applyStyle(int resId, boolean force) {
+    mThemeImpl.applyStyle(resId, force);
+}
+</code></pre><p>所以，我们可以通过applyStyle()在代码中动态设置样式。</p>
+<pre><code>getTheme().applyStyle(R.style.cusFastScroll,true);
+</code></pre><p>###方式三：反射设置样式</p>
+<pre><code>try {
+        Field f = AbsListView.class.getDeclaredField(&quot;mFastScroll&quot;);
+        f.setAccessible(true);
+        Object o=f.get(listView);
+        f=f.getType().getDeclaredField(&quot;mThumbImage&quot;);
+        //...
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
 
-<p>PS： EditText可用同样的方法处理</p>
-<h5 id="场景二：TextView支持长按复制和搜索功能"><a href="#场景二：TextView支持长按复制和搜索功能" class="headerlink" title="场景二：TextView支持长按复制和搜索功能"></a>场景二：TextView支持长按复制和搜索功能</h5><pre><code>一些阅读性的功能，需要对TextView中的文本进行长按弹出系统的文本复制功能。
-</code></pre><p>处理方法：</p>
-<pre><code>android:textIsSelectable=&quot;true&quot;
-</code></pre><p>注意点：</p>
+注:此方法没有经过测试
+</code></pre><p>注意点:通过源码可以看到，fstScrollbar是通过setFastScrollEnabled(true)设置启用后才实例化的，所以必须setFastScrollEnabled(true)后，mFastScroll对象才不为空。才能通过反射获取到值。</p>
+<p>##总结</p>
 <ol>
-<li><p><strong>textIsSelectable</strong>属性的源码本质上也是调用了<strong>setMovementMethod</strong><br><pre><br>// mInputType should already be EditorInfo.TYPE_NULL and mInput should be null</pre></p>
-<p>setMovementMethod(selectable ? ArrowKeyMovementMethod.getInstance() : null);<br>setText(mText, selectable ? BufferType.SPANNABLE : BufferType.NORMAL);</p>
-<p>// Called by setText above, but safer in case of future code changes<br>mEditor.prepareCursorControllers();<br><br>延展点：<br> TextView的文本滑动功能,会与复制功能冲突。</p>
-</li>
+<li>解决问题通常先定位问题</li>
+<li>找到解决问题的思路</li>
+<li>对思路进行求证</li>
 </ol>
-<pre><code>setMovementMethod(ScrollingMovementMethod.getInstance())
-</code></pre><h4 id="1-2-图文混合展示"><a href="#1-2-图文混合展示" class="headerlink" title="1.2 图文混合展示"></a>1.2 图文混合展示</h4><p>图文混合显示其实主要用到了<strong>SpannableString</strong>类进行富文本操作<br><br><a href="http://www.cnblogs.com/JohnTsai/p/4547716.html" target="_blank" rel="noopener">SpannableString使用例子</a></p>
-<h5 id="场景一：即时通讯的聊天表情图片"><a href="#场景一：即时通讯的聊天表情图片" class="headerlink" title="场景一：即时通讯的聊天表情图片"></a>场景一：即时通讯的聊天表情图片</h5><pre><code>在做社交类APP的时候，通常会遇到在发消息或者文章的时候，需要在文章中插入表情图片。最常见的莫过于QQ和微信的聊天功能和朋友圈了。
-</code></pre><p>处理方法：</p>
-<ol>
-<li>通过key-value将表情资源文件与常量一一对应。</li>
-<li>操作字符串，将字符串中含有的常量查找出来，进行替换操作</li>
-<li>使用ImageSpan将TextView中的常量替换为图片。</li>
-</ol>
-<blockquote>
-<p><a href="https://blog.csdn.net/alfred_c/article/details/48737241" target="_blank" rel="noopener">表情实现例子</a></p>
-</blockquote>
-<h5 id="场景二：文本前面带图片标签"><a href="#场景二：文本前面带图片标签" class="headerlink" title="场景二：文本前面带图片标签"></a>场景二：文本前面带图片标签</h5><p><img src="https://i.imgur.com/BMovGHr.png" alt="场景二效果图"></p>
-<p>代码实现如下：</p>
-<pre><code>tvTxt.setText(new SpannableStringUtils.Builder()
- .append(&quot;这是一串很长的标题文字!!!!!&quot;)
- .setLeadingMargin(ViewUtil.getViewWidth(ivImg)+ AppUtil.dip2px(2),0)
- .create());
-</code></pre><p>资源链接：<a href="https://github.com/AbrahamCaiJin/CommonUtilLibrary/blob/master/CommonUtil/src/main/java/com/jingewenku/abrahamcaijin/commonutil/SpannableStringUtils.java" target="_blank" rel="noopener">SpannableStringUtils工具类</a></p>
-<p>处理方法其实和场景一相似，主要通过使用复合的SpannableString进行设置。</p>
-<h4 id="1-3-HTML格式读取展示"><a href="#1-3-HTML格式读取展示" class="headerlink" title="1.3 HTML格式读取展示"></a>1.3 HTML格式读取展示</h4><blockquote>
-<p>许多APP的商品介绍都是通过后端的富文本编辑器进行录入的，同时还有可能插入图片，形成图文说明。而富文本编辑器编辑后的文章在数据库是以HTML格式的字符串存储的，所以在APP接收到的数据也是带有HTML标签的字符串。<br><br>此时,我们需要用到<strong>Html.fromHtml()</strong>方法对带有html标签的字符串进行转化。<br></p>
-</blockquote>
-<p><strong>Html.fromHtml()(最多参数)：</strong></p>
-<pre><code>public static Spanned fromHtml(String source, int flags, Html.ImageGetter imageGetter, Html.TagHandler tagHandler) {
-  //...
-}
-</code></pre><ul>
-<li>source:原字符串</li>
-<li>flags：FROM_HTML_MODE_LEGACY-html块元素之间使用两个换行符分隔 </li>
-<li>ImageGetter：如果存在<img>标签，重写ImageGetter的getDrawable方法对路径进行转化(本地、网络等)。没有则置空</li>
-<li>TagHandler ：存在自定义标签时使用，会在HTML类中被调用。</li>
-</ul>
-<p>以下是HTML的img标签存在网络图片的示例代码:</p>
-<pre><code>ImageLoaderUtil.downloadDrawableAsync(mContext,paramString,new SimpleTarget&lt;Drawable&gt;() {
-@Override
-public void onResourceReady(@NonNull Drawable resource, @Nullable Transition&lt;? super Drawable&gt; transition) {
-
-urlDrawable.drawable = resource;
-textView.requestLayout();
-textView.postInvalidate();
-}
-
-});
-</code></pre><p>downloadDrawableAsync方法如下：</p>
-<pre><code>public static void downloadDrawableAsync(Context context,String url,SimpleTarget&lt;Drawable&gt; target){
-Glide.with(context)
-.asDrawable()
-.load(url)
-.into(target);
-}
-</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018-10-11</p>
+<p>上面就是对控件使用时候出现问题后的一个解决的步骤。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy   <br><br>–2018.10.19</p>
 
         
         </div>
@@ -319,7 +350,7 @@ Glide.with(context)
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/" data-id="cjng9qi560001tcvwwvmfk8cd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/19/自定义ListView快速滑动条图标的几种方式/" data-id="cjng9qi5y000ktcvwegmue8cb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -394,19 +425,10 @@ Glide.with(context)
         
 <nav id="article-nav">
     
-        <a href="/2018/10/15/Java线程安全/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Java线程安全
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/10/09/Android工作记录-0-前言/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/16/Android中引用类型说明/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Android工作记录-0 前言</div>
+            <div class="article-nav-title">Android中引用类型说明</div>
         </a>
     
 </nav>
