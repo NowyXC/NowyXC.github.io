@@ -229,22 +229,7 @@
 <ol>
 <li>Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,<br>去<code>build-&gt;generated-&gt;source-&gt;apt-&gt;debug-&gt;&lt;包名&gt;-&gt;databinding</code>目录下查找对应方法。如果存在，那可能只是AS的误报。</li>
 <li>@BindingAdapter注解需要修饰<strong>静态(static)</strong>方法，<strong>不需要设置到viewdatabinding中</strong>，apt会自动查找并转换。具体实现可以在对应的viewDataBinding类的<code>executeBindings</code>方法中找到。</li>
-<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code>  </li>
-<li><p>隐式属性引用</p>
-<pre><code>&lt;CheckBox
-  android:id=&quot;@+id/cb_Test&quot;
-  android:layout_width=&quot;wrap_content&quot;
-  android:layout_height=&quot;wrap_content&quot;
-  android:text=&quot;选中&quot;
-  /&gt;
-&lt;TextView
-  android:layout_width=&quot;match_parent&quot;
-  android:layout_height=&quot;100dp&quot;
-  android:text=&quot;选中显示&quot;
-  android:gravity=&quot;center&quot;
-  android:visibility=&quot;@{cbTest.checked?View.VISIBLE:View.GONE}&quot;
-  /&gt;
-</code></pre><p><strong>CheckBox的id是cb_Test,而引用的变量时cbTest,变量名称使用是根据ViewDatabinding的属性名称，而非XML中的ID</strong>.</p></p>
+<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code></p>
             <p class="article-more-link">
                 <a href="/2018/10/23/Databinding使用记录/#more">查看更多</a>
             </p>

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###使用记录和注意项  Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,去build-&amp;gt;generated-&amp;gt;source-&amp;gt;apt-&amp;gt;debug-&amp;gt;&amp;lt;包名&amp;gt;-&amp;gt;databinding目录下查找对应方法。如果存在，那可能只是AS的误报。 @BindingAdapter">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-22T16:26:27.279Z">
+<meta property="og:updated_time" content="2018-10-22T16:41:19.534Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Databinding使用记录">
 <meta name="twitter:description" content="###使用记录和注意项  Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,去build-&amp;gt;generated-&amp;gt;source-&amp;gt;apt-&amp;gt;debug-&amp;gt;&amp;lt;包名&amp;gt;-&amp;gt;databinding目录下查找对应方法。如果存在，那可能只是AS的误报。 @BindingAdapter">
@@ -234,7 +234,7 @@
 <ol>
 <li>Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,<br>去<code>build-&gt;generated-&gt;source-&gt;apt-&gt;debug-&gt;&lt;包名&gt;-&gt;databinding</code>目录下查找对应方法。如果存在，那可能只是AS的误报。</li>
 <li>@BindingAdapter注解需要修饰<strong>静态(static)</strong>方法，<strong>不需要设置到viewdatabinding中</strong>，apt会自动查找并转换。具体实现可以在对应的viewDataBinding类的<code>executeBindings</code>方法中找到。</li>
-<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code>  </li>
+<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code>  <a id="more"></a></li>
 <li><p>隐式属性引用</p>
 <pre><code>&lt;CheckBox
   android:id=&quot;@+id/cb_Test&quot;
@@ -250,12 +250,11 @@
   android:visibility=&quot;@{cbTest.checked?View.VISIBLE:View.GONE}&quot;
   /&gt;
 </code></pre><p><strong>CheckBox的id是cb_Test,而引用的变量时cbTest,变量名称使用是根据ViewDatabinding的属性名称，而非XML中的ID</strong>.</p>
-<a id="more"></a>
+</li>
+</ol>
 <p>5.反向绑定</p>
 <ol>
 <li>@InverseBindingMethod </li>
-</ol>
-</li>
 </ol>
 <pre><code>    public @interface InverseBindingMethod {
 
