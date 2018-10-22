@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###使用记录和注意项  Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,去build-&amp;gt;generated-&amp;gt;source-&amp;gt;apt-&amp;gt;debug-&amp;gt;&amp;lt;包名&amp;gt;-&amp;gt;databinding目录下查找对应方法。如果存在，那可能只是AS的误报。 @BindingAdapter">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-22T16:17:48.172Z">
+<meta property="og:updated_time" content="2018-10-22T16:19:50.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Databinding使用记录">
 <meta name="twitter:description" content="###使用记录和注意项  Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,去build-&amp;gt;generated-&amp;gt;source-&amp;gt;apt-&amp;gt;debug-&amp;gt;&amp;lt;包名&amp;gt;-&amp;gt;databinding目录下查找对应方法。如果存在，那可能只是AS的误报。 @BindingAdapter">
@@ -234,7 +234,7 @@
 <ol>
 <li>Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,<br>去<code>build-&gt;generated-&gt;source-&gt;apt-&gt;debug-&gt;&lt;包名&gt;-&gt;databinding</code>目录下查找对应方法。如果存在，那可能只是AS的误报。</li>
 <li>@BindingAdapter注解需要修饰<strong>静态(static)</strong>方法，<strong>不需要设置到viewdatabinding中</strong>，apt会自动查找并转换。具体实现可以在对应的viewDataBinding类的<code>executeBindings</code>方法中找到。</li>
-<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code></li>
+<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code>  </li>
 <li><p>隐式属性引用</p>
 <pre><code>&lt;CheckBox
   android:id=&quot;@+id/cb_Test&quot;
@@ -250,11 +250,12 @@
   android:visibility=&quot;@{cbTest.checked?View.VISIBLE:View.GONE}&quot;
   /&gt;
 </code></pre><p><strong>CheckBox的id是cb_Test,而引用的变量时cbTest,变量名称使用是根据ViewDatabinding的属性名称，而非XML中的ID</strong>.</p>
-</li>
-</ol>
+<a id="more"></a>
 <p>5.反向绑定</p>
 <ol>
 <li>@InverseBindingMethod </li>
+</ol>
+</li>
 </ol>
 <pre><code>    public @interface InverseBindingMethod {
 
@@ -613,7 +614,7 @@ public static String getTextString(TextView view) {
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tag</h3>
+        <h3 class="widget-title">tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li></ul>
         </div>
