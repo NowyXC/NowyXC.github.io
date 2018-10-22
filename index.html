@@ -154,11 +154,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                10
+                11
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                12
+                13
                 <span>标签</span>
             </div>
         </div>
@@ -183,6 +183,286 @@
 
             
             <section id="main">
+    <article id="post-Databinding使用记录" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/10/23/Databinding使用记录/">Databinding使用记录</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/23/Databinding使用记录/">
+            <time datetime="2018-10-22T16:16:14.000Z" itemprop="datePublished">2018-10-23</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Databinding/">Databinding</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###使用记录和注意项</p>
+<ol>
+<li>Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,<br>去<code>build-&gt;generated-&gt;source-&gt;apt-&gt;debug-&gt;&lt;包名&gt;-&gt;databinding</code>目录下查找对应方法。如果存在，那可能只是AS的误报。</li>
+<li>@BindingAdapter注解需要修饰<strong>静态(static)</strong>方法，<strong>不需要设置到viewdatabinding中</strong>，apt会自动查找并转换。具体实现可以在对应的viewDataBinding类的<code>executeBindings</code>方法中找到。</li>
+<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code></li>
+<li><p>隐式属性引用</p>
+<pre><code>&lt;CheckBox
+  android:id=&quot;@+id/cb_Test&quot;
+  android:layout_width=&quot;wrap_content&quot;
+  android:layout_height=&quot;wrap_content&quot;
+  android:text=&quot;选中&quot;
+  /&gt;
+&lt;TextView
+  android:layout_width=&quot;match_parent&quot;
+  android:layout_height=&quot;100dp&quot;
+  android:text=&quot;选中显示&quot;
+  android:gravity=&quot;center&quot;
+  android:visibility=&quot;@{cbTest.checked?View.VISIBLE:View.GONE}&quot;
+  /&gt;
+</code></pre><p><strong>CheckBox的id是cb_Test,而引用的变量时cbTest,变量名称使用是根据ViewDatabinding的属性名称，而非XML中的ID</strong>.</p>
+</li>
+</ol>
+<p>5.反向绑定</p>
+<ol>
+<li>@InverseBindingMethod </li>
+</ol>
+<pre><code>    public @interface InverseBindingMethod {
+
+        /**
+         * The View type that is associated with the attribute.
+         */
+        Class type();
+
+        /**
+         * The attribute that supports two-way binding.
+         */
+        String attribute();
+
+        /**
+         * The event used to notify the data binding system that the attribute value has changed.
+         * Defaults to attribute() + &quot;AttrChanged&quot;
+         */
+        String event() default &quot;&quot;;
+
+        /**
+         * The getter method to retrieve the attribute value from the View. The default is
+         * the bean method name based on the attribute name.
+         */
+        String method() default &quot;&quot;;
+    }
+
+- event()和method()如果为空，都会默认采用attribute的标准命名格式
+- event:attribute() + &quot;AttrChanged&quot;          ：触发数据更新的事件
+- method:get+attribute() 或者 is+attribute() ：获取数据值的方法
+
+定义反向绑定完成后，需要设置触发反向绑定的方法，通常采用@BindingAdapter(value = {event()的值}, requireAll = false)注册一个参数变化监听方法。
+
+例如TextView的文本修改监听：
+
+    @BindingAdapter(value = {&quot;android:beforeTextChanged&quot;, &quot;android:onTextChanged&quot;,
+            &quot;android:afterTextChanged&quot;, &quot;android:textAttrChanged&quot;}, requireAll = false)
+    public static void setTextWatcher(TextView view, final BeforeTextChanged before,
+            final OnTextChanged on, final AfterTextChanged after,
+            final InverseBindingListener textAttrChanged) {
+        final TextWatcher newValue;
+        if (before == null &amp;&amp; after == null &amp;&amp; on == null &amp;&amp; textAttrChanged == null) {
+            newValue = null;
+        } else {
+            newValue = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    if (before != null) {
+                        before.beforeTextChanged(s, start, count, after);
+                    }
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (on != null) {
+                        on.onTextChanged(s, start, before, count);
+                    }
+                    if (textAttrChanged != null) {      //这里是重点
+                        textAttrChanged.onChange();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (after != null) {
+                        after.afterTextChanged(s);
+                    }
+                }
+            };
+        }
+        final TextWatcher oldValue = ListenerUtil.trackListener(view, newValue, R.id.textWatcher);
+        if (oldValue != null) {
+            view.removeTextChangedListener(oldValue);
+        }
+        if (newValue != null) {
+            view.addTextChangedListener(newValue);
+        }
+    }
+这个方法监听4个xml属性：
+
+1. android:beforeTextChanged 
+2. android:onTextChanged
+3. android:afterTextChanged
+4. android:textAttrChanged 
+
+反向绑定主要需要android:textAttrChanged即InverseBindingListener监听器。该监听器会在当前的ViewDataBinding类中自动添加，作为反向刷新的回调。
+
+**用通俗点的话说，我们需要在EditText的录入事件里面修改数据源的值，那么我们就需要在EditText的输入事件里添加数据源刷新回调。**
+至于其他三个属性对应着监听器**TextWatcher**的三个方法,可以在xml里面赋值，否则传null
+
+额外补充点:
+
+1)其他三个属性的赋值例子代码：    
+
+        xml:
+        &lt;EditText
+            android:id=&quot;@+id/etText&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;100dp&quot;
+            android:text=&quot;@={viewHolder.mEditTest}&quot;
+            android:onTextChanged=&quot;@{viewHolder.changed}&quot;  
+            android:gravity=&quot;center&quot;
+            /&gt;
+
+        viewHolder类中：
+        public TextViewBindingAdapter.OnTextChanged changed = new TextViewBindingAdapter.OnTextChanged() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.e(&quot;url&quot;,&quot;changed&quot;);
+                }
+            };
+
+
+2）该setTextWatcher事件在executeBindings()中已经完成，不会覆盖activity中的TextWatcher事件
+</code></pre><ol start="2">
+<li><p>@InverseBindingAdapter(用于重新实现UI返回值给数据源的getter方法，实现这个就不需要@InverseBindingMethod了)</p>
+<pre><code>@InverseBindingAdapter(attribute = &quot;android:text&quot;, event = &quot;android:textAttrChanged&quot;)
+public static String getTextString(TextView view) {
+    return view.getText().toString();
+}
+</code></pre><ul>
+<li>attribute：对应双向绑定的属性，eg: android:text或者app:refresh</li>
+<li>event：触发数据更新的事件,与上面的@BindingAdapter关联（关联点:android:textAttrChanged）</li>
+</ul>
+</li>
+</ol>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.10.22</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/10/23/Databinding使用记录/" data-id="cjnki8r820006lwvwvfo9i5wq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-自定义ListView快速滑动条图标的几种方式" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -239,7 +519,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/19/自定义ListView快速滑动条图标的几种方式/" data-id="cjng9qi5y000ktcvwegmue8cb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/19/自定义ListView快速滑动条图标的几种方式/" data-id="cjnki8r8h000olwvw5vlgtt6u" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -376,7 +656,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/16/Android中引用类型说明/" data-id="cjng9qi5d0003tcvwj6kk5e8n" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/16/Android中引用类型说明/" data-id="cjnki8r7x0002lwvws648xz6t" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -512,7 +792,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/FrameLayout源码笔记/" data-id="cjng9qi5i0007tcvweln24r9z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/15/FrameLayout源码笔记/" data-id="cjnki8r830008lwvwe9gmc7g2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -643,7 +923,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/Java-按值传递/" data-id="cjng9qi5v000itcvw8njx6ei4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/15/Java-按值传递/" data-id="cjnki8r8b000elwvwqqo1asrj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -778,7 +1058,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/Java线程安全/" data-id="cjng9qi5r000dtcvwbtapt05y" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/15/Java线程安全/" data-id="cjnki8r840009lwvwxb3s5200" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -915,7 +1195,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/" data-id="cjng9qi560001tcvwwvmfk8cd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/" data-id="cjnki8r8f000klwvwo8qediwt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1051,7 +1331,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/09/Android工作记录-0-前言/" data-id="cjng9qi5j0008tcvwt31m1y7z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/09/Android工作记录-0-前言/" data-id="cjnki8r7r0000lwvwgbg0c7gp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1182,7 +1462,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/09/photoTest/" data-id="cjng9qi5t000etcvwia4950wb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/09/photoTest/" data-id="cjnki8r8i000qlwvwqxi10su9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1313,7 +1593,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/08/categoriesTest/" data-id="cjng9qi5m0009tcvwwntxllzj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/08/categoriesTest/" data-id="cjnki8r89000dlwvwrobxoa82" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1389,133 +1669,9 @@
 
 
 
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/10/08/hello-world/">Hello World</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/hello-world/">
-            <time datetime="2018-10-08T10:43:42.955Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/10/08/hello-world/" data-id="cjng9qi60000otcvwuv7y7hq1" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
+    <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    </nav>
 </section>
             
                 
@@ -1526,6 +1682,25 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/23/Databinding使用记录/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/10/23/Databinding使用记录/" class="title">Databinding使用记录</a></p>
+                            <p class="item-date"><time datetime="2018-10-22T16:16:14.000Z" itemprop="datePublished">2018-10-23</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1603,25 +1778,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/15/Java线程安全/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a></p>
-                            <p class="item-title"><a href="/2018/10/15/Java线程安全/" class="title">Java线程安全</a></p>
-                            <p class="item-date"><time datetime="2018-10-15T08:03:08.000Z" itemprop="datePublished">2018-10-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1631,7 +1787,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1640,16 +1796,16 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">10</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">11</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">tag</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1658,7 +1814,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Android工作记录/" style="font-size: 15px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 20px;">Android控件</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a>
+            <a href="/tags/Android工作记录/" style="font-size: 15px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 20px;">Android控件</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a>
         </div>
     </div>
 
