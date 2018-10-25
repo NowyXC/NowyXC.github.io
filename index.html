@@ -154,7 +154,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                12
+                13
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -183,6 +183,209 @@
 
             
             <section id="main">
+    <article id="post-react-native学习笔记-1-Flexbox布局" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/10/25/react-native学习笔记-1-Flexbox布局/">react-native学习笔记-1 Flexbox布局</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/25/react-native学习笔记-1-Flexbox布局/">
+            <time datetime="2018-10-25T10:04:28.000Z" itemprop="datePublished">2018-10-25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/react-native/">react-native</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###1.flex属性</p>
+<blockquote>
+<p>弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间</p>
+</blockquote>
+<p>###2.flexbox</p>
+<blockquote>
+<p>指定某个组件的子元素的布局</p>
+</blockquote>
+<p>####2.1. flexDirection属性</p>
+<blockquote>
+<p>表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向） </p>
+</blockquote>
+<p>####2.2. justifyContent属性</p>
+<blockquote>
+<p>主轴子控件排列方式</p>
+</blockquote>
+<ul>
+<li><p>相关属性：(字符方式说明：子控件:’.’  空间:’_’)</p>
+<pre><code>flex-start：  (...______)  整体靠开始方向（类似Android里面的start）,会超出屏幕
+center：      (___...___)  整体居中排列,会超出屏幕
+flex-end:     (______...)  整体靠结束方向（类似Android中的end）,会超出屏幕
+space-around: (_.__.__._) 子控件环绕空余空间，两控件之间的空间是2倍，总长度（宽度超出屏幕后，子控件长度（宽度）均分，除第一项和最后一项）
+space-between:(.___.___.) 子控件之间平分空余空间，首尾空间为0。会超出屏幕
+space-evenly: (_._._._) 子控件均分空余空间，首尾存在空间。超出屏幕与&lt;space-around&gt;相似。 tips:这个空间分得不严谨
+</code></pre></li>
+</ul>
+<p>####2.3. alignItems</p>
+<blockquote>
+<p>次轴子控件排列方式（与主轴垂直的轴）</p>
+</blockquote>
+<ul>
+<li><p>相关属性：</p>
+<pre><code>flex-start:同justifyContent
+center:同justifyContent
+flex-end:同justifyContent
+stretch：填充剩余空间，该方向宽度（长度）为0才生效
+</code></pre></li>
+</ul>
+<p>####3. 测试代码</p>
+<pre><code>import React, {Component} from &apos;react&apos;;
+import {Platform, StyleSheet, Text, View} from &apos;react-native&apos;;
+
+/**
+ * flexbox测试
+ * 
+ */
+export default class App extends Component {
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#f00&apos;,height:100}]}/&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#0f0&apos;,height:140}]}/&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#f5f&apos;,height:180}]}/&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#ff0&apos;}]}/&gt;
+
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: &apos;row&apos;,
+    justifyContent:&apos;space-evenly&apos;,
+    alignItems:&apos;flex-end&apos;,
+    backgroundColor: &apos;#ff5262&apos;
+  },
+  item:{
+    width:100,
+
+  }
+});
+</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy  <br><br>– 2018.10.25</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/10/25/react-native学习笔记-1-Flexbox布局/" data-id="cjnog3er0000wk8vw83woriyl" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-react-native学习笔记-0-环境搭建问题记录" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -238,7 +441,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/25/react-native学习笔记-0-环境搭建问题记录/" data-id="cjnof4sop000vlovwg3epkclu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/25/react-native学习笔记-0-环境搭建问题记录/" data-id="cjnog3eqy000sk8vw7dqm6ivz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -373,7 +576,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/23/Databinding使用记录/" data-id="cjnof4so10003lovwqys8uftx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/23/Databinding使用记录/" data-id="cjnog3eqj0008k8vws7gkoqqy" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -505,7 +708,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/19/自定义ListView快速滑动条图标的几种方式/" data-id="cjnof4som000plovwm4xojno7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/19/自定义ListView快速滑动条图标的几种方式/" data-id="cjnog3er1000xk8vwzhxd15z9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -642,7 +845,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/16/Android中引用类型说明/" data-id="cjnof4snw0001lovwv5nruwuh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/16/Android中引用类型说明/" data-id="cjnog3eq50000k8vwztic3cth" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -778,7 +981,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/FrameLayout源码笔记/" data-id="cjnof4soa0009lovwjzthu2cj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/15/FrameLayout源码笔记/" data-id="cjnog3eqk0009k8vwx8sr5vyq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -909,7 +1112,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/Java-按值传递/" data-id="cjnof4sof000dlovw7ey3hdds" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/15/Java-按值传递/" data-id="cjnog3eqp000dk8vwffdfudn7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1044,7 +1247,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/Java线程安全/" data-id="cjnof4soe000clovwa3er57bb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/15/Java线程安全/" data-id="cjnog3eqr000hk8vwlm5syb4t" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1181,7 +1384,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/" data-id="cjnof4so60007lovwldc123x0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/" data-id="cjnog3eqg0006k8vwn1o13rts" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1317,138 +1520,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/09/Android工作记录-0-前言/" data-id="cjnof4so90008lovw2dmpt0qc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-photoTest" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/10/09/photoTest/">photoTest</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/photoTest/">
-            <time datetime="2018-10-08T18:05:50.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <img src="/2018/10/09/photoTest/example.jpg" title="This is an example image">
-<p>这是一个图片测试例子！</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/10/09/photoTest/" data-id="cjnof4sok000klovw88jeqw9d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/09/Android工作记录-0-前言/" data-id="cjnog3eqa0002k8vw7gvkjvir" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1541,6 +1613,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/10/25/react-native学习笔记-1-Flexbox布局/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/react-native/">react-native</a></p>
+                            <p class="item-title"><a href="/2018/10/25/react-native学习笔记-1-Flexbox布局/" class="title">react-native学习笔记-1 Flexbox布局</a></p>
+                            <p class="item-date"><time datetime="2018-10-25T10:04:28.000Z" itemprop="datePublished">2018-10-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/" class="thumbnail">
     
     
@@ -1614,25 +1705,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/15/FrameLayout源码笔记/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/10/15/FrameLayout源码笔记/" class="title">FrameLayout源码笔记</a></p>
-                            <p class="item-date"><time datetime="2018-10-15T09:30:30.000Z" itemprop="datePublished">2018-10-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1642,7 +1714,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1651,16 +1723,16 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">12</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">13</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">Tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1669,7 +1741,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Android工作记录/" style="font-size: 15px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 20px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+            <a href="/tags/Android工作记录/" style="font-size: 15px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 20px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
         </div>
     </div>
 

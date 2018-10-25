@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2018 | Nowy_Blog</title>
+    <title>react-native学习笔记-1 Flexbox布局 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+    <meta name="description" content="###1.flex属性  弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间  ###2.flexbox  指定某个组件的子元素的布局  ####2.1. flexDirection属性  表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向）   ###">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native学习笔记-1 Flexbox布局">
+<meta property="og:url" content="http://yoursite.com/2018/10/25/react-native学习笔记-1-Flexbox布局/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###1.flex属性  弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间  ###2.flexbox  指定某个组件的子元素的布局  ####2.1. flexDirection属性  表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向）   ###">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-25T10:28:40.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="react-native学习笔记-1 Flexbox布局">
+<meta name="twitter:description" content="###1.flex属性  弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间  ###2.flexbox  指定某个组件的子元素的布局  ####2.1. flexDirection属性  表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向）   ###">
     
 
     
@@ -182,25 +187,21 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-react-native学习笔记-1-Flexbox布局" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/25/react-native学习笔记-1-Flexbox布局/">react-native学习笔记-1 Flexbox布局</a>
+        <h1 class="article-title" itemprop="name">
+            react-native学习笔记-1 Flexbox布局
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
         <a href="/2018/10/25/react-native学习笔记-1-Flexbox布局/">
@@ -209,351 +210,201 @@
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
         <a class="article-category-link" href="/categories/react-native/">react-native</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
         <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/">react-native学习笔记-0 环境搭建问题记录</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###1.flex属性</p>
+<blockquote>
+<p>弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间</p>
+</blockquote>
+<p>###2.flexbox</p>
+<blockquote>
+<p>指定某个组件的子元素的布局</p>
+</blockquote>
+<p>####2.1. flexDirection属性</p>
+<blockquote>
+<p>表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向） </p>
+</blockquote>
+<p>####2.2. justifyContent属性</p>
+<blockquote>
+<p>主轴子控件排列方式</p>
+</blockquote>
+<ul>
+<li><p>相关属性：(字符方式说明：子控件:’.’  空间:’_’)</p>
+<pre><code>flex-start：  (...______)  整体靠开始方向（类似Android里面的start）,会超出屏幕
+center：      (___...___)  整体居中排列,会超出屏幕
+flex-end:     (______...)  整体靠结束方向（类似Android中的end）,会超出屏幕
+space-around: (_.__.__._) 子控件环绕空余空间，两控件之间的空间是2倍，总长度（宽度超出屏幕后，子控件长度（宽度）均分，除第一项和最后一项）
+space-between:(.___.___.) 子控件之间平分空余空间，首尾空间为0。会超出屏幕
+space-evenly: (_._._._) 子控件均分空余空间，首尾存在空间。超出屏幕与&lt;space-around&gt;相似。 tips:这个空间分得不严谨
+</code></pre></li>
+</ul>
+<p>####2.3. alignItems</p>
+<blockquote>
+<p>次轴子控件排列方式（与主轴垂直的轴）</p>
+</blockquote>
+<ul>
+<li><p>相关属性：</p>
+<pre><code>flex-start:同justifyContent
+center:同justifyContent
+flex-end:同justifyContent
+stretch：填充剩余空间，该方向宽度（长度）为0才生效
+</code></pre></li>
+</ul>
+<p>####3. 测试代码</p>
+<pre><code>import React, {Component} from &apos;react&apos;;
+import {Platform, StyleSheet, Text, View} from &apos;react-native&apos;;
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/">
-            <time datetime="2018-10-25T09:58:44.000Z" itemprop="datePublished">2018-10-25</time>
-        </a>
-    </div>
+/**
+ * flexbox测试
+ * 
+ */
+export default class App extends Component {
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#f00&apos;,height:100}]}/&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#0f0&apos;,height:140}]}/&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#f5f&apos;,height:180}]}/&gt;
+        &lt;View style={[styles.item,{backgroundColor:&apos;#ff0&apos;}]}/&gt;
 
+      &lt;/View&gt;
+    );
+  }
+}
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
-    </div>
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: &apos;row&apos;,
+    justifyContent:&apos;space-evenly&apos;,
+    alignItems:&apos;flex-end&apos;,
+    backgroundColor: &apos;#ff5262&apos;
+  },
+  item:{
+    width:100,
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>, <a class="tag-link" href="/tags/问题记录/">问题记录</a>
-    </div>
+  }
+});
+</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy  <br><br>– 2018.10.25</p>
 
-                </div>
-            </div>
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/23/Databinding使用记录/">Databinding使用记录</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/23/Databinding使用记录/">
-            <time datetime="2018-10-22T16:16:14.000Z" itemprop="datePublished">2018-10-23</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android框架/">Android框架</a>, <a class="tag-link" href="/tags/Databinding/">Databinding</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/">自定义ListView快速滑动条图标的几种方式</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/">
-            <time datetime="2018-10-19T15:42:16.000Z" itemprop="datePublished">2018-10-19</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/ListView/">ListView</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/16/Android中引用类型说明/">Android中引用类型说明</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/16/Android中引用类型说明/">
-            <time datetime="2018-10-16T09:30:30.000Z" itemprop="datePublished">2018-10-16</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Reference/">Reference</a>, <a class="tag-link" href="/tags/引用类型/">引用类型</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/FrameLayout源码笔记/">FrameLayout源码笔记</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/FrameLayout源码笔记/">
-            <time datetime="2018-10-15T09:30:30.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/Android源码阅读/">Android源码阅读</a>, <a class="tag-link" href="/tags/FrameLayout/">FrameLayout</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/Java-按值传递/">Java 按值传递</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java-按值传递/">
-            <time datetime="2018-10-15T08:13:14.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/java基础/">java基础</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/Java线程安全/">Java线程安全</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java线程安全/">
-            <time datetime="2018-10-15T08:03:08.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/多线程/">多线程</a>, <a class="tag-link" href="/tags/并发操作/">并发操作</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">Android工作记录整理-控件篇(1)--TextView</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">
-            <time datetime="2018-10-14T15:38:32.000Z" itemprop="datePublished">2018-10-14</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/TextView/">TextView</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/Android工作记录-0-前言/">Android工作记录-0 前言</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/Android工作记录-0-前言/">
-            <time datetime="2018-10-09T06:38:27.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
 </div>
 
-    <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/">下一页 &raquo;</a>
-    </nav>
+    <a data-url="http://yoursite.com/2018/10/25/react-native学习笔记-1-Flexbox布局/" data-id="cjnog3er0000wk8vw83woriyl" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">react-native学习笔记-0 环境搭建问题记录</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
