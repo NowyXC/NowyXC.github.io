@@ -5,18 +5,18 @@
     
     <title>react-native学习笔记-1 Flexbox布局 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###1.flex属性  弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间  ###2.flexbox  指定某个组件的子元素的布局">
+    <meta name="description" content="###1.flex属性    弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间 ###2.flexbox    指定某个组件的子元素的布局">
 <meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react-native学习笔记-1 Flexbox布局">
 <meta property="og:url" content="http://yoursite.com/2018/10/25/react-native学习笔记-1-Flexbox布局/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###1.flex属性  弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间  ###2.flexbox  指定某个组件的子元素的布局">
+<meta property="og:description" content="###1.flex属性    弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间 ###2.flexbox    指定某个组件的子元素的布局">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-25T10:29:38.204Z">
+<meta property="og:updated_time" content="2018-10-25T10:31:36.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-native学习笔记-1 Flexbox布局">
-<meta name="twitter:description" content="###1.flex属性  弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间  ###2.flexbox  指定某个组件的子元素的布局">
+<meta name="twitter:description" content="###1.flex属性    弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间 ###2.flexbox    指定某个组件的子元素的布局">
     
 
     
@@ -230,23 +230,11 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>###1.flex属性</p>
-<blockquote>
-<p>弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间</p>
-</blockquote>
-<p>###2.flexbox</p>
-<blockquote>
-<p>指定某个组件的子元素的布局</p>
-</blockquote>
+            <p>###1.flex属性<br>    弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间</p>
+<p>###2.flexbox<br>    指定某个组件的子元素的布局</p>
 <a id="more"></a>
-<p>####2.1. flexDirection属性</p>
-<blockquote>
-<p>表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向） </p>
-</blockquote>
-<p>####2.2. justifyContent属性</p>
-<blockquote>
-<p>主轴子控件排列方式</p>
-</blockquote>
+<p>####2.1. flexDirection属性<br>    表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向） </p>
+<p>####2.2. justifyContent属性<br>    主轴子控件排列方式</p>
 <ul>
 <li><p>相关属性：(字符方式说明：子控件:’.’  空间:’_’)</p>
 <pre><code>flex-start：  (...______)  整体靠开始方向（类似Android里面的start）,会超出屏幕
@@ -257,10 +245,7 @@ space-between:(.___.___.) 子控件之间平分空余空间，首尾空间为0�
 space-evenly: (_._._._) 子控件均分空余空间，首尾存在空间。超出屏幕与&lt;space-around&gt;相似。 tips:这个空间分得不严谨
 </code></pre></li>
 </ul>
-<p>####2.3. alignItems</p>
-<blockquote>
-<p>次轴子控件排列方式（与主轴垂直的轴）</p>
-</blockquote>
+<p>####2.3. alignItems<br>    次轴子控件排列方式（与主轴垂直的轴）</p>
 <ul>
 <li><p>相关属性：</p>
 <pre><code>flex-start:同justifyContent
