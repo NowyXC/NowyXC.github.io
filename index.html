@@ -225,82 +225,17 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>###1.flex属性</p>
+            <p><p>###1.flex属性</p>
 <blockquote>
 <p>弹性（Flex）宽高，与Android中的weight(权重)相同,根据数值的等份填充父容器空间</p>
 </blockquote>
 <p>###2.flexbox</p>
 <blockquote>
 <p>指定某个组件的子元素的布局</p>
-</blockquote>
-<p>####2.1. flexDirection属性</p>
-<blockquote>
-<p>表示主轴方向，参数：row、column、row-reverse、column-reverse（row：横向，column：竖直,reverse:反向） </p>
-</blockquote>
-<p>####2.2. justifyContent属性</p>
-<blockquote>
-<p>主轴子控件排列方式</p>
-</blockquote>
-<ul>
-<li><p>相关属性：(字符方式说明：子控件:’.’  空间:’_’)</p>
-<pre><code>flex-start：  (...______)  整体靠开始方向（类似Android里面的start）,会超出屏幕
-center：      (___...___)  整体居中排列,会超出屏幕
-flex-end:     (______...)  整体靠结束方向（类似Android中的end）,会超出屏幕
-space-around: (_.__.__._) 子控件环绕空余空间，两控件之间的空间是2倍，总长度（宽度超出屏幕后，子控件长度（宽度）均分，除第一项和最后一项）
-space-between:(.___.___.) 子控件之间平分空余空间，首尾空间为0。会超出屏幕
-space-evenly: (_._._._) 子控件均分空余空间，首尾存在空间。超出屏幕与&lt;space-around&gt;相似。 tips:这个空间分得不严谨
-</code></pre></li>
-</ul>
-<p>####2.3. alignItems</p>
-<blockquote>
-<p>次轴子控件排列方式（与主轴垂直的轴）</p>
-</blockquote>
-<ul>
-<li><p>相关属性：</p>
-<pre><code>flex-start:同justifyContent
-center:同justifyContent
-flex-end:同justifyContent
-stretch：填充剩余空间，该方向宽度（长度）为0才生效
-</code></pre></li>
-</ul>
-<p>####3. 测试代码</p>
-<pre><code>import React, {Component} from &apos;react&apos;;
-import {Platform, StyleSheet, Text, View} from &apos;react-native&apos;;
-
-/**
- * flexbox测试
- * 
- */
-export default class App extends Component {
-  render() {
-    return (
-      &lt;View style={styles.container}&gt;
-        &lt;View style={[styles.item,{backgroundColor:&apos;#f00&apos;,height:100}]}/&gt;
-        &lt;View style={[styles.item,{backgroundColor:&apos;#0f0&apos;,height:140}]}/&gt;
-        &lt;View style={[styles.item,{backgroundColor:&apos;#f5f&apos;,height:180}]}/&gt;
-        &lt;View style={[styles.item,{backgroundColor:&apos;#ff0&apos;}]}/&gt;
-
-      &lt;/View&gt;
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: &apos;row&apos;,
-    justifyContent:&apos;space-evenly&apos;,
-    alignItems:&apos;flex-end&apos;,
-    backgroundColor: &apos;#ff5262&apos;
-  },
-  item:{
-    width:100,
-
-  }
-});
-</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy  <br><br>– 2018.10.25</p>
-
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2018/10/25/react-native学习笔记-1-Flexbox布局/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1730,7 +1665,7 @@ const styles = StyleSheet.create({
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Tags</h3>
+        <h3 class="widget-title">tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
         </div>
