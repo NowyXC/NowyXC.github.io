@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###前言 整理学习react-native常用控件。整理自react-native中文网 ###基础组件    序号 组件名 作用     1 View 搭建用户界面的最基础组件   2 Text 显示文本内容的组件   3 Image 显示图片内容的组件   4 TextInput 文本输入框   5 ScrollView 可滚动的容器视图   6 StyleSheet 类似CSS样式表的样式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-29T10:39:56.698Z">
+<meta property="og:updated_time" content="2018-10-29T12:44:10.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-native的组件">
 <meta name="twitter:description" content="###前言 整理学习react-native常用控件。整理自react-native中文网 ###基础组件    序号 组件名 作用     1 View 搭建用户界面的最基础组件   2 Text 显示文本内容的组件   3 Image 显示图片内容的组件   4 TextInput 文本输入框   5 ScrollView 可滚动的容器视图   6 StyleSheet 类似CSS样式表的样式">
@@ -519,6 +519,47 @@
 </tr>
 </tbody>
 </table>
+<p>###扩展：平台检测 ——Platform 模块</p>
+<ul>
+<li>系统判断： Platform.OS === “android” (“ios”)</li>
+<li><p>根据平台使用样式或者代码：Platform.select({android:{…},ios:{…}});</p>
+<pre><code>const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection:&apos;row&apos;,
+    justifyContent: &apos;center&apos;,
+    alignItems: &apos;center&apos;,
+    ...Platform.select({
+      android:{
+        backgroundColor: &apos;#F500FF&apos;,
+      },
+      ios:{
+        backgroundColor: &apos;#666666&apos;,
+      }
+  })
+  }
+});
+</code></pre></li>
+<li><p>根据平台加载组件</p>
+<pre><code>const Component = Platform.select({
+    ios: () =&gt; require(&quot;ComponentIOS&quot;),
+    android: () =&gt; require(&quot;ComponentAndroid&quot;)
+})();
+</code></pre></li>
+</ul>
+<ul>
+<li><p>通过文件扩展名区分平台</p>
+<ul>
+<li>BigButton.ios.js</li>
+<li><p>BigButton.android.js</p>
+<p>直接引用方式：<br><code>const BigButton = require(&quot;./BigButton&quot;);</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>系统版本检测：Platform.Version,ios返回的是带小数的字符串（10.3），需要进行强转<br><code>eg: const majorVersionIOS = parseInt(Platform.Version, 10);</code></li>
+</ul>
 <h2 id="updating"><a href="#updating" class="headerlink" title="updating"></a>updating</h2><p>– Nowy   <br><br>– 2018.10.29</p>
 
         
