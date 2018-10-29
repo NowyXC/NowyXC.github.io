@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###前言 整理学习react-native常用控件。整理自react-native中文网 ###基础组件    序号 组件名 作用     1 View 搭建用户界面的最基础组件   2 Text 显示文本内容的组件   3 Image 显示图片内容的组件   4 TextInput 文本输入框   5 ScrollView 可滚动的容器视图   6 StyleSheet 类似CSS样式表的样式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-29T10:32:20.933Z">
+<meta property="og:updated_time" content="2018-10-29T10:39:56.698Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-native的组件">
 <meta name="twitter:description" content="###前言 整理学习react-native常用控件。整理自react-native中文网 ###基础组件    序号 组件名 作用     1 View 搭建用户界面的最基础组件   2 Text 显示文本内容的组件   3 Image 显示图片内容的组件   4 TextInput 文本输入框   5 ScrollView 可滚动的容器视图   6 StyleSheet 类似CSS样式表的样式">
@@ -274,10 +274,174 @@
 </tbody>
 </table>
 <a id="more"></a>
-<p>###交互控件<br>|序号 | 组件名         | 作用          |<br>|—-| ————- |:————-|<br>| 1  | Button       | 按钮控件        |<br>| 2  | Picker       | 原生选择器控件  |<br>| 3  | Slider           | 滑动数值选择器  |<br>| 4  | Switch          | 开关控件        |</p>
-<p>###列表视图<br>|序号 | 组件名         | 作用          |<br>|—-| ————- |:————-|<br>| 1  | FlatList       | 滚动列表组件     |<br>| 2  | SectionList    | 分组列表组件  |</p>
-<p>###iOS 独有的组件和 API<br>|序号 | 组件名         | 作用           |<br>|—-| ————- |:————-|<br>| 1  | ActionSheetIOS | 从设备底部弹出一个显示一个ActionSheet弹出框选项菜单或分享菜单        |<br>| 2  | AlertIOS       | 弹出一个提示对话框，还可以带有输入框             |<br>| 3  | DatePickerIOS       | 显示一个日期/时间选择器            |<br>| 4  | ImagePickerIOS  | 插入图片    |<br>| 5  | NavigatorIOS | UINavigationController的封装，用于实现页面的导航跳转              |<br>| 6  | ProgressViewIOS | 渲染一个UIProgressView进度条      |<br>| 7  | PushNotificationIOS | 管理推送通知，包括权限处理和应用角标数字    |<br>| 8  | SegmentedControlIOS | 渲染一个UISegmentedControl顶部选项卡布局    |<br>| 9  | TabBarIOS | 渲染一个UITabViewController底部选项卡布局。需要和TabBarIOS.Item搭配使用    |</p>
-<p>###Android 独有的组件和 API<br>|序号 | 组件名         | 作用           |<br>|—-| ————- |:————-|<br>| 1  | BackHandler             | 监听并处理设备上的返回按钮    |<br>| 2  | DatePickerAndroid    | 打开日期选择器           |<br>| 3  | DrawerLayoutAndroid     | 渲染一个DrawerLayout抽屉布局    |<br>| 4  | PermissionsAndroid      | 对Android 6.0引入的权限模型的封装|<br>| 5  | ProgressBarAndroid     | 渲染一个ProgressBar进度条            |<br>| 6  | TimePickerAndroid     | 打开时间选择器   |<br>| 7  | ToastAndroid         | 弹出一个Toast提示框   |<br>| 8  | ToolbarAndroid         | 在顶部渲染一个Toolbar工具栏    |<br>| 9  | ViewPagerAndroid     | 可左右翻页滑动的视图容器   |</p>
+<p>###交互控件</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>组件名</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Button</td>
+<td style="text-align:left">按钮控件</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Picker</td>
+<td style="text-align:left">原生选择器控件</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Slider</td>
+<td style="text-align:left">滑动数值选择器</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Switch</td>
+<td style="text-align:left">开关控件</td>
+</tr>
+</tbody>
+</table>
+<p>###列表视图</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>组件名</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>FlatList</td>
+<td style="text-align:left">滚动列表组件</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SectionList</td>
+<td style="text-align:left">分组列表组件</td>
+</tr>
+</tbody>
+</table>
+<p>###iOS 独有的组件和 API</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>组件名</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ActionSheetIOS</td>
+<td style="text-align:left">从设备底部弹出一个显示一个ActionSheet弹出框选项菜单或分享菜单</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AlertIOS</td>
+<td style="text-align:left">弹出一个提示对话框，还可以带有输入框</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DatePickerIOS</td>
+<td style="text-align:left">显示一个日期/时间选择器</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ImagePickerIOS</td>
+<td style="text-align:left">插入图片</td>
+</tr>
+<tr>
+<td>5</td>
+<td>NavigatorIOS</td>
+<td style="text-align:left">UINavigationController的封装，用于实现页面的导航跳转</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ProgressViewIOS</td>
+<td style="text-align:left">渲染一个UIProgressView进度条</td>
+</tr>
+<tr>
+<td>7</td>
+<td>PushNotificationIOS</td>
+<td style="text-align:left">管理推送通知，包括权限处理和应用角标数字</td>
+</tr>
+<tr>
+<td>8</td>
+<td>SegmentedControlIOS</td>
+<td style="text-align:left">渲染一个UISegmentedControl顶部选项卡布局</td>
+</tr>
+<tr>
+<td>9</td>
+<td>TabBarIOS</td>
+<td style="text-align:left">渲染一个UITabViewController底部选项卡布局。需要和TabBarIOS.Item搭配使用</td>
+</tr>
+</tbody>
+</table>
+<p>###Android 独有的组件和 API</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>组件名</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>BackHandler</td>
+<td style="text-align:left">监听并处理设备上的返回按钮</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DatePickerAndroid</td>
+<td style="text-align:left">打开日期选择器</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DrawerLayoutAndroid</td>
+<td style="text-align:left">渲染一个DrawerLayout抽屉布局</td>
+</tr>
+<tr>
+<td>4</td>
+<td>PermissionsAndroid</td>
+<td style="text-align:left">对Android 6.0引入的权限模型的封装</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ProgressBarAndroid</td>
+<td style="text-align:left">渲染一个ProgressBar进度条</td>
+</tr>
+<tr>
+<td>6</td>
+<td>TimePickerAndroid</td>
+<td style="text-align:left">打开时间选择器</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ToastAndroid</td>
+<td style="text-align:left">弹出一个Toast提示框</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ToolbarAndroid</td>
+<td style="text-align:left">在顶部渲染一个Toolbar工具栏</td>
+</tr>
+<tr>
+<td>9</td>
+<td>ViewPagerAndroid</td>
+<td style="text-align:left">可左右翻页滑动的视图容器</td>
+</tr>
+</tbody>
+</table>
 <p>###其他</p>
 <table>
 <thead>
