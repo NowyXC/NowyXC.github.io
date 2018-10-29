@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>分类: Android | Nowy_Blog</title>
+    <title>react-native的组件 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/categories/Android/index.html">
+    <meta name="description" content="###前言 整理学习react-native常用控件。整理自react-native中文网 ###基础组件    序号 组件名 作用     1 View 搭建用户界面的最基础组件   2 Text 显示文本内容的组件   3 Image 显示图片内容的组件   4 TextInput 文本输入框   5 ScrollView 可滚动的容器视图   6 StyleSheet 类似CSS样式表的样式">
+<meta name="keywords" content="资料整理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native的组件">
+<meta property="og:url" content="http://yoursite.com/2018/10/29/react-native的组件和API/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###前言 整理学习react-native常用控件。整理自react-native中文网 ###基础组件    序号 组件名 作用     1 View 搭建用户界面的最基础组件   2 Text 显示文本内容的组件   3 Image 显示图片内容的组件   4 TextInput 文本输入框   5 ScrollView 可滚动的容器视图   6 StyleSheet 类似CSS样式表的样式">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-29T10:32:20.933Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="react-native的组件">
+<meta name="twitter:description" content="###前言 整理学习react-native常用控件。整理自react-native中文网 ###基础组件    序号 组件名 作用     1 View 搭建用户界面的最基础组件   2 Text 显示文本内容的组件   3 Image 显示图片内容的组件   4 TextInput 文本输入框   5 ScrollView 可滚动的容器视图   6 StyleSheet 类似CSS样式表的样式">
     
 
     
@@ -182,230 +187,276 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-folder"></i></span>
-        <h1 class="title">Android</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-react-native的组件和API" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/23/Databinding使用记录/">Databinding使用记录</a>
+        <h1 class="article-title" itemprop="name">
+            react-native的组件
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/23/Databinding使用记录/">
-            <time datetime="2018-10-22T16:16:14.000Z" itemprop="datePublished">2018-10-23</time>
+        <a href="/2018/10/29/react-native的组件和API/">
+            <time datetime="2018-10-29T10:00:31.000Z" itemprop="datePublished">2018-10-29</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
+        <a class="article-category-link" href="/categories/react-native/">react-native</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android框架/">Android框架</a>, <a class="tag-link" href="/tags/Databinding/">Databinding</a>
+        <a class="tag-link" href="/tags/资料整理/">资料整理</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/">自定义ListView快速滑动条图标的几种方式</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###前言<br> 整理学习react-native常用控件。整理自<a href="https://reactnative.cn/docs/components-and-apis/" target="_blank" rel="noopener">react-native中文网</a></p>
+<p>###基础组件</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>组件名</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>View</td>
+<td style="text-align:center">搭建用户界面的最基础组件</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Text</td>
+<td style="text-align:center">显示文本内容的组件</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Image</td>
+<td style="text-align:center">显示图片内容的组件</td>
+</tr>
+<tr>
+<td>4</td>
+<td>TextInput</td>
+<td style="text-align:center">文本输入框</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ScrollView</td>
+<td style="text-align:center">可滚动的容器视图</td>
+</tr>
+<tr>
+<td>6</td>
+<td>StyleSheet</td>
+<td style="text-align:center">类似CSS样式表的样式抽象层</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<p>###交互控件<br>|序号 | 组件名         | 作用          |<br>|—-| ————- |:————-|<br>| 1  | Button       | 按钮控件        |<br>| 2  | Picker       | 原生选择器控件  |<br>| 3  | Slider           | 滑动数值选择器  |<br>| 4  | Switch          | 开关控件        |</p>
+<p>###列表视图<br>|序号 | 组件名         | 作用          |<br>|—-| ————- |:————-|<br>| 1  | FlatList       | 滚动列表组件     |<br>| 2  | SectionList    | 分组列表组件  |</p>
+<p>###iOS 独有的组件和 API<br>|序号 | 组件名         | 作用           |<br>|—-| ————- |:————-|<br>| 1  | ActionSheetIOS | 从设备底部弹出一个显示一个ActionSheet弹出框选项菜单或分享菜单        |<br>| 2  | AlertIOS       | 弹出一个提示对话框，还可以带有输入框             |<br>| 3  | DatePickerIOS       | 显示一个日期/时间选择器            |<br>| 4  | ImagePickerIOS  | 插入图片    |<br>| 5  | NavigatorIOS | UINavigationController的封装，用于实现页面的导航跳转              |<br>| 6  | ProgressViewIOS | 渲染一个UIProgressView进度条      |<br>| 7  | PushNotificationIOS | 管理推送通知，包括权限处理和应用角标数字    |<br>| 8  | SegmentedControlIOS | 渲染一个UISegmentedControl顶部选项卡布局    |<br>| 9  | TabBarIOS | 渲染一个UITabViewController底部选项卡布局。需要和TabBarIOS.Item搭配使用    |</p>
+<p>###Android 独有的组件和 API<br>|序号 | 组件名         | 作用           |<br>|—-| ————- |:————-|<br>| 1  | BackHandler             | 监听并处理设备上的返回按钮    |<br>| 2  | DatePickerAndroid    | 打开日期选择器           |<br>| 3  | DrawerLayoutAndroid     | 渲染一个DrawerLayout抽屉布局    |<br>| 4  | PermissionsAndroid      | 对Android 6.0引入的权限模型的封装|<br>| 5  | ProgressBarAndroid     | 渲染一个ProgressBar进度条            |<br>| 6  | TimePickerAndroid     | 打开时间选择器   |<br>| 7  | ToastAndroid         | 弹出一个Toast提示框   |<br>| 8  | ToolbarAndroid         | 在顶部渲染一个Toolbar工具栏    |<br>| 9  | ViewPagerAndroid     | 可左右翻页滑动的视图容器   |</p>
+<p>###其他</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>组件名</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ActivityIndicator</td>
+<td style="text-align:left">显示一个圆形的正在加载的符号</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Alert</td>
+<td style="text-align:left">弹出一个提示框，显示指定的标题和信息</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Animated</td>
+<td style="text-align:left">易于使用和维护的动画库，可生成流畅而强大的动画</td>
+</tr>
+<tr>
+<td>4</td>
+<td>CameraRoll</td>
+<td style="text-align:left">访问本地相册</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Clipboard</td>
+<td style="text-align:left">读写剪贴板内容</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Dimensions</td>
+<td style="text-align:left">获取设备尺寸</td>
+</tr>
+<tr>
+<td>7</td>
+<td>KeyboardAvoidingView</td>
+<td style="text-align:left">一种视图容器，可以随键盘升起而自动移动</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Linking</td>
+<td style="text-align:left">提供了一个通用的接口来调起其他应用或被其他应用调起</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Modal</td>
+<td style="text-align:left">一种简单的覆盖全屏的模态视图</td>
+</tr>
+<tr>
+<td>10</td>
+<td>PixelRatio</td>
+<td style="text-align:left">可以获取设备的像素密度</td>
+</tr>
+<tr>
+<td>11</td>
+<td>RefreshControl</td>
+<td style="text-align:left">此组件用在ScrollView及其衍生组件的内部，用于添加下拉刷新的功能</td>
+</tr>
+<tr>
+<td>12</td>
+<td>StatusBar</td>
+<td style="text-align:left">用于控制应用顶部状态栏样式的组件</td>
+</tr>
+<tr>
+<td>13</td>
+<td>WebView</td>
+<td style="text-align:left">在原生视图中显示Web内容的组件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="updating"><a href="#updating" class="headerlink" title="updating"></a>updating</h2><p>– Nowy   <br><br>– 2018.10.29</p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/">
-            <time datetime="2018-10-19T15:42:16.000Z" itemprop="datePublished">2018-10-19</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/ListView/">ListView</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/16/Android中引用类型说明/">Android中引用类型说明</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/16/Android中引用类型说明/">
-            <time datetime="2018-10-16T09:30:30.000Z" itemprop="datePublished">2018-10-16</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Reference/">Reference</a>, <a class="tag-link" href="/tags/引用类型/">引用类型</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/FrameLayout源码笔记/">FrameLayout源码笔记</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/FrameLayout源码笔记/">
-            <time datetime="2018-10-15T09:30:30.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/Android源码阅读/">Android源码阅读</a>, <a class="tag-link" href="/tags/FrameLayout/">FrameLayout</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">Android工作记录整理-控件篇(1)--TextView</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">
-            <time datetime="2018-10-14T15:38:32.000Z" itemprop="datePublished">2018-10-14</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/TextView/">TextView</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/Android工作记录-0-前言/">Android工作记录-0 前言</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/Android工作记录-0-前言/">
-            <time datetime="2018-10-09T06:38:27.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
 </div>
+
+    <a data-url="http://yoursite.com/2018/10/29/react-native的组件和API/" data-id="cjnu5znso0014esvwby9km9rx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/26/react-native的网络访问-Fetch/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">react-native的网络访问(Fetch)</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
