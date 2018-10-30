@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2018 | Nowy_Blog</title>
+    <title>react-native React Navigation跳转页面(StackNavigator) | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/page/2/index.html">
+    <meta name="description" content="###React Navigation的导入配置  官方文档： 链接地址 导入的脚本为：yarn add react-navigation 前置配置： yarnnpm install -g yarn react-native-cli">
+<meta name="keywords" content="学习笔记,React Navigation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native React Navigation跳转页面(StackNavigator)">
+<meta property="og:url" content="http://yoursite.com/2018/10/29/react-native-React-Navigation跳转页面/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###React Navigation的导入配置  官方文档： 链接地址 导入的脚本为：yarn add react-navigation 前置配置： yarnnpm install -g yarn react-native-cli">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-30T08:30:29.804Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="react-native React Navigation跳转页面(StackNavigator)">
+<meta name="twitter:description" content="###React Navigation的导入配置  官方文档： 链接地址 导入的脚本为：yarn add react-navigation 前置配置： yarnnpm install -g yarn react-native-cli">
     
 
     
@@ -182,260 +187,312 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-react-native-React-Navigation跳转页面" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/Java-按值传递/">Java 按值传递</a>
+        <h1 class="article-title" itemprop="name">
+            react-native React Navigation跳转页面(StackNavigator)
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java-按值传递/">
-            <time datetime="2018-10-15T08:13:14.000Z" itemprop="datePublished">2018-10-15</time>
+        <a href="/2018/10/29/react-native-React-Navigation跳转页面/">
+            <time datetime="2018-10-29T12:57:17.000Z" itemprop="datePublished">2018-10-29</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
+        <a class="article-category-link" href="/categories/react-native/">react-native</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/java基础/">java基础</a>
+        <a class="tag-link" href="/tags/React-Navigation/">React Navigation</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/Java线程安全/">Java线程安全</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###React Navigation的导入配置 </p>
+<p>官方文档： <a href="https://reactnavigation.org/docs/en/getting-started.html" target="_blank" rel="noopener">链接地址</a></p>
+<p>导入的脚本为：<br><code>yarn add react-navigation</code></p>
+<p>前置配置： <strong>yarn</strong><br><code>npm install -g yarn react-native-cli</code></p>
+<a id="more"></a>
+<p>###StackNavigator使用记录</p>
+<ol>
+<li>定义多个组件（记得导出）</li>
+<li>创建并配置<code>StackNavigator</code>,使用<code>createStackNavigator</code></li>
+<li>跳转功能的调用<code>this.props.navigation.navigate(&#39;组件名称&#39;)</code></li>
+</ol>
+<p>具体测试代码：</p>
+<ul>
+<li><p>App.js</p>
+<pre><code>import React, {Component} from &apos;react&apos;;
+import {
+  StyleSheet,
+  Text,
+  Button,
+  View
+} from &apos;react-native&apos;;
+import {
+  createStackNavigator 
+} from &apos;react-navigation&apos;;
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java线程安全/">
-            <time datetime="2018-10-15T08:03:08.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
+import HomeScreen from &apos;./pages/homePage&apos;;
+import MineScreen from &apos;./pages/minePage&apos;;
+</code></pre></li>
+</ul>
+<pre><code>/**
+ * 同一个JS中的组件Main
+ */
+class MainScreen extends React.Component{
+    render(){
+        return(
+            &lt;View style={styles.container}&gt;
+                &lt;Text&gt;这是MainScreen!&lt;/Text&gt;
+                &lt;Button
+                  title=&apos;跳转到DetailScreen&apos;
+                  onPress={()=&gt;{
+                    this.props.navigation.navigate(&apos;Home&apos;) //点击事件定义-跳转到Home
+                  }}
+                /&gt;
+            &lt;/View&gt;
+        );
+    }
+}
 
+/**
+ * 同一个JS中的组件Detail
+ */
+class DetailScreen extends React.Component{
+    render(){
+        return(
+            &lt;View style={styles.container}&gt;
+                &lt;Text&gt;这是DetailsScreen!&lt;/Text&gt;
+                &lt;Button
+                  title=&apos;跳转到MainScreen&apos;
+                  onPress={()=&gt;{
+                    this.props.navigation.navigate(&apos;Main&apos;) //点击事件定义- 跳转到Main
+                  }}
+                /&gt;
+            &lt;/View&gt;
+        );
+    }
+}
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
+const RootStack = createStackNavigator ( //配置导航
+  {
+    Main: {
+      screen:MainScreen
+    },
+    Home:{
+      screen:HomeScreen
+    },
+    Mine:{
+      screen:MineScreen
+    },
+    Detail:{
+      screen:DetailScreen
+    }
+  },
+  {
+    initialRouteName:&apos;Main&apos;, //设置初始页面
+  }
+  );
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/多线程/">多线程</a>, <a class="tag-link" href="/tags/并发操作/">并发操作</a>
-    </div>
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:&apos;#f3f3f6&apos;,
+        alignItems: &apos;center&apos;,
+        justifyContent:&apos;center&apos;
 
-                </div>
-            </div>
+    }
+});
+
+type Props = {};
+export default class App extends Component&lt;Props&gt;{
+  render() {
+    return &lt;RootStack /&gt;; //引用导航配置
+  }
+}
+</code></pre><ul>
+<li><p>HomePage.js（minePage.js相似）</p>
+<pre><code>import React, {Component} from &apos;react&apos;;
+import {
+    View,
+    Text,
+    Button,
+    StyleSheet
+} from &apos;react-native&apos;;
+
+/**
+ * 不同JS文件的组件Home
+ */
+export default class HomeScreen extends React.Component{
+    render(){
+        return(
+            &lt;View style={styles.container}&gt;
+                &lt;Text&gt;这是HomeScreen!&lt;/Text&gt;
+                &lt;Button
+                    title=&quot;返回到Main&quot;
+                    onPress = {()=&gt;{
+                        this.props.navigation.push(&apos;Home&apos;) //打开新的Home组件
+                    }}
+                /&gt;
+                &lt;Button
+                    title=&quot;返回上一页&quot;
+                    onPress = {()=&gt;{
+                        this.props.navigation.goBack() //返回上一页
+                    }}
+                /&gt;
+            &lt;/View&gt;
+        );
+    }
+}
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:&apos;#f3f3f6&apos;,
+        alignItems: &apos;center&apos;,
+        justifyContent:&apos;center&apos;
+    }
+});
+</code></pre></li>
+</ul>
+<p>####总结</p>
+<ol>
+<li>通过<code>createStackNavigator</code>方法配置导航后，在app.js的render()中直接引用。配置中的组件就可以使用<code>this.props.navigation</code>进行跳转</li>
+<li><code>this.props.navigation.navigate(&#39;Home&#39;)</code>，’Home’对应<code>createStackNavigator</code>中的key.</li>
+<li><code>navigate(&#39;Home&#39;)</code>会先查找堆栈中是否存在’Home’界面，存在直接返回’Home’界面（旧的），<strong>不存在则开启新界面</strong></li>
+<li>一直开启新界面可以使用push(‘Home’)</li>
+<li><code>this.props.navigation.goBack()</code>:返回上一页,与Android的返回按键关联</li>
+</ol>
+<p>####技巧：</p>
+<p><strong>返回首页功能</strong>的两种实现方式：</p>
+<ol>
+<li><code>this.props.navigation.navigate(&#39;首页对应的key&#39;)</code></li>
+<li><code>this.props.navigation.popToTop()</code></li>
+</ol>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.10.30</p>
+
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">Android工作记录整理-控件篇(1)--TextView</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">
-            <time datetime="2018-10-14T15:38:32.000Z" itemprop="datePublished">2018-10-14</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/TextView/">TextView</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/Android工作记录-0-前言/">Android工作记录-0 前言</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/Android工作记录-0-前言/">
-            <time datetime="2018-10-09T06:38:27.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/photoTest/">photoTest</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/photoTest/">
-            <time datetime="2018-10-08T18:05:50.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/08/categoriesTest/">CategoriesTest</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/categoriesTest/">
-            <time datetime="2018-10-08T15:54:32.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/08/hello-world/">Hello World</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/hello-world/">
-            <time datetime="2018-10-08T10:43:42.955Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
 </div>
 
-    <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/">&laquo; 上一页</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
-    </nav>
+    <a data-url="http://yoursite.com/2018/10/29/react-native-React-Navigation跳转页面/" data-id="cjnvh2x4p000xm4vw0c40ck43" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/29/react-native的组件和API/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">react-native的组件</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 

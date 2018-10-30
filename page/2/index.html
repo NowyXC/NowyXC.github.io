@@ -154,11 +154,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                16
+                17
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                18
+                19
                 <span>标签</span>
             </div>
         </div>
@@ -183,6 +183,137 @@
 
             
             <section id="main">
+    <article id="post-Java-按值传递" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/10/15/Java-按值传递/">Java 按值传递</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/15/Java-按值传递/">
+            <time datetime="2018-10-15T08:13:14.000Z" itemprop="datePublished">2018-10-15</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/java基础/">java基础</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h1 id="Java-按值传递"><a href="#Java-按值传递" class="headerlink" title="Java 按值传递"></a>Java 按值传递</h1><p><strong>首先，在JAVA中，其实只存在按值传递。<br>大家所说的值传递和引用传递其实只是对基本数据类型的传递和引用类型的传递进行了区分。</strong></p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/15/Java-按值传递/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/10/15/Java-按值传递/" data-id="cjnvh2x4s0010m4vwktvs9d23" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Java线程安全" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -242,7 +373,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/Java线程安全/" data-id="cjnu5zns30009esvwf9q9d7nc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/15/Java线程安全/" data-id="cjnvh2x4f000om4vw4qtzx0ir" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -379,7 +510,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/" data-id="cjnu5znrv0003esvw488htvwf" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/14/Android工作记录整理-控件篇-1-TextView/" data-id="cjnvh2x48000jm4vwg197qkr5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -515,7 +646,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/09/Android工作记录-0-前言/" data-id="cjnu5znrr0001esvw5cfygm5j" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/09/Android工作记录-0-前言/" data-id="cjnvh2x1p0000m4vwy37335d2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -646,7 +777,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/09/photoTest/" data-id="cjnu5znsc000iesvwey124mu9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/09/photoTest/" data-id="cjnvh2x4k000tm4vw9dizmaiw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -777,7 +908,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/08/categoriesTest/" data-id="cjnu5znsa000eesvwy86j0e9q" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/08/categoriesTest/" data-id="cjnvh2x4h000qm4vw5umfyvfc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -905,7 +1036,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/08/hello-world/" data-id="cjnu5znse000kesvwk42jpzz3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/10/08/hello-world/" data-id="cjnvh2x4m000wm4vwzakzff8i" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -998,6 +1129,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/10/29/react-native-React-Navigation跳转页面/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/react-native/">react-native</a></p>
+                            <p class="item-title"><a href="/2018/10/29/react-native-React-Navigation跳转页面/" class="title">react-native React Navigation跳转页面(StackNavigator)</a></p>
+                            <p class="item-date"><time datetime="2018-10-29T12:57:17.000Z" itemprop="datePublished">2018-10-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/10/29/react-native的组件和API/" class="thumbnail">
     
     
@@ -1071,25 +1221,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/react-native/">react-native</a></p>
-                            <p class="item-title"><a href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/" class="title">react-native学习笔记-0 环境搭建问题记录</a></p>
-                            <p class="item-date"><time datetime="2018-10-25T09:58:44.000Z" itemprop="datePublished">2018-10-25</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1099,7 +1230,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">6</span></li></ul>
         </div>
     </div>
 
@@ -1108,7 +1239,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">16</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li></ul>
         </div>
     </div>
 
@@ -1117,7 +1248,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1126,7 +1257,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Android工作记录/" style="font-size: 13.33px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 16.67px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+            <a href="/tags/Android工作记录/" style="font-size: 13.33px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 16.67px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/React-Navigation/" style="font-size: 10px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
         </div>
     </div>
 
