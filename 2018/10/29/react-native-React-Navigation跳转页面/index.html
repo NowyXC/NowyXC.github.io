@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###React Navigation的导入配置  官方文档： 链接地址 导入的脚本为：yarn add react-navigation 前置配置： yarnnpm install -g yarn react-native-cli">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-30T08:30:29.804Z">
+<meta property="og:updated_time" content="2018-10-30T12:53:38.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-native React Navigation跳转页面(StackNavigator)">
 <meta name="twitter:description" content="###React Navigation的导入配置  官方文档： 链接地址 导入的脚本为：yarn add react-navigation 前置配置： yarnnpm install -g yarn react-native-cli">
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
 <li>通过<code>createStackNavigator</code>方法配置导航后，在app.js的render()中直接引用。配置中的组件就可以使用<code>this.props.navigation</code>进行跳转</li>
 <li><code>this.props.navigation.navigate(&#39;Home&#39;)</code>，’Home’对应<code>createStackNavigator</code>中的key.</li>
 <li><code>navigate(&#39;Home&#39;)</code>会先查找堆栈中是否存在’Home’界面，存在直接返回’Home’界面（旧的），<strong>不存在则开启新界面</strong></li>
-<li>一直开启新界面可以使用push(‘Home’)</li>
+<li>一直开启新界面可以使用<code>push(&#39;Home&#39;)</code></li>
 <li><code>this.props.navigation.goBack()</code>:返回上一页,与Android的返回按键关联</li>
 </ol>
 <p>####技巧：</p>
@@ -391,7 +391,15 @@ const styles = StyleSheet.create({
 <li><code>this.props.navigation.navigate(&#39;首页对应的key&#39;)</code></li>
 <li><code>this.props.navigation.popToTop()</code></li>
 </ol>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.10.30</p>
+<p><strong>参数传递</strong>:</p>
+<ol>
+<li><code>this.props.navigation.navigate(&#39;首页对应的key&#39;,{key:value,key2:value2})</code></li>
+<li><code>this.props.navigation.push(&#39;首页对应的key&#39;,{key:value,key2:value2})</code></li>
+</ol>
+<p>参数接收：</p>
+<pre><code>const { navigation } = this.props;
+const value = navigation.getParam(&apos;key&apos;, &apos;defValue&apos;);
+</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.10.30</p>
 
         
         </div>
