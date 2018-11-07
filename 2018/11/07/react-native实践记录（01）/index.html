@@ -3,22 +3,28 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Java线程安全 | Nowy_Blog</title>
+    <title>react-native实践记录（01） | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性">
-<meta name="keywords" content="多线程,并发操作">
+    <meta name="description" content="###0.前言本系列文章主要是对react-native学习知识的实践，并记录下实操过程中遇到的问题和解决方案。 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器（暂时没测试iOS效果） 本文主要是采用react-native编写BOSS直聘的app的相关UI，以此实践和校验之前学习的react-native知识点。 本文主要讲解内容">
+<meta name="keywords" content="react-native实践记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java线程安全">
-<meta property="og:url" content="http://yoursite.com/2018/10/15/Java线程安全/index.html">
+<meta property="og:title" content="react-native实践记录（01）">
+<meta property="og:url" content="http://yoursite.com/2018/11/07/react-native实践记录（01）/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性">
+<meta property="og:description" content="###0.前言本系列文章主要是对react-native学习知识的实践，并记录下实操过程中遇到的问题和解决方案。 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器（暂时没测试iOS效果） 本文主要是采用react-native编写BOSS直聘的app的相关UI，以此实践和校验之前学习的react-native知识点。 本文主要讲解内容">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2018/10/15/Java线程安全/线程安全.png">
-<meta property="og:updated_time" content="2018-10-15T08:09:03.894Z">
+<meta property="og:image" content="https://i.imgur.com/5KudTx3.png">
+<meta property="og:image" content="https://i.imgur.com/SYKucfS.png">
+<meta property="og:image" content="https://i.imgur.com/2CFIhzB.png">
+<meta property="og:image" content="https://i.imgur.com/RCerPlk.png">
+<meta property="og:image" content="https://i.imgur.com/7WZVeFr.png">
+<meta property="og:image" content="https://i.imgur.com/bmULFuj.png">
+<meta property="og:image" content="https://i.imgur.com/0Htg2tq.png">
+<meta property="og:updated_time" content="2018-11-07T16:23:21.488Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java线程安全">
-<meta name="twitter:description" content="线程安全 控制多个线程对某个资源的有序访问或修改 解决两个主要的问题：可见性和有序性">
-<meta name="twitter:image" content="http://yoursite.com/2018/10/15/Java线程安全/线程安全.png">
+<meta name="twitter:title" content="react-native实践记录（01）">
+<meta name="twitter:description" content="###0.前言本系列文章主要是对react-native学习知识的实践，并记录下实操过程中遇到的问题和解决方案。 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器（暂时没测试iOS效果） 本文主要是采用react-native编写BOSS直聘的app的相关UI，以此实践和校验之前学习的react-native知识点。 本文主要讲解内容">
+<meta name="twitter:image" content="https://i.imgur.com/5KudTx3.png">
     
 
     
@@ -189,7 +195,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Java线程安全" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-react-native实践记录（01）" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -197,7 +203,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Java线程安全
+            react-native实践记录（01）
         </h1>
     
 
@@ -206,8 +212,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java线程安全/">
-            <time datetime="2018-10-15T08:03:08.000Z" itemprop="datePublished">2018-10-15</time>
+        <a href="/2018/11/07/react-native实践记录（01）/">
+            <time datetime="2018-11-07T14:25:19.000Z" itemprop="datePublished">2018-11-07</time>
         </a>
     </div>
 
@@ -215,13 +221,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
+        <a class="article-category-link" href="/categories/react-native/">react-native</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/多线程/">多线程</a>, <a class="tag-link" href="/tags/并发操作/">并发操作</a>
+        <a class="tag-link" href="/tags/react-native实践记录/">react-native实践记录</a>
     </div>
 
                     </div>
@@ -232,37 +238,161 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <img src="/2018/10/15/Java线程安全/线程安全.png" title="多线程的数据读写操作">
-<h1 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h1><ul>
-<li><strong>控制多个线程对某个资源的有序访问或修改</strong></li>
-<li><strong>解决两个主要的问题：<font color="red">可见性</font>和<font color="red">有序性</font></strong></li>
+            <p>###0.前言<br>本系列文章主要是对react-native学习知识的实践，并记录下实操过程中遇到的问题和解决方案。</p>
+<p>开发环境：windows10 + vscode + react-native 0.57 + Android模拟器（暂时没测试iOS效果）</p>
+<p>本文主要是采用react-native编写<code>BOSS直聘的app</code>的相关UI，以此实践和校验之前学习的react-native知识点。</p>
+<p>本文主要讲解内容点：</p>
+<ul>
+<li>项目文件夹功能划分和思考</li>
+<li>首页框架搭建（react-navigation的使用）</li>
+<li>编写过程中遇到的问题和注意点</li>
 </ul>
 <a id="more"></a>
-<p>####synchronized关键字<br>synchronized关键字做为多线程并发环境的执行<strong>有序性</strong>的保证手段之一</p>
-<pre><code>synchronized(锁){  
-        临界区代码 
- }   
-</code></pre><p>每个锁对象都有两个队列，一个是<strong>就绪队列</strong>，一个是<strong>阻塞队列</strong>，就绪队列存储了将要获得锁的线程，阻塞队列存储了被阻塞的线程，当一个被线程被唤醒 (notify)后，才会进入到就绪队列，等待cpu的调度。</p>
-<p>####volatile关键字<br>volatile是java提供的一种同步手段，只不过它是<strong>轻量级的同步</strong>，只能保证多线程的<strong>内存可见性</strong>，不能保证多线程的执行有序性。<br>任何被volatile修饰的变量，<strong>都不拷贝副本到工作内存，任何修改都及时写在主存。</strong>不能保证原子性 </p>
-<p>要使 volatile 变量提供理想的线程安全,必须同时满足下面<strong>两个条件</strong>:</p>
-<ol>
-<li>对变量的写操作不依赖于当前值。</li>
-<li>该变量没有包含在具有其他变量的不变式中 </li>
-</ol>
-<p>volatile只保证了可见性，所以Volatile适合直接赋值的场景：</p>
-<pre><code>public class VolatileTest{  
-  public volatile int a;  
-  public void setA(int a){  
-  this.a=a;  
-  }  
-} 
-</code></pre><p>在没有volatile声明时，多线程环境下，a的最终值不一定是正确的，因为this.a=a;涉及到给a赋值和将a同步回主存的步骤，这个顺序可能被打乱。如果用volatile声明了，读取主存副本到工作内存和同步a到主存的步骤，相当于是一个原子操作。所以简单来说，volatile适合这种场景：</p>
-<p>一个变量被多个线程共享，线程直接给这个变量赋值。这是一种很简单的同步场景，这时候使用volatile的开销将会非常小。</p>
-<p>参考文章： </p>
+<p>###1.效果图<br><img src="https://i.imgur.com/5KudTx3.png" alt="职位"><br><img src="https://i.imgur.com/SYKucfS.png" alt="公司"><br><img src="https://i.imgur.com/2CFIhzB.png" alt="消息"><br><img src="https://i.imgur.com/RCerPlk.png" alt="我的"></p>
+<p>通过效果图对本文所讲述的内容有个大概的认知。</p>
+<p>###2.项目创建与文件夹划分<br><img src="https://i.imgur.com/7WZVeFr.png" alt="项目结构"></p>
+<p>####2.1目录说明</p>
 <ul>
-<li><a href="http://www.iteye.com/topic/806990" target="_blank" rel="noopener">http://www.iteye.com/topic/806990</a></li>
-<li><a href="http://www.iteye.com/topic/808550" target="_blank" rel="noopener">http://www.iteye.com/topic/808550</a></li>
+<li>app：存放整个react-native项目的根目录</li>
+<li>assets:存放一些资源文件，例如：json文件、HTML文件等</li>
+<li>images：存放静态的图片资源文件</li>
+<li>src:源码目录，主要存放项目组件源码</li>
+<li>styles:存放组件使用的style</li>
 </ul>
+<p><strong>文件夹划分的思考:</strong></p>
+<ul>
+<li>以App作为根目录是为了方便整个项目的管理，减少react-native的创建目录下的文件数</li>
+<li>assets和images主要为了存放资源以便<strong>快速查找</strong>。</li>
+<li>src源码目录，底下进行<strong>模块划分</strong>（迅速查找和多人协作）</li>
+<li>style主要分离src目录中组件的style样式，即样式和组件的<strong>业务分离</strong>，使组件的代码数减少。</li>
+<li>src下的<strong>通用组件components</strong>的样式不作分离，以便移植复用。</li>
+</ul>
+<p><img src="https://i.imgur.com/bmULFuj.png" alt="模块说明"></p>
+<ul>
+<li>文件夹的划分不是必须按照这种方法，以个人习惯或者团队约定划分为主。</li>
+</ul>
+<p>###3.首页框架的搭建<br>如预览图所示，首页主要为一个底部导航+4个页面组成，采用<code>react-navigation</code>库实现。</p>
+<ul>
+<li><a href="https://reactnavigation.org/docs/en/getting-started.html" target="_blank" rel="noopener">react-navigation的文档链接</a></li>
+<li><a href="https://reactnavigation.org/docs/en/material-top-tab-navigator.html" target="_blank" rel="noopener">react-navigation的API</a></li>
+</ul>
+<p>####3.1 createStackNavigator与createBottomTabNavigator的使用</p>
+<ul>
+<li>createStackNavigator:组件，用于创建一个存放页面的堆栈。类似Android的activity栈。即后进先出的一个容器。</li>
+<li>createBottomTabNavigator:组件，创建底部选项卡的导航。</li>
+</ul>
+<p>具体实现可直接查看源代码，叙述过多反而没看代码直接。页尾附项目git链接。</p>
+<p>####3.2 主要注意点<br>createStackNavigator与createBottomTabNavigator配合使用可以实现底部导航切换和开启新页面，但需要注意组件是存放在StackNavigator中还是BottomTabNavigator，它们的效果不相同：</p>
+<ul>
+<li>存放在BottomTabNavigator中的组件打开后，底部导航栏依然存在</li>
+<li>存放在StackNavigator中的组件根据调用函数可以直接打开新页面或者从栈中弹出指定界面</li>
+</ul>
+<p>本项目是通过底部菜单切换4个页面，详情页不需要显示底部菜单。所以采用<strong>顶级导航StackNavigator+子级TabNavigator</strong></p>
+<p>核心代码：</p>
+<pre><code>const MainStackNavigator = createStackNavigator ( //顶级导航StackNavigator
+    {
+      Main: {
+        screen:MainTabNavigator //子级TabNavigator
+      },
+      JobDetail:{
+        screen:JobDetail
+      }
+    },
+    {
+      initialRouteName:&apos;Main&apos;,
+      headerMode:&apos;none&apos;
+    }
+  );
+</code></pre><p>###4.开发中遇到的问题和注意点<br>学习过程可能很顺利，但在实际开发中可能会遇到各式各样的问题。</p>
+<p>####4.1 实现消息页面的（聊天&lt;=&gt;互动）切换。<br>使用createMaterialTopTabNavigator实现选项卡切换功能。</p>
+<p><strong>存在问题：</strong></p>
+<p><img src="https://i.imgur.com/0Htg2tq.png" alt="实现问题"></p>
+<p>MaterialTopTabNavigator提供的样式不太符合UI需求。tab的样式需要自定义。</p>
+<p>自定义的方式，根据官网介绍是自定义<code>tabBarComponent</code>，不过官网和网络上的资料特别少，对源码的掌握不足。<br><br>所以我选择了折中的方法：</p>
+<ul>
+<li><code>聊天</code>和<code>互动</code>作为两个按钮，在外部控制MaterialTopTabNavigator的切换</li>
+</ul>
+<p><strong>实现的思路：</strong></p>
+<ol>
+<li>MaterialTopTabNavigator设置tabBar隐藏，即高度为0.</li>
+<li>设置全局的切换状态state</li>
+<li>监听MaterialTopTabNavigator的滑动修改切换状态state</li>
+</ol>
+<p><strong>核心实现代码：</strong></p>
+<p> 1.监听滑动事件（onNavigationStateChange）</p>
+<p>核心代码：</p>
+<pre><code>&lt;MaterialTopTabNavigator
+     ref={tabNavRef =&gt; { //先忽略此句代码，后面讲解
+        NavigationService.setTopLevelNavigator(tabNavRef);
+        }}
+
+        onNavigationStateChange={(prevNav, nav, action) =&gt; {       
+            if(nav.routes[nav.index].routeName === &apos;Message&apos;){
+                this.setState({routeIndex:0});
+             }else{
+                this.setState({routeIndex:1});
+             }
+            routes = nav.routes;
+       }}
+   /&gt;
+</code></pre><p>通过onNavigationStateChange可以监听到页面的滑动显示。通过nav.routes[nav.index].routeName知道当前显示的选项卡，并修改全局切换状态<code>routeIndex</code>的值</p>
+<p> 2.外部控制导航的切换<br><br>在导航内的界面如果需要切换到同一个路由的其他界面，通常可以采用<code>this.props.navigation.navigate(&#39;key&#39;)</code>或者<code>this.props.navigation.push(&#39;key&#39;)</code>进行跳转。<br>可是外部组件无法直接获取导航的<code>navigate(&#39;key&#39;)</code>和<code>push(&#39;key&#39;)</code>方法。<br><br>所以官方提供了一种扩展方法让使用者<strong>在外部调用路由的跳转方法</strong>.使用说明文章地址：<a href="https://reactnavigation.org/docs/en/navigating-without-navigation-prop.html" target="_blank" rel="noopener">点击此处</a></p>
+<p>核心实现：组件的dispatch方法+NavigationActions的navigate.</p>
+<p>核心代码：</p>
+<pre><code>// NavigationService.js,这个算是一个工具类
+
+import { NavigationActions } from &apos;react-navigation&apos;;
+
+let _navigator;
+
+function setTopLevelNavigator(navigatorRef) {
+  _navigator = navigatorRef;
+}
+
+function navigate(routeName, params) {
+  _navigator.dispatch(
+    NavigationActions.navigate({
+      routeName,
+      params,
+    })
+  );
+}
+
+// add other navigation functions that you need and export them
+
+export default {
+  navigate,
+  setTopLevelNavigator,
+};
+</code></pre><p>使用方式： </p>
+<pre><code>1. 组件中设置ref到NavigationService中
+2. 在需要处使用NavigationService.navigate(&apos;ChatScreen&apos;, { userName: &apos;Lucy&apos; });
+</code></pre><p>核心代码：</p>
+<pre><code>1.初始化NavigationService
+
+&lt;MaterialTopTabNavigator
+     ref={tabNavRef =&gt; { //设置NavigationService中的_navigator
+        NavigationService.setTopLevelNavigator(tabNavRef);
+        }}
+        ...省略
+       }}
+   /&gt;
+
+2.使用方式，在外部点击事件中使用
+
+&lt;TouchableWithoutFeedback
+     onPress={()=&gt;{
+       if(this.state.routeIndex != 0){
+           this.setState({routeIndex:0});
+           NavigationService.navigate(&apos;Message&apos;,null); //调用切换页面
+           }
+       }}  
+   &gt;
+    ...   
+&lt;/TouchableWithoutFeedback&gt;
+</code></pre><p>####4.2 存在的不足点<br>onNavigationStateChange监听的是页面的显示和隐藏状态，通过此监听修改外部按钮状态可能出现延迟（state刷新页面延迟）。<br><br>此处标记此问题，后期加深了解后寻求解决方案。</p>
+<p>###总结<br>实践所遇到的问题比学习需要思考的多很多，实践可以更快的掌握知识点和扩展知识的使用。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy   <br><br>– 2018.11.07</p>
 
         
         </div>
@@ -273,7 +403,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/15/Java线程安全/" data-id="cjo7dhm7q000ilgvw6scgywsy" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/11/07/react-native实践记录（01）/" data-id="cjo7dhm7w000ulgvwxl13xewx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -348,19 +478,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/15/Java-按值传递/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Java 按值传递
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/30/react-native-React-Navigation常用参数配置/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Android工作记录整理-控件篇(1)--TextView</div>
+            <div class="article-nav-title">react-native React Navigation常用参数配置</div>
         </a>
     
 </nav>
