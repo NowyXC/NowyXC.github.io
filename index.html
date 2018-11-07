@@ -364,8 +364,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>###配置标题栏</p>
+            <p><p>###配置标题栏</p>
 <ol>
 <li><p>基本配置</p>
 <pre><code>class MainScreen extends React.Component{
@@ -376,47 +375,10 @@
  //...        
 }
 </code></pre></li>
-<li><p>动态配置标题栏</p>
-<pre><code>class DetailScreen extends React.Component{
-  static navigationOptions = ({navigation}) =&gt; {
-    return {
-      title: navigation.getParam(&quot;title&quot;,&quot;defValue&quot;),//根据上一级传递参数设置标题
-    }
-  };
-  render(){
-      const { navigation } = this.props;
-      const value1 = navigation.getParam(&quot;key1&quot;,&quot;defValue&quot;);
-      const value2 = navigation.getParam(&quot;key2&quot;,&quot;defValue&quot;);
-        return(
-            &lt;View style={styles.container}&gt;
-                &lt;Text&gt;这是DetailsScreen!&lt;/Text&gt;
-                &lt;Text&gt;传递参数1:{value1}&lt;/Text&gt;
-                &lt;Text&gt;传递参数2:{JSON.stringify(value2)}&lt;/Text&gt;
-                &lt;Button
-                  title=&apos;跳转到MainScreen&apos;
-                  onPress={()=&gt;{
-                    this.props.navigation.navigate(&apos;Main&apos;)
-                  }}
-                /&gt;
-                 &lt;Button
-                  title=&apos;参数修改&apos;
-                  onPress ={()=&gt;{ //可以动态修改同一key的参数值。
-                    this.props.navigation.setParams({&quot;title&quot;:&quot;titleUpdated&quot;})
-                  }}
-                /&gt;    
-            &lt;/View&gt;
-        );
-    }
-}
-</code></pre></li>
-</ol>
-<p>navigationOptions具有以下的属性：</p>
-<ul>
-<li>navigation： 屏幕的导航参数，屏幕的路线位于navigation.state。</li>
-<li>screenProps： 从导航器组件上方传递的道具</li>
-<li>navigationOptions ： 未提供新值时将使用的默认或先前选项</li>
-</ul>
-
+</ol></p>
+            <p class="article-more-link">
+                <a href="/2018/10/30/react-native-React-Navigation常用参数配置/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
