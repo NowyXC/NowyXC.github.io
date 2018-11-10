@@ -3,15 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>分类: Android | Nowy_Blog</title>
+    <title>react-native实践记录（02） | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/categories/Android/index.html">
+    <meta name="description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录原生项目中引入react-native的步骤和注意项。（Android方向）">
+<meta name="keywords" content="react-native实践记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native实践记录（02）">
+<meta property="og:url" content="http://yoursite.com/2018/11/10/react-native实践记录（02）/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录原生项目中引入react-native的步骤和注意项。（Android方向）">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.imgur.com/jCoIByr.png">
+<meta property="og:image" content="https://i.imgur.com/ZiKA3o0.png">
+<meta property="og:image" content="https://i.imgur.com/8pItzGr.png">
+<meta property="og:updated_time" content="2018-11-10T11:29:39.161Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="react-native实践记录（02）">
+<meta name="twitter:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录原生项目中引入react-native的步骤和注意项。（Android方向）">
+<meta name="twitter:image" content="https://i.imgur.com/jCoIByr.png">
     
 
     
@@ -182,230 +191,346 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-folder"></i></span>
-        <h1 class="title">Android</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-react-native实践记录（02）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/23/Databinding使用记录/">Databinding使用记录</a>
+        <h1 class="article-title" itemprop="name">
+            react-native实践记录（02）
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/23/Databinding使用记录/">
-            <time datetime="2018-10-22T16:16:14.000Z" itemprop="datePublished">2018-10-23</time>
+        <a href="/2018/11/10/react-native实践记录（02）/">
+            <time datetime="2018-11-10T09:42:56.000Z" itemprop="datePublished">2018-11-10</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
+        <a class="article-category-link" href="/categories/react-native/">react-native</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android框架/">Android框架</a>, <a class="tag-link" href="/tags/Databinding/">Databinding</a>
+        <a class="tag-link" href="/tags/react-native实践记录/">react-native实践记录</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/">自定义ListView快速滑动条图标的几种方式</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言</p>
+<p>开发环境：windows10 + vscode + react-native 0.57 + Android模拟器</p>
+<p>本文主要记录原生项目中引入react-native的步骤和注意项。（Android方向）</p>
+<a id="more"></a>
+<p>###1.android项目创建与配置<br>通过AndroidStudio创建一个原生项目，也可以使用现成的项目。</p>
+<p>####1.1配置</p>
+<ol>
+<li><p>app项目目录下，添加<code>react-native的架包</code></p>
+<pre><code>//android/app/build.gradle文件
+dependencies {
+    ...
+    implementation &quot;com.facebook.react:react-native:+&quot;  // From node_modules
+}
+</code></pre></li>
+<li><p>项目根目录下的<code>build.gradle</code>添加<code>react-native支持库</code>引用</p>
+<pre><code>//android/build.gradle
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url &quot;$rootDir/../node_modules/react-native/android&quot;
+        }
+    }
+}
+</code></pre></li>
+<li><p>创建assets资源文件夹</p>
+<p> <img src="https://i.imgur.com/jCoIByr.png" alt="assets文件夹"></p>
+<p> 主要作用是用于存放react-native生成的离线文件,即图中的index.android.bundle.(下面会讲解如何生成)</p>
+</li>
+<li><p>Application的实现<code>ReactApplication</code>接口</p>
+<pre><code>//application类
+public class NowyApp extends Application implements ReactApplication {
+    @Override
+    public ReactNativeHost getReactNativeHost() {
+        return mReactNativeHost;
+    }
+    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+        @Override
+        public boolean getUseDeveloperSupport() {
+            return BuildConfig.DEBUG;
+        }
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/">
-            <time datetime="2018-10-19T15:42:16.000Z" itemprop="datePublished">2018-10-19</time>
-        </a>
-    </div>
+        @Override
+        protected List&lt;ReactPackage&gt; getPackages() {
+            return Arrays.&lt;ReactPackage&gt;asList(//高级应用：JS调原生模块
+                    new MainReactPackage()
+            );
+        }
+    //JS调原生模块：https://reactnative.cn/docs/native-modules-android/
 
+        //对应react-native项目的入口文件的名称，此项目为index.js
+        @Override
+        protected String getJSMainModuleName() {
+            return &quot;index&quot;;
+        }
+    };
+}
+</code></pre></li>
+<li><p>创建承载react-native界面的activity</p>
+<pre><code>//ReactAty类
+public class ReactAty extends ReactActivity {
+    /**
+     * Returns the name of the main component registered from JavaScript.
+     * This is used to schedule rendering of the component.
+     */
+    @Override
+    protected String getMainComponentName() {
+        //对应AppRegistry.registerComponent(appName, () =&gt; Test);中的appName,此处为ReactNativeApp
+        return &quot;ReactNativeApp&quot;;
+    }
+}
+</code></pre></li>
+<li><p>其他配置</p>
+<ul>
+<li><p>ndk配置，项目中使用ndk</p>
+<ul>
+<li><p><code>gradle.properties</code>中添加<code>android.useDeprecatedNdk=true</code></p>
+</li>
+<li><p><code>android/app/build.gradle</code>的defaultConfig节点里添加ndk {<br>  abiFilters “armeabi-v7a”, “x86”<br>}</p>
+</li>
+</ul>
+</li>
+<li><p>权限配置</p>
+</li>
+<li>AndroidManifest.xml注册ReactAty组件</li>
+</ul>
+</li>
+</ol>
+<p>###2.react-native环境引入</p>
+<p>####2.1.生成react-native环境<br>本项目是在Android项目外部添加一个文件夹作为整个项目的根目录：<br><br>../ReactNativeApp/android (android为完整的Android项目空间)</p>
+<ol>
+<li><p>在旧的react-native项目拷贝<code>package.json</code>到项目<code>ReactNativeApp</code>目录下，代码大体如下</p>
+<pre><code>//package.json文件
+{
+  &quot;name&quot;: &quot;ReactNativeApp&quot;, //你的项目名，需要修改
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;private&quot;: true,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node node_modules/react-native/local-cli/cli.js start&quot;, //配置启动脚本
+  },
+//简单的方法是通过react-native init &quot;项目名&quot;创建后拷贝package.json文件
+}
+</code></pre></li>
+<li><p><code>ReactNativeApp</code>目录下使用cmd执行<code>npm install react react-native --save</code>，引入<code>react</code>和<code>react-native</code><br> <img src="https://i.imgur.com/ZiKA3o0.png" alt="成果图片"></p>
+<p> 在<code>ReactNativeApp</code>目录下生成node_modules文件夹</p>
+</li>
+<li><p>配置react-native项目入口文件index.js</p>
+<p> 在react-native的0.57版本，使用react-native init 初始化的项目有<code>index.js</code>、<code>app.json</code>、<code>App.js</code>3个文件:</p>
+<ul>
+<li><code>app.json</code>:记录react-native项目的项目名和显示名称</li>
+<li><code>App.js</code>:项目代码文件，类似Android里面的activity（App.js只是一个示例，可以应用其他组件的js）</li>
+<li><p><code>index.js</code>：入口注册文件，声明react-native项目的名称和入口文件（采用上面2个文件的内容），类似Android的<code>AndroidManifest.xml</code>声明入口activity</p>
+<p><img src="https://i.imgur.com/8pItzGr.png" alt="示例"></p>
+<p>上图中，项目注册的appName是引用自<code>app.json</code>的name.组件Test是引用<code>app/src/Test.js</code>文件</p>
+</li>
+</ul>
+</li>
+<li><p>react-native功能实现</p>
+<pre><code>//Test.js核心代码 此处是在UI上显示一张图片
+export default class Test extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return(
+            // 显示一张图片
+            &lt;View style={styles.container}&gt; 
+                &lt;Image source={
+                    require(&apos;../images/ic_user_avatar_def.png&apos;)}
+                    style={styles.img}
+                /&gt;
+            &lt;/View&gt;
+        );
+    }
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
+}
+</code></pre></li>
+<li><p>输出bundle文件,存放于assets中</p>
+<p> bundle文件:代码文件,类似Android中的dex</p>
+<p> 在当前目录下，通过命令行cmd执行下列语句：</p>
+<p>  react-native bundle –platform android –dev false –entry-file index.js –bundle-output android/app/src/main/assets/index.android.bundle –assets-dest android/app/src/main/res/</p>
+<p> bundle命令的相关参数说明：</p>
+<ol>
+<li>–platform：指定平台（android、ios）</li>
+<li>–dev：开发模式</li>
+<li>–entry-file：指定项目入口文件，通常是index.js。（老版本是index.android.js或者index.ios.js）</li>
+<li>–bundle-output：bundle文件生成的目录(通常是在assets目录下)</li>
+<li>–assets-dest：资源文件生成的目录（会在Android 项目下生产一个文件夹:<code>drawable-mdpi</code>）</li>
+</ol>
+</li>
+</ol>
+<p>###3.运行与编译</p>
+<p>####3.1 运行</p>
+<ol>
+<li>通过AndroidStudio运行</li>
+<li>通过命令行cmd执行 react-native run-android 运行</li>
+</ol>
+<p>####3.2 编译</p>
+<ol>
+<li>编写react-native代码可以通过2.5中的命令重新生成新的<code>index.android.bundle</code>文件</li>
+<li>编写Android代码直接在Android项目中编写（记得rebuild）</li>
+<li>Android如果开启混淆，需要把react和react-native项目保持</li>
+</ol>
+<pre><code>#proguard-rules.pro文件
+# React Native
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/ListView/">ListView</a>
-    </div>
+# Keep our interfaces so they can be used by other ProGuard rules.
+# See http://sourceforge.net/p/proguard/bugs/466/
+-keep,allowobfuscation @interface com.facebook.proguard.annotations.DoNotStrip
+-keep,allowobfuscation @interface com.facebook.proguard.annotations.KeepGettersAndSetters
+-keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
 
-                </div>
-            </div>
+# Do not strip any method/class that is annotated with @DoNotStrip
+-keep @com.facebook.proguard.annotations.DoNotStrip class *
+-keep @com.facebook.common.internal.DoNotStrip class *
+-keepclassmembers class * {
+    @com.facebook.proguard.annotations.DoNotStrip *;
+    @com.facebook.common.internal.DoNotStrip *;
+}
+
+-keepclassmembers @com.facebook.proguard.annotations.KeepGettersAndSetters class * {
+  void set*(***);
+  *** get*();
+}
+
+-keep class * extends com.facebook.react.bridge.JavaScriptModule { *; }
+-keep class * extends com.facebook.react.bridge.NativeModule { *; }
+-keepclassmembers,includedescriptorclasses class * { native &lt;methods&gt;; }
+-keepclassmembers class *  { @com.facebook.react.uimanager.UIProp &lt;fields&gt;; }
+-keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp &lt;methods&gt;; }
+-keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup &lt;methods&gt;; }
+
+-dontwarn com.facebook.react.**
+</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.11.10</p>
+
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/16/Android中引用类型说明/">Android中引用类型说明</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/16/Android中引用类型说明/">
-            <time datetime="2018-10-16T09:30:30.000Z" itemprop="datePublished">2018-10-16</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Reference/">Reference</a>, <a class="tag-link" href="/tags/引用类型/">引用类型</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/FrameLayout源码笔记/">FrameLayout源码笔记</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/FrameLayout源码笔记/">
-            <time datetime="2018-10-15T09:30:30.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/Android源码阅读/">Android源码阅读</a>, <a class="tag-link" href="/tags/FrameLayout/">FrameLayout</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">Android工作记录整理-控件篇(1)--TextView</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">
-            <time datetime="2018-10-14T15:38:32.000Z" itemprop="datePublished">2018-10-14</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/TextView/">TextView</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/Android工作记录-0-前言/">Android工作记录-0 前言</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/Android工作记录-0-前言/">
-            <time datetime="2018-10-09T06:38:27.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
 </div>
+
+    <a data-url="http://yoursite.com/2018/11/10/react-native实践记录（02）/" data-id="cjobdbnfk000xxkvwpnp6zfoh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/11/07/react-native实践记录（01）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">react-native实践记录（01）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
