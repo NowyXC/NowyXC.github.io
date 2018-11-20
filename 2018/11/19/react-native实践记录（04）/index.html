@@ -3,22 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>react-native实践记录（03） | Nowy_Blog</title>
+    <title>react-native实践记录（04） | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录原生项目与react-native的交互方式和注意项。（Android方向） 交互方式总共2种：  react-native主动调用native native主动调用react-native">
-<meta name="keywords" content="react-native实践记录">
+    <meta name="description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录在Android中对 react-native 相关模块进行版本更新（热更新的前期准备） react-native的更新本质上是对index.android.bundle文件和资源文件的的替换 注意：本文只是针对于Android方面的记录。">
+<meta name="keywords" content="react-native实践记录,Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react-native实践记录（03）">
-<meta property="og:url" content="http://yoursite.com/2018/11/12/react-native实践记录（03）/index.html">
+<meta property="og:title" content="react-native实践记录（04）">
+<meta property="og:url" content="http://yoursite.com/2018/11/19/react-native实践记录（04）/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录原生项目与react-native的交互方式和注意项。（Android方向） 交互方式总共2种：  react-native主动调用native native主动调用react-native">
+<meta property="og:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录在Android中对 react-native 相关模块进行版本更新（热更新的前期准备） react-native的更新本质上是对index.android.bundle文件和资源文件的的替换 注意：本文只是针对于Android方面的记录。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.imgur.com/FNmHvET.png">
-<meta property="og:updated_time" content="2018-11-12T14:41:42.904Z">
+<meta property="og:updated_time" content="2018-11-20T07:32:09.372Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="react-native实践记录（03）">
-<meta name="twitter:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录原生项目与react-native的交互方式和注意项。（Android方向） 交互方式总共2种：  react-native主动调用native native主动调用react-native">
-<meta name="twitter:image" content="https://i.imgur.com/FNmHvET.png">
+<meta name="twitter:title" content="react-native实践记录（04）">
+<meta name="twitter:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录在Android中对 react-native 相关模块进行版本更新（热更新的前期准备） react-native的更新本质上是对index.android.bundle文件和资源文件的的替换 注意：本文只是针对于Android方面的记录。">
     
 
     
@@ -189,7 +187,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-react-native实践记录（03）" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-react-native实践记录（04）" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -197,7 +195,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            react-native实践记录（03）
+            react-native实践记录（04）
         </h1>
     
 
@@ -206,8 +204,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/11/12/react-native实践记录（03）/">
-            <time datetime="2018-11-12T12:25:34.000Z" itemprop="datePublished">2018-11-12</time>
+        <a href="/2018/11/19/react-native实践记录（04）/">
+            <time datetime="2018-11-19T06:50:26.000Z" itemprop="datePublished">2018-11-19</time>
         </a>
     </div>
 
@@ -221,7 +219,7 @@
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/react-native实践记录/">react-native实践记录</a>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/react-native实践记录/">react-native实践记录</a>
     </div>
 
                     </div>
@@ -234,148 +232,263 @@
             
             <p>###0.前言</p>
 <p>开发环境：windows10 + vscode + react-native 0.57 + Android模拟器</p>
-<p>本文主要记录原生项目与react-native的交互方式和注意项。（Android方向）</p>
-<p>交互方式总共2种：</p>
-<ol>
-<li>react-native主动调用native</li>
-<li>native主动调用react-native</li>
-</ol>
+<p>本文主要记录在<strong>Android</strong>中对 <strong>react-native</strong> 相关模块进行<strong>版本更新</strong>（热更新的前期准备）</p>
+<p><strong>react-native</strong>的更新本质上是对<strong>index.android.bundle</strong>文件和<strong>资源文件</strong>的的<strong>替换</strong></p>
+<p>注意：本文只是针对于Android方面的记录。</p>
 <a id="more"></a>
-<p>###1.react-native主动调用native<br>react-native调用native主要是通过<code>native端代码</code>向app的<code>ReactNativeHost实例</code>中注入特定格式的原生模块，从而使ReactNativeHost具备该模块实例。即react-native端可以通过NativeModules模块去获取注入的原生模块。<br><img src="https://i.imgur.com/FNmHvET.png" alt="react-native调用native层方法图"></p>
-<p>####1.1 具体实现流程</p>
+<p>###1.实现加载本地index.android.bundle文件<br>加载本地index.android.bundle文件的实现主要由<strong>ReactNativeHost</strong>实现。</p>
+<p>整体的实现流程：<br></p>
 <ol>
-<li><strong>Android端注入原生模块</strong><ol>
-<li>自定义<code>NativeModule</code>(继承<code>ReactContextBaseJavaModule</code>)</li>
-<li>自定义<code>ReactPackage</code>(实现<code>ReactPackage</code>接口)</li>
-<li><code>NativeModule</code>添加入<code>ReactPackage</code>(添加入<code>createNativeModules</code>的<code>List&lt;NativeModule&gt;中</code>)</li>
-<li><code>ReactPackage</code>注入<code>ReactNativeHost</code></li>
+<li>App -&gt; 实例化ReactNativeHost </li>
+<li>启动react-native相关模块界面 -&gt; ReactNativeHost -&gt; <strong>ReactInstanceManager</strong>初始化（为空时）-&gt; 通过<strong>getJSBundleFile()</strong>或者<strong>getBundleAssetName()</strong>设置需要加载的bundle文件。</li>
 </ol>
-</li>
-</ol>
-<ol start="2">
-<li><strong>react-native调用原生模块</strong><br><br> 调用方式：<br> NativeModules.[原生模块名称].[模块方法或者参数名];<ul>
-<li>原生模块名称：对应原生端<code>自定义NativeModule</code>的<code>getName()</code></li>
-<li>模块方法:对应原生端<code>自定义NativeModule</code>带<code>@ReactMethod</code>注解的方法</li>
-<li>参数名：对应原生端<code>自定义NativeModule</code>的<code>getConstants()</code></li>
-</ul>
-</li>
-<li><p><strong>注意事项</strong></p>
-<ol>
-<li>原生模块的方法是异步，只能通过回调返回(private/public均可以调起)</li>
-<li><p>参数类型限制（没有java中的Long类型）</p>
-<pre><code>Boolean -&gt; Bool
-Integer -&gt; Number
-Double -&gt; Number
-Float -&gt; Number
-String -&gt; String
-Callback -&gt; function
-ReadableMap -&gt; Object
-ReadableArray -&gt; Array
-</code></pre></li>
-</ol>
-</li>
-</ol>
-<p>###2.native主动调用react-native<br><strong>Native核心代码：</strong></p>
-<pre><code>reactContext
-    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-    .emit(eventName, params);
-</code></pre><ul>
-<li>通过reactContext对象获取RCTDeviceEventEmitter模块，调用emit(eventName, params)方法传递数据到react-native端。</li>
-</ul>
-<p><strong>ReactNative核心代码:</strong></p>
-<pre><code>componentWillMount() {
-    DeviceEventEmitter.addListener(eventName, (params) =&gt; {
-         ...//执行事件
-      });
-    }
-</code></pre><ul>
-<li>通过DeviceEventEmitter组件添加[eventName]的监听，接收参数[params]</li>
-</ul>
-<p>###2.1注意事项</p>
-<ol>
-<li><p><strong>native端的reactContext实例的获取</strong></p>
-<p> <code>reactContext</code>是通过<code>runCreateReactContextOnNewThread(final ReactContextInitParams initParams)</code>方法实例化的。</p>
-<pre><code>//ReactInstanceManager类
-private void runCreateReactContextOnNewThread(final ReactContextInitParams initParams) {
-    //省略部分代码...
-    mCreateReactContextThread =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                //省略部分代码...
-                try {
-                    //省略部分代码...
-                  mCreateReactContextThread = null;
-                  ReactMarker.logMarker(PRE_SETUP_REACT_CONTEXT_START);
-                  final Runnable maybeRecreateReactContextRunnable =
-                      new Runnable() {
-                        @Override
-                        public void run() {
-                          if (mPendingReactContextInitParams != null) {//重新创建
-                            runCreateReactContextOnNewThread(mPendingReactContextInitParams);
-                            mPendingReactContextInitParams = null;
-                          }
-                        }
-                      };
-                  Runnable setupReactContextRunnable =
-                      new Runnable() {
-                        @Override
-                        public void run() {
-                          try {
-                            setupReactContext(reactApplicationContext);//设置ReactContext
-                          } catch (Exception e) {
-                            mDevSupportManager.handleException(e);
-                          }
-                        }
-                      };
+<p>核心代码:</p>
+<pre><code>//ReactNativeHost类
+protected ReactInstanceManager createReactInstanceManager() {
+    ReactMarker.logMarker(ReactMarkerConstants.BUILD_REACT_INSTANCE_MANAGER_START);
+    ReactInstanceManagerBuilder builder = ReactInstanceManager.builder()
+      .setApplication(mApplication)
+      ...//省略部分参数设置代码
 
-                  reactApplicationContext.runOnNativeModulesQueueThread(setupReactContextRunnable);
-                  UiThreadUtil.runOnUiThread(maybeRecreateReactContextRunnable);
-                } catch (Exception e) {
-                  mDevSupportManager.handleException(e);
-                }
-              }
-            });
-    ReactMarker.logMarker(REACT_CONTEXT_THREAD_START);
-    mCreateReactContextThread.start();
+    //核心代码段↓↓↓
+    String jsBundleFile = getJSBundleFile();
+    if (jsBundleFile != null) {//检测到JSBundleFile则优先加载getJSBundleFile()返回的bundle文件
+      builder.setJSBundleFile(jsBundleFile);
+    } else {//检测不到则加载assets目录下的bundle文件
+      builder.setBundleAssetName(Assertions.assertNotNull(getBundleAssetName()));
+    }
+    //核心代码段↑↑↑
+
+    ReactInstanceManager reactInstanceManager = builder.build();
+    ReactMarker.logMarker(ReactMarkerConstants.BUILD_REACT_INSTANCE_MANAGER_END);
+    return reactInstanceManager;
   }
+</code></pre><p>而在Android的项目中，集成react-native模块需要实例化ReactNativeHost对象。</p>
+<pre><code>//NowyApp类中
+private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+        @Override
+        public boolean getUseDeveloperSupport() {
+            return BuildConfig.DEBUG;
+        }
+
+        @Override
+        protected List&lt;ReactPackage&gt; getPackages() {
+            return Arrays.&lt;ReactPackage&gt;asList(//高级应用：JS调原生模块
+                    new MainReactPackage(),
+                    new CusReactNativePackage()
+            );
+        }
+        //对应react-native项目的入口文件的名称，此项目为index.js
+        @Override
+        protected String getJSMainModuleName() {
+            return mJSMainModuleName;
+        }
+
+        @Override
+        public ReactInstanceManager getReactInstanceManager() {
+            return super.getReactInstanceManager();
+        }
+
+        //*******************************
+        //  热更新
+        //*******************************
+        //
+        //  String jsBundleFile = getJSBundleFile();
+        //  if (jsBundleFile != null) {
+        //      builder.setJSBundleFile(jsBundleFile);
+        //  } else {
+        //      builder.setBundleAssetName(Assertions.assertNotNull(getBundleAssetName()));
+        //  }
+        //*******************************
+        @Nullable
+        @Override
+        protected String getBundleAssetName() {
+            return super.getBundleAssetName();
+        }
+
+        //此方法为重点，若mJSBundleFile不为空，则优先加载mJSBundleFile指向的bundle文件
+        @Nullable
+        @Override
+        protected String getJSBundleFile() {
+            if (mJSBundleFile != null &amp;&amp; mJSBundleFile.exists()) {
+                return mJSBundleFile.getPath();
+            }
+            return super.getJSBundleFile();
+        }
+    };
+</code></pre><p>检测本地bundle文件存在相关代码:</p>
+<pre><code>//NowyApp类
+ private String mJSMainModuleName =&quot;index&quot;;
+    private File mJSBundleFile = null;
+    private String mJSBundleDirName = &quot;JSBundle&quot;;
+    private String mJSBundleName = &quot;index.android.bundle&quot;;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        sInstance = this;
+        SoLoader.init(this, /* native exopackage */ false);
+        if(checkRNUpdate()){
+            Logger.t(TAG).e(&quot;本地存在JSBundle文件&quot;);
+        }else{
+            Logger.t(TAG).e(&quot;本地不存在JSBundle文件&quot;);
+        }
+    }
+/**
+ * 检测RN更新
+ * @return true:存在本地RN文件
+ */
+ private boolean checkRNUpdate(){
+        mJSBundleFile = null;
+        File mJSBundleDir = new File(FileUtil.getAppPath(this),mJSBundleDirName);
+        if(!mJSBundleDir.exists()){
+            Logger.t(TAG).e(&quot;没有检测到文件夹：&quot;+mJSBundleDir.getPath());
+            mJSBundleDir.mkdirs();
+            return false;
+        }else{
+            String mJSBundleFilePath = mJSBundleDir.getPath()+File.separator+mJSBundleName;
+            mJSBundleFile = new File(mJSBundleFilePath);
+            if(mJSBundleFile.exists()){
+                Logger.t(TAG).e(&quot;检测到新的&quot;+mJSBundleName);
+                return true;
+            }
+            return false;
+        }
+    }
+</code></pre><p>以上为最基础的RN更新流程，原理就是通过ReactNativeHost实例重写getJSBundleFile()方法，返回外部的bundle文件路径。</p>
+<p>项目代码：<a href="https://github.com/NowyXC/ReactNativeApp" target="_blank" rel="noopener">点击这里</a> </p>
+<ul>
+<li>branche(对应分支)：<code>热更新</code> </li>
+<li>commit(提交版本):<code>8df83cc3a3d83e4f861bdf80bb4617a45f4fe980</code></li>
+</ul>
+<p>####1.1首次开启react-native界面，存在白屏问题</p>
+<ul>
+<li>根本原因是ReactContext的初始化时间比较长，而且是通过后台线程进行初始化的。</li>
+</ul>
+<p>解决方法，在非react-native页面预先创建ReactContext对象。</p>
+<p>此处有两种方法：</p>
+<ol>
+<li>通过ReactRootView.startReactApplication(…)方法隐式初始化ReactContext对象</li>
+<li>显式的调用ReactNativeHost.getReactInstanceManager().createReactContextInBackground()初始化。</li>
+</ol>
+<p>其中方法一参考文章为：<a href="https://blog.csdn.net/u013718120/article/details/71538263" target="_blank" rel="noopener">点击此处</a></p>
+<p>由于参考的文章中的代码比较旧，所以根据思路重新实现了预加载。<br>相对应的类在preLoad目录下：<a href="https://github.com/NowyXC/ReactNativeApp/tree/%E7%83%AD%E6%9B%B4%E6%96%B0/android/app/src/main/java/com/nowy/reactnativeapp/reactnative/preLoad" target="_blank" rel="noopener">点击查看</a></p>
+<p>方法二核心代码：</p>
+<pre><code>//MainActivity
+//方法二：通过createReactContextInBackground预加载ReactContext
+if(NowyApp.getInstance().getReactNativeHost().getReactInstanceManager().hasStartedCreatingInitialContext()){
+    Log.e(&quot;MainActivity&quot;,&quot;已经开始创建ReactContext&quot;);
+}else {
+    NowyApp.getInstance().getReactNativeHost().getReactInstanceManager().createReactContextInBackground();
+}
+</code></pre><p>PS:因为ReactContext初始化需要一定的时间，如果在此时间段内打开react-native界面，一样会白屏。上述两个方法都是迂回方法。</p>
+<p>项目代码：<a href="https://github.com/NowyXC/ReactNativeApp" target="_blank" rel="noopener">点击这里</a> </p>
+<ul>
+<li>branche(对应分支)：<code>热更新</code> </li>
+<li>commit(提交版本):<code>429c3520d7031ed9e971acd42b4fc5e821c55b1d</code></li>
+</ul>
+<p>###2.实现加载本地图片<br>react-native如果是通过getJSBundleFile()方法加载外部bundle文件，那么会加载该bundle文件所在目录的资源文件。<br><br>核心代码：</p>
+<pre><code>//node_modules/react-native/Image/AssetSourceResolver.js
+/**
+ * If the jsbundle is running from a sideload location, this resolves assets
+ * relative to its location
+ * E.g. &apos;file:///sdcard/AwesomeModule/drawable-mdpi/icon.png&apos;
+ */
+drawableFolderInBundle(): ResolvedAssetSource {
+  const path = this.jsbundleUrl || &apos;file://&apos;;
+  return this.fromSource(path + getAssetPathInDrawableFolder(this.asset));
+}
+</code></pre><p>所以，最简单的方式就是将react-native模块使用到的<strong>全部资源文件</strong>拷贝到<strong>外部bundle文件对应的目录下</strong>。</p>
+<p>例子中的bundle文件在：<code>/data/data/&lt;package包名&gt;/JSBundle/</code></p>
+<p>bundle文件：<code>/data/data/&lt;package包名&gt;/JSBundle/index.android.bundle</code></p>
+<p>图片资源目录：</p>
+<ul>
+<li><code>/data/data/&lt;package包名&gt;/JSBundle/drawable-hdpi</code></li>
+<li><code>/data/data/&lt;package包名&gt;/JSBundle/drawable-mdpi</code></li>
+<li><code>/data/data/&lt;package包名&gt;/JSBundle/drawable-xhdpi</code></li>
+<li><code>/data/data/&lt;package包名&gt;/JSBundle/drawable-xxhdpi</code></li>
+<li><code>/data/data/&lt;package包名&gt;/JSBundle/drawable-xxxhdpi</code></li>
+</ul>
+<p><code>&lt;package包名&gt;:app对应的applicationId</code></p>
+<p>注：在读取外部图片资源时，如果资源不存在，则只占空间不显示图片(style决定)。</p>
+<p>###2.1 既加载App的资源目录图片又加载外部资源目录图片的实现</p>
+<p>图片加载的核心代码：</p>
+<pre><code>//node_modules/react-native/Image/AssetSourceResolver.js
+defaultAsset(): ResolvedAssetSource {
+    if (this.isLoadedFromServer()) {
+      return this.assetServerURL();
+    }
+
+    if (Platform.OS === &apos;android&apos;) {
+      return this.isLoadedFromFileSystem()
+        ? this.drawableFolderInBundle()            //读取外部资源目录
+        : this.resourceIdentifierWithoutScale();//读取app资源目录
+    } else {
+      return this.scaledAssetURLNearBundle();
+    }
+  }
+</code></pre><p>通过修改<strong>isLoadedFromFileSystem()</strong>方法对文件读取路径进行调整。</p>
+<pre><code>//node_modules/react-native/Image/AssetSourceResolver.js
+ isLoadedFromFileSystem(): boolean {//判断是否加载外部bundle文件，例如file:///sdcard/AwesomeModule/index.android.bundle
+    return !!(this.jsbundleUrl &amp;&amp; this.jsbundleUrl.startsWith(&apos;file://&apos;));
+  }
+</code></pre><p>实现的思路：</p>
+<ol>
+<li>判断图片是否存在于扩展资源目录下</li>
+<li>存在则优先显示外部资源目录下的图片</li>
+<li>不存在则显示app资源目录下的图片 </li>
+</ol>
+<p>具体实现：</p>
+<ol>
+<li><p><strong>对应版本记录图片资源</strong></p>
+<pre><code>//在app目录下新建一个存放version描述文件的目录(app/version)
+//imageVersion.js
+import React, {Component} from &apos;react&apos;;
+//////
+// react-native使用的资源文件在编译后会根据存放的路径重命名。
+// 例如：资源文件路径：/app/images/image.png，会被命名为：app_images_image.png.
+// android默认存放路径：/android/app/src/main/res/drawable-mdpi/app_images_image.png.
+// 外部存放路径：file:///sdcard/AwesomeModule/drawable-mdpi/app_images_image.png.
+//////
+//资源文件在/app/images/下，使用此前缀拼接
+const ImagesPrefix = &quot;app_images_&quot;
+
+//原来的资源文件，存在于APP资源目录中
+const originalImgs = [
+    ImagesPrefix+&apos;ic_user_avatar_def.png&apos; /*头像图*/
+]
+
+//增量更新的资源文件，存在于外部bundle文件所在目录中
+const externalImgs_V1 = [
+    ImagesPrefix+&apos;ic_evaluation_satisfied_green.png&apos; /*笑脸图*/
+]
+
+export {
+    originalImgs,
+    externalImgs_V1 as externalImgs
+}
 </code></pre></li>
+<li><p><strong>isLoadedFromFileSystem()的替换</strong></p>
+</li>
 </ol>
-<pre><code>//ReactQueueConfigurationSpec类
- public static ReactQueueConfigurationSpec createDefault() {
-    MessageQueueThreadSpec spec = Build.VERSION.SDK_INT &lt; 21 ?
-        MessageQueueThreadSpec.newBackgroundThreadSpec(&quot;native_modules&quot;, LEGACY_STACK_SIZE_BYTES) :
-        MessageQueueThreadSpec.newBackgroundThreadSpec(&quot;native_modules&quot;);
-    return builder()
-        .setJSQueueThreadSpec(MessageQueueThreadSpec.newBackgroundThreadSpec(&quot;js&quot;))
-        .setNativeModulesQueueThreadSpec(spec)
-        .build();
+<p>核心代码:</p>
+<pre><code>//查询externalImgs中是否存在该资源，存在优先使用外部资源目录的图片资源
+isLoadedFromFileSystem_V2(): boolean{
+    //&apos;drawable-mdpi/icon.png&apos;
+    let imgFolder = getAssetPathInDrawableFolder(this.asset);
+    var imgName = imgFolder.substr(imgFolder.indexOf(&quot;/&quot;) + 1);
+    return !!(this.jsbundleUrl &amp;&amp; externalImgs.indexOf(imgName) &gt; -1);
   }
-</code></pre><p>从源码可以知道reactContext的实例化是通过<code>native_modules</code>这个后台消息队列的子线程执行的。即reactContext的获取为<strong>异步操作</strong>。</p>
-<p><strong>异步导致的问题：</strong></p>
+</code></pre><p>###3.附录</p>
+<p>参考文章：<a href="https://github.com/songxiaoliang/ReactNativeApp" target="_blank" rel="noopener">点击跳转</a></p>
+<p>本文项目地址：<a href="https://github.com/NowyXC/ReactNativeApp/tree/热更新" target="_blank" rel="noopener">点击跳转</a> branche: <code>热更新</code><br>commit ： <code>4d877896f4a6839f2cffca5190ce7c558ae7e70b</code></p>
+<p>项目说明：</p>
 <ol>
-<li>ReactActivity中获取<strong>getReactInstanceManager().getCurrentReactContext()为空</strong></li>
+<li>Android的assets目录中存放了两个版本的index.android.bundle(重命名)</li>
+<li>app的version目录下存放了修改后的AssetSourceResolver.js的源码</li>
+<li>未完待续…</li>
 </ol>
-<p>解决方法：</p>
-<pre><code>getWindow().getDecorView().post(new Runnable() {
-          @Override
-          public void run() {
-              if(getReactInstanceManager().getCurrentReactContext() == null ){
-                  if(!isFinishing())
-                      getWindow().getDecorView().postDelayed(this,1000);
-              }else{
-                  WindowModule.sendWindowInfo(getReactInstanceManager().getCurrentReactContext());
-              }
-          }
-      });
-</code></pre><p>通过消息队列进行轮询，判断<strong>reactContext非空后调用</strong></p>
-<p>###3.示例代码</p>
-<ol>
-<li><a href="https://reactnative.cn/docs/native-modules-android/" title="React-Native中文网#原生模块" target="_blank" rel="noopener">React-Native中文网#原生模块</a></li>
-<li><a href="https://github.com/NowyXC/ReactNativeApp" target="_blank" rel="noopener">本文测试项目代码</a></li>
-</ol>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy <br><br>–2018.11.12</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.11.19</p>
 
         
         </div>
@@ -386,7 +499,7 @@ private void runCreateReactContextOnNewThread(final ReactContextInitParams initP
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/11/12/react-native实践记录（03）/" data-id="cjopf8pit001c8wvw6bsghe6x" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/11/19/react-native实践记录（04）/" data-id="cjopf8piq00178wvw6puzn4c3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -461,19 +574,10 @@ private void runCreateReactContextOnNewThread(final ReactContextInitParams initP
         
 <nav id="article-nav">
     
-        <a href="/2018/11/19/react-native实践记录（04）/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    react-native实践记录（04）
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/11/10/react-native实践记录（02）/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/11/12/react-native实践记录（03）/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">react-native实践记录（02）</div>
+            <div class="article-nav-title">react-native实践记录（03）</div>
         </a>
     
 </nav>
