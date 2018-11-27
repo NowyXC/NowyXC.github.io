@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Android工作记录-0 前言 | Nowy_Blog</title>
+    <title>react-native实践记录（05） | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="##Android工作记录–0  ###前言  本标签底下的一系列文章主要是对以往工作中所遇到的问题和特殊点进行记录和描述。 主要在于记录处理要点，以便下次遇到快速解决。 大部分的记录都是在云笔记中整理后迁移过来的。">
-<meta name="keywords" content="Android工作记录">
+    <meta name="description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录在Android中 react-native的 热更新和增量更新的实践  热更新：动态的修改JSBundle文件的引用 增量更新：通过diff-match-patch生成差分包(pat文件)，在APP端通过原来的bundle文件+pat文件生成新版的bund">
+<meta name="keywords" content="react-native实践记录,Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android工作记录-0 前言">
-<meta property="og:url" content="http://yoursite.com/2018/10/09/Android工作记录-0-前言/index.html">
+<meta property="og:title" content="react-native实践记录（05）">
+<meta property="og:url" content="http://yoursite.com/2018/11/27/react-native实践记录（05）/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="##Android工作记录–0  ###前言  本标签底下的一系列文章主要是对以往工作中所遇到的问题和特殊点进行记录和描述。 主要在于记录处理要点，以便下次遇到快速解决。 大部分的记录都是在云笔记中整理后迁移过来的。">
+<meta property="og:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录在Android中 react-native的 热更新和增量更新的实践  热更新：动态的修改JSBundle文件的引用 增量更新：通过diff-match-patch生成差分包(pat文件)，在APP端通过原来的bundle文件+pat文件生成新版的bund">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-09T06:46:06.511Z">
+<meta property="og:updated_time" content="2018-11-27T14:33:09.044Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android工作记录-0 前言">
-<meta name="twitter:description" content="##Android工作记录–0  ###前言  本标签底下的一系列文章主要是对以往工作中所遇到的问题和特殊点进行记录和描述。 主要在于记录处理要点，以便下次遇到快速解决。 大部分的记录都是在云笔记中整理后迁移过来的。">
+<meta name="twitter:title" content="react-native实践记录（05）">
+<meta name="twitter:description" content="###0.前言 开发环境：windows10 + vscode + react-native 0.57 + Android模拟器 本文主要记录在Android中 react-native的 热更新和增量更新的实践  热更新：动态的修改JSBundle文件的引用 增量更新：通过diff-match-patch生成差分包(pat文件)，在APP端通过原来的bundle文件+pat文件生成新版的bund">
     
 
     
@@ -187,7 +187,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Android工作记录-0-前言" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-react-native实践记录（05）" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -195,7 +195,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Android工作记录-0 前言
+            react-native实践记录（05）
         </h1>
     
 
@@ -204,8 +204,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/Android工作记录-0-前言/">
-            <time datetime="2018-10-09T06:38:27.000Z" itemprop="datePublished">2018-10-09</time>
+        <a href="/2018/11/27/react-native实践记录（05）/">
+            <time datetime="2018-11-27T13:56:44.000Z" itemprop="datePublished">2018-11-27</time>
         </a>
     </div>
 
@@ -213,13 +213,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
+        <a class="article-category-link" href="/categories/react-native/">react-native</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/react-native实践记录/">react-native实践记录</a>
     </div>
 
                     </div>
@@ -230,13 +230,58 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>##Android工作记录–0 </p>
-<p>###前言</p>
+            <p>###0.前言</p>
+<p>开发环境：windows10 + vscode + react-native 0.57 + Android模拟器</p>
+<p>本文主要记录在<strong>Android</strong>中 <strong>react-native</strong>的 <strong>热更新</strong>和<strong>增量更新</strong>的实践</p>
 <ul>
-<li>本标签底下的一系列文章主要是对以往工作中所遇到的问题和特殊点进行记录和描述。</li>
-<li>主要在于记录处理要点，以便下次遇到快速解决。</li>
-<li>大部分的记录都是在云笔记中整理后迁移过来的。</li>
+<li>热更新：动态的修改JSBundle文件的引用</li>
+<li>增量更新：通过diff-match-patch生成差分包(pat文件)，在APP端通过原来的bundle文件+pat文件生成新版的bundle文件。</li>
 </ul>
+<p>注意：本文只是针对于Android方面的记录。</p>
+<a id="more"></a>
+<p>###1.热更新的实现<br>通过 <a href="https://nowyxc.github.io/2018/11/19/react-native实践记录（04）/" target="_blank" rel="noopener">实践记录(04)</a>得到的结论，修改ReactNativeHost对象的getJSBundle()方法的返回值，就可以实现react-native代码的动态更新。</p>
+<p>具体的步骤如下：</p>
+<ol>
+<li>版本校验</li>
+<li>下载服务端新版bundle文件及资源（zip）</li>
+<li>替换本地jsBundle文件</li>
+<li>重新创建ReactContext</li>
+</ol>
+<p>具体涉及的耗时操作：</p>
+<ul>
+<li>文件下载</li>
+<li>文件解压</li>
+<li>创建ReactContext</li>
+</ul>
+<p>此处主要注意 <strong>ReactContext</strong> 的创建，在更新完毕后重新创建<strong>ReactContext</strong>对象是异步的，如果未创建完毕，react-native界面将是白屏。</p>
+<p>###2.增量更新的实现</p>
+<ol>
+<li>[<strong>原Bundle文件version_1</strong>,<strong>新Bundle文件version_2</strong>] –&gt; [<strong>diff-match-patch(对比)</strong>]–&gt; [<strong>pat文件</strong>]</li>
+<li>[<strong>原Bundle文件version_1</strong>,<strong>pat文件</strong>] –&gt; [<strong>diff-match-patch(补丁修正)</strong>]–&gt; [<strong>新Bundle文件version_2</strong>]</li>
+</ol>
+<p>主要核心是通过diff-match-patch库实现</p>
+<p>diff-match-patch库：<a href="https://github.com/google/diff-match-patch" target="_blank" rel="noopener">GitHub地址</a></p>
+<p>注意点：</p>
+<ol>
+<li><p><strong>生成pat文件与读取的环境和编码</strong><br><br>在生成pat包时，需要注意生成的编码环境和系统环境。最好在使用环境中生成pat包。例如：在Android系统下使用，那么在Android环境中生成pat包，以免原Bundle文件和pat包合并成<strong>错误的Bundle文件</strong></p>
+</li>
+<li><p><strong>Bundle文件生成后的刷新问题</strong><br><br>外部Bundle文件的加载需要重新实例化ReactContext对象，即调用如下代码：</p>
+<pre><code>if( NowyApp.getInstance().getReactNativeHost().hasInstance()){
+     NowyApp.getInstance().getReactNativeHost().clear();//清除原来的实例
+ }
+
+NowyApp.getInstance().getReactNativeHost().getReactInstanceManager()//初始化
+               .createReactContextInBackground();
+</code></pre></li>
+</ol>
+<p>需要注意的是，<strong>createReactContextInBackground()</strong>为<strong>异步操作</strong>，只有实例化完成才能看到最新的bundle展现的react-native界面</p>
+<p>###3.附录</p>
+<p>本文项目相关代码：</p>
+<ul>
+<li><a href="https://github.com/NowyXC/RNUpdateManager" target="_blank" rel="noopener">RNUpdateManager</a> ：更新库的简单实现</li>
+<li><a href="https://github.com/NowyXC/ReactNativeApp/tree/热更新" target="_blank" rel="noopener">ReactNativeApp</a>：功能实践代码</li>
+</ul>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy   <br><br>–2018.11.27</p>
 
         
         </div>
@@ -247,7 +292,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/09/Android工作记录-0-前言/" data-id="cjozuculc00028ovwu9snkxjn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/11/27/react-native实践记录（05）/" data-id="cjozucuor002i8ovws449193l" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -322,19 +367,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Android工作记录整理-控件篇(1)--TextView
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/10/09/photoTest/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/11/21/文本对比生成差分包——diff-match-patch/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">photoTest</div>
+            <div class="article-nav-title">文本对比生成差分包——diff-match-patch</div>
         </a>
     
 </nav>
