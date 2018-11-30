@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: 多线程 | Nowy_Blog</title>
+    <title>MyBatis学习记录01——基础搭建 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/tags/多线程/index.html">
+    <meta name="description" content="###0.前言搭建MyBatis使用例子，主要用于熟悉MyBatis的核心组件 配置步骤：  SqlSessionFactoryBuilder+Configuration创建SqlSessionFactory实例 SqlSessionFactory创建SqlSession实例 SqlSession发送sql或者获取Mapper,并通过Mapper发送sql">
+<meta name="keywords" content="MyBatis学习记录,SSM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis学习记录01——基础搭建">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/MyBatis学习记录01——基础搭建/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言搭建MyBatis使用例子，主要用于熟悉MyBatis的核心组件 配置步骤：  SqlSessionFactoryBuilder+Configuration创建SqlSessionFactory实例 SqlSessionFactory创建SqlSession实例 SqlSession发送sql或者获取Mapper,并通过Mapper发送sql">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-30T09:43:35.734Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="MyBatis学习记录01——基础搭建">
+<meta name="twitter:description" content="###0.前言搭建MyBatis使用例子，主要用于熟悉MyBatis的核心组件 配置步骤：  SqlSessionFactoryBuilder+Configuration创建SqlSessionFactory实例 SqlSessionFactory创建SqlSession实例 SqlSession发送sql或者获取Mapper,并通过Mapper发送sql">
     
 
     
@@ -182,50 +187,329 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#多线程</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-MyBatis学习记录01——基础搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/Java线程安全/">Java线程安全</a>
+        <h1 class="article-title" itemprop="name">
+            MyBatis学习记录01——基础搭建
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java线程安全/">
-            <time datetime="2018-10-15T08:03:08.000Z" itemprop="datePublished">2018-10-15</time>
+        <a href="/2018/11/30/MyBatis学习记录01——基础搭建/">
+            <time datetime="2018-11-30T08:41:51.000Z" itemprop="datePublished">2018-11-30</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
+        <a class="article-category-link" href="/categories/MyBatis/">MyBatis</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/多线程/">多线程</a>, <a class="tag-link" href="/tags/并发操作/">并发操作</a>
+        <a class="tag-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a>, <a class="tag-link" href="/tags/SSM/">SSM</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>搭建MyBatis使用例子，主要用于熟悉MyBatis的核心组件</p>
+<p>配置步骤：</p>
+<ol>
+<li>SqlSessionFactoryBuilder+Configuration创建SqlSessionFactory实例</li>
+<li>SqlSessionFactory创建SqlSession实例</li>
+<li>SqlSession发送sql或者获取Mapper,并通过Mapper发送sql</li>
+</ol>
+<a id="more"></a>
+<p>###1.创建SqlSessionFactory<br>创建SqlSessionFactory有两种方式：</p>
+<ol>
+<li>读取xml配置后创建 </li>
+<li>代码直接创建(通过Configuration对象配置)</li>
+</ol>
+<p>注意点：</p>
+<ol>
+<li>SqlSessionFactory占据着数据库的连接资源，最好通过单例引用。</li>
+</ol>
+<p>####1.1 xml配置创建</p>
+<ol>
+<li><p>java读取配置文件</p>
+<pre><code>SqlSessionFactoryUtils类
+private static SqlSessionFactory getSessionFactory() {
+    synchronized (LOCK) {
+        if(mSessionFactory != null) {
+            return mSessionFactory;
+        }
+        String config = &quot;mybatis-config.xml&quot;;
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(config);
+            mSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+        return mSessionFactory;
+    }
+}
+</code></pre></li>
+<li><p>xml配置文件</p>
+<pre><code>//src/mybatis-config.xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration   PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+&lt;configuration&gt; 
+
+ &lt;!-- 别名设置 --&gt;
+  &lt;typeAliases&gt;
+      &lt;typeAlias alias=&quot;role&quot; type=&quot;com.nowy.mybatissample.pojo.Role&quot;/&gt;
+  &lt;/typeAliases&gt;
+
+ &lt;!-- 环境配置，默认为 &quot;development&quot;的环境--&gt;
+ &lt;environments default=&quot;development&quot;&gt;
+
+ &lt;!-- 环境1：development --&gt;
+  &lt;environment id=&quot;development&quot;&gt;
+    &lt;transactionManager type=&quot;JDBC&quot;&gt; &lt;!-- 事务方式 --&gt;
+    &lt;/transactionManager&gt;
+    &lt;dataSource type=&quot;POOLED&quot;&gt; &lt;!-- 采用MyBatis内部提供连接池方式 --&gt;
+      &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt; &lt;!-- 对应mysql-connector-java-5.1.23-bin.jar中的Driver.class --&gt;
+      &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/ssm&quot;/&gt;&lt;!-- 数据库url --&gt;
+      &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;  &lt;!-- 数据库用户名和密码 --&gt;
+      &lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt;
+    &lt;/dataSource&gt;
+  &lt;/environment&gt;
+
+ &lt;!-- 可以配置多个环境 --&gt;
+
+&lt;/environments&gt;
+</code></pre></li>
+</ol>
+<pre><code>  &lt;!-- 映射器注册 --&gt;
+  &lt;mappers&gt;
+      &lt;mapper resource=&quot;com/nowy/mybatissample/mapper/RoleMapper.xml&quot;/&gt;
+  &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre><p>####1.2 代码创建<br>创建步骤：</p>
+<ol>
+<li>配环境（环境列表）<ul>
+<li>配置数据库-datasocure</li>
+<li>配置jdbc事务方式</li>
+<li>生成环境配置实例<br><br><br></li>
+</ul>
+</li>
+<li>生成配置实例<ul>
+<li>导入环境配置</li>
+<li>上下文别名配置</li>
+<li>映射器配置</li>
+</ul>
+</li>
+</ol>
+<p>核心代码：</p>
+<pre><code>//SqlSessionFactoryUtils类
+private static SqlSessionFactory getSessionFactory2() {
+        synchronized (LOCK) {
+            if(mSessionFactory != null) {
+                return mSessionFactory;
+            }
+
+            //1.配环境
+            //a.配置数据库
+            PooledDataSource dataSource = new PooledDataSource();
+            dataSource.setDriver(&quot;com.mysql.jdbc.Driver&quot;);
+            dataSource.setUsername(&quot;root&quot;);
+            dataSource.setPassword(&quot;root&quot;);
+            dataSource.setUrl(&quot;jdbc:mysql://localhost:3306/ssm&quot;);
+            dataSource.setDefaultAutoCommit(false);
+
+            //b.配置jdbc事务方式
+            TransactionFactory transactionFactory = new JdbcTransactionFactory();
+
+            //c.生成环境配置实例
+            Environment environment = new Environment(&quot;development&quot;, transactionFactory, dataSource);
+
+            //2.生成配置实例
+
+            //a.导入环境配置
+            Configuration config = new Configuration(environment);
+
+            //b.上下文别名配置
+            config.getTypeAliasRegistry().registerAlias(&quot;role&quot;, Role.class);
+
+            //c.映射器配置
+            config.getMapperRegistry().addMapper(RoleMapper.class);
+
+            mSessionFactory = new SqlSessionFactoryBuilder().build(config);
+
+            return mSessionFactory;
+        }
+    }
+</code></pre><ul>
+<li>代码创建方式不便于维护和动态切换，除非有特殊的需求，否则不太建议使用</li>
+</ul>
+<p>###2.SQL发送<br>MyBatis中通过SqlSession发送SQL。</p>
+<p>SqlSession相当于数据库的一个连接，<br>事务的提交(commit)，回滚(rollback)都通过它调用。</p>
+<p>注意点：<br>SqlSession相当于一个数据库连接，业务处理完后需要close（关闭）</p>
+<p>####2.1 映射器配置(Mapper接口+Xml文件)</p>
+<ol>
+<li><p>Mapper接口</p>
+<pre><code>//RoleMapper类
+public interface RoleMapper {
+
+    //方法名与RoleMapper.xml中的queryById对应
+    Role queryById(Long id);//查询
+    int insertRole(Role role);//插入
+}
+</code></pre></li>
+<li><p>Xml文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+  &lt;mapper namespace=&quot;com.nowy.mybatissample.mapper.RoleMapper&quot;&gt; &lt;!-- 绑定 --&gt;
+      &lt;select id=&quot;queryById&quot; parameterType=&quot;Long&quot; resultType=&quot;role&quot;&gt; &lt;!-- role为配置文件中注册的别名 --&gt;
+          select id,role_name as roleName,note from t_role where id = #{id}
+      &lt;/select&gt;
+
+      &lt;insert id=&quot;insertRole&quot; parameterType=&quot;role&quot;&gt;
+        insert into t_role(role_name, note) values(#{roleName}, #{note})
+    &lt;/insert&gt;
+  &lt;/mapper&gt;
+</code></pre></li>
+</ol>
+<p>####2.2 SqlSession直接发送SQL</p>
+<pre><code>sqlSession = SqlSessionFactoryUtils.openSqlSession();//mSessionFactory.openSession()
+Role role = sqlSession.selectOne(&quot;com.nowy.mybatissample.mapper.RoleMapper.queryById&quot;,1L);
+</code></pre><p>直接通过sqlSession的方法，传入预先设置好的数据库语句（RoleMapper类queryById(Long id)）,<br>这种方式支持模糊查找，即<code>sqlSession.selectOne(&quot;queryById&quot;,1L);</code>,前提是<code>queryById</code>是唯一的。</p>
+<p>####2.3 通过映射器发送</p>
+<pre><code>RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+Role role = roleMapper.queryById(1L);
+</code></pre><p>通过<code>sqlSession.getMapper(RoleMapper.class)</code>获得映射器，再使用映射器中定义的方法发送SQL.</p>
+<p>###3.0 总结</p>
+<ul>
+<li><strong>SqlSessionFactoryBuilder</strong> -&gt; <strong>SqlSessionFactory</strong> -&gt; <strong>SqlSession</strong> -&gt; <strong>Mapper</strong> （调用线路图）</li>
+<li>SqlSessionFactory 最好保持<strong>单例</strong></li>
+<li>SqlSession<strong>处理完</strong>业务后需要<strong>关闭</strong></li>
+</ul>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy  <br><br>– 2018.11.30</p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="http://yoursite.com/2018/11/30/MyBatis学习记录01——基础搭建/" data-id="cjp3uc6pl00079cvwp8zxn0ws" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/11/29/springMVC设置默认启动页/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">springMVC设置默认启动页</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
