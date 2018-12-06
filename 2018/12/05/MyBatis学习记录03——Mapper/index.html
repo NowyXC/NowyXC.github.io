@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Databinding使用记录 | Nowy_Blog</title>
+    <title>MyBatis学习记录03——Mapper(上) | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###使用记录和注意项  Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,去build-&amp;gt;generated-&amp;gt;source-&amp;gt;apt-&amp;gt;debug-&amp;gt;&amp;lt;包名&amp;gt;-&amp;gt;databinding目录下查找对应方法。如果存在，那可能只是AS的误报。 @BindingAdapter">
-<meta name="keywords" content="Databinding,Android框架">
+    <meta name="description" content="###0.前言Mapper的学习记录 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert :">
+<meta name="keywords" content="MyBatis学习记录,SSM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Databinding使用记录">
-<meta property="og:url" content="http://yoursite.com/2018/10/23/Databinding使用记录/index.html">
+<meta property="og:title" content="MyBatis学习记录03——Mapper(上)">
+<meta property="og:url" content="http://yoursite.com/2018/12/05/MyBatis学习记录03——Mapper/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###使用记录和注意项  Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,去build-&amp;gt;generated-&amp;gt;source-&amp;gt;apt-&amp;gt;debug-&amp;gt;&amp;lt;包名&amp;gt;-&amp;gt;databinding目录下查找对应方法。如果存在，那可能只是AS的误报。 @BindingAdapter">
+<meta property="og:description" content="###0.前言Mapper的学习记录 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert :">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-22T16:47:57.551Z">
+<meta property="og:updated_time" content="2018-12-06T07:57:56.880Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Databinding使用记录">
-<meta name="twitter:description" content="###使用记录和注意项  Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,去build-&amp;gt;generated-&amp;gt;source-&amp;gt;apt-&amp;gt;debug-&amp;gt;&amp;lt;包名&amp;gt;-&amp;gt;databinding目录下查找对应方法。如果存在，那可能只是AS的误报。 @BindingAdapter">
+<meta name="twitter:title" content="MyBatis学习记录03——Mapper(上)">
+<meta name="twitter:description" content="###0.前言Mapper的学习记录 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert :">
     
 
     
@@ -187,7 +187,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Databinding使用记录" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-MyBatis学习记录03——Mapper" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -195,7 +195,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Databinding使用记录
+            MyBatis学习记录03——Mapper(上)
         </h1>
     
 
@@ -204,8 +204,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/23/Databinding使用记录/">
-            <time datetime="2018-10-22T16:16:14.000Z" itemprop="datePublished">2018-10-23</time>
+        <a href="/2018/12/05/MyBatis学习记录03——Mapper/">
+            <time datetime="2018-12-05T13:49:28.000Z" itemprop="datePublished">2018-12-05</time>
         </a>
     </div>
 
@@ -213,13 +213,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
+        <a class="article-category-link" href="/categories/MyBatis/">MyBatis</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android框架/">Android框架</a>, <a class="tag-link" href="/tags/Databinding/">Databinding</a>
+        <a class="tag-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a>, <a class="tag-link" href="/tags/SSM/">SSM</a>
     </div>
 
                     </div>
@@ -230,157 +230,262 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>###使用记录和注意项</p>
-<ol>
-<li>Databinding的插件对AS的支持还是有些缺陷，有时候ViewDataBinding读取不到variable的setter,<br>去<code>build-&gt;generated-&gt;source-&gt;apt-&gt;debug-&gt;&lt;包名&gt;-&gt;databinding</code>目录下查找对应方法。如果存在，那可能只是AS的误报。</li>
-<li>@BindingAdapter注解需要修饰<strong>静态(static)</strong>方法，<strong>不需要设置到viewdatabinding中</strong>，apt会自动查找并转换。具体实现可以在对应的viewDataBinding类的<code>executeBindings</code>方法中找到。</li>
-<li>在xml的使用相关的工具类或者方法，需要在<code>&lt;data&gt;</code>中引用对应的类(包括R文件)。eg:<code>&lt;import type=&quot;android.view.View&quot;/&gt;</code>  <a id="more"></a></li>
-<li><p>隐式属性引用</p>
-<pre><code>&lt;CheckBox
-  android:id=&quot;@+id/cb_Test&quot;
-  android:layout_width=&quot;wrap_content&quot;
-  android:layout_height=&quot;wrap_content&quot;
-  android:text=&quot;选中&quot;
-  /&gt;
-&lt;TextView
-  android:layout_width=&quot;match_parent&quot;
-  android:layout_height=&quot;100dp&quot;
-  android:text=&quot;选中显示&quot;
-  android:gravity=&quot;center&quot;
-  android:visibility=&quot;@{cbTest.checked?View.VISIBLE:View.GONE}&quot;
-  /&gt;
-</code></pre><p><strong>CheckBox的id是cb_Test,而引用的变量时cbTest,变量名称使用是根据ViewDatabinding的属性名称，而非XML中的ID</strong>.</p>
-</li>
-</ol>
-<p>5.反向绑定</p>
-<ol>
-<li>@InverseBindingMethod </li>
-</ol>
-<pre><code>    public @interface InverseBindingMethod {
-
-        /**
-         * The View type that is associated with the attribute.
-         */
-        Class type();
-
-        /**
-         * The attribute that supports two-way binding.
-         */
-        String attribute();
-
-        /**
-         * The event used to notify the data binding system that the attribute value has changed.
-         * Defaults to attribute() + &quot;AttrChanged&quot;
-         */
-        String event() default &quot;&quot;;
-
-        /**
-         * The getter method to retrieve the attribute value from the View. The default is
-         * the bean method name based on the attribute name.
-         */
-        String method() default &quot;&quot;;
-    }
-
-- event()和method()如果为空，都会默认采用attribute的标准命名格式
-- event:attribute() + &quot;AttrChanged&quot;          ：触发数据更新的事件
-- method:get+attribute() 或者 is+attribute() ：获取数据值的方法
-
-定义反向绑定完成后，需要设置触发反向绑定的方法，通常采用@BindingAdapter(value = {event()的值}, requireAll = false)注册一个参数变化监听方法。
-
-例如TextView的文本修改监听：
-
-    @BindingAdapter(value = {&quot;android:beforeTextChanged&quot;, &quot;android:onTextChanged&quot;,
-            &quot;android:afterTextChanged&quot;, &quot;android:textAttrChanged&quot;}, requireAll = false)
-    public static void setTextWatcher(TextView view, final BeforeTextChanged before,
-            final OnTextChanged on, final AfterTextChanged after,
-            final InverseBindingListener textAttrChanged) {
-        final TextWatcher newValue;
-        if (before == null &amp;&amp; after == null &amp;&amp; on == null &amp;&amp; textAttrChanged == null) {
-            newValue = null;
-        } else {
-            newValue = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    if (before != null) {
-                        before.beforeTextChanged(s, start, count, after);
-                    }
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (on != null) {
-                        on.onTextChanged(s, start, before, count);
-                    }
-                    if (textAttrChanged != null) {      //这里是重点
-                        textAttrChanged.onChange();
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (after != null) {
-                        after.afterTextChanged(s);
-                    }
-                }
-            };
-        }
-        final TextWatcher oldValue = ListenerUtil.trackListener(view, newValue, R.id.textWatcher);
-        if (oldValue != null) {
-            view.removeTextChangedListener(oldValue);
-        }
-        if (newValue != null) {
-            view.addTextChangedListener(newValue);
-        }
-    }
-这个方法监听4个xml属性：
-
-1. android:beforeTextChanged 
-2. android:onTextChanged
-3. android:afterTextChanged
-4. android:textAttrChanged 
-
-反向绑定主要需要android:textAttrChanged即InverseBindingListener监听器。该监听器会在当前的ViewDataBinding类中自动添加，作为反向刷新的回调。
-
-**用通俗点的话说，我们需要在EditText的录入事件里面修改数据源的值，那么我们就需要在EditText的输入事件里添加数据源刷新回调。**
-至于其他三个属性对应着监听器**TextWatcher**的三个方法,可以在xml里面赋值，否则传null
-
-额外补充点:
-
-1)其他三个属性的赋值例子代码：    
-
-        xml:
-        &lt;EditText
-            android:id=&quot;@+id/etText&quot;
-            android:layout_width=&quot;match_parent&quot;
-            android:layout_height=&quot;100dp&quot;
-            android:text=&quot;@={viewHolder.mEditTest}&quot;
-            android:onTextChanged=&quot;@{viewHolder.changed}&quot;  
-            android:gravity=&quot;center&quot;
-            /&gt;
-
-        viewHolder类中：
-        public TextViewBindingAdapter.OnTextChanged changed = new TextViewBindingAdapter.OnTextChanged() {
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    Log.e(&quot;url&quot;,&quot;changed&quot;);
-                }
-            };
-
-
-2）该setTextWatcher事件在executeBindings()中已经完成，不会覆盖activity中的TextWatcher事件
-</code></pre><ol start="2">
-<li><p>@InverseBindingAdapter(用于重新实现UI返回值给数据源的getter方法，实现这个就不需要@InverseBindingMethod了)</p>
-<pre><code>@InverseBindingAdapter(attribute = &quot;android:text&quot;, event = &quot;android:textAttrChanged&quot;)
-public static String getTextString(TextView view) {
-    return view.getText().toString();
+            <p>###0.前言<br>Mapper的学习记录</p>
+<p>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。</p>
+<p>Mapper的配置元素主要有：</p>
+<ul>
+<li>select : 查询语句，返回指定结果集</li>
+<li>insert : 插入语句，返回整数</li>
+<li>update : 更新语句，返回整数</li>
+<li>delete : 删除语句，返回整数</li>
+<li>sql     : sql语句片段，用于导入(select、insert、update、delete等语句)</li>
+<li>resultMap : 结果集与转化对象间的参数配对</li>
+</ul>
+<a id="more"></a>
+<p>###1.0 Mapper的结构说明</p>
+<pre><code>//Role类
+public class Role{
+    private Long id;
+    private String roleName;
+    private String note;
+    //...省略...
 }
-</code></pre><ul>
-<li>attribute：对应双向绑定的属性，eg: android:text或者app:refresh</li>
-<li>event：触发数据更新的事件,与上面的@BindingAdapter关联（关联点:android:textAttrChanged）</li>
+
+//RoleMapper.java
+public interface RoleMapper {
+    public Role getRole(Long id);
+}
+
+//RoleMapper.xml
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.RoleMapper&quot;&gt;
+    //...
+&lt;/mapper&gt;
+</code></pre><p>RoleMapper包含两部分，即RoleMapper.java和RoleMapper.xml,通过mapper的namespace指定关联。</p>
+<ul>
+<li>Mapper.xml : 用于配置SQL语句、POJO类与结果集的映射关系以及缓存方式等</li>
+<li>Mapper.java : 接口文件，描述方法所需参数和返回值类型，被用于SQLSession的调用 </li>
+</ul>
+<p>###2.0 select元素 ——查询语句</p>
+<pre><code>//Role类
+public class Role{
+    private Long id;
+    private String roleName;
+    private String note;
+    //...省略...
+}
+
+//RoleMapper.java
+public interface RoleMapper {
+
+    public Role getRole(Long id);
+}
+
+//RoleMapper.xml
+&lt;select id=&quot;getRole&quot; parameterType=&quot;long&quot; resultType=&quot;com.ssm.chapter5.pojo.Role&quot;&gt;
+    select id,role_name as roleName, note from t_role where id = #{id}
+&lt;/select&gt;
+</code></pre><p>上述语句的含义： 一条id（唯一标识）为<code>getRole</code>的select语句，其中有一个<code>long</code>类型的参数<code>id</code>,其数据库查询后返回的结果集为<code>Role</code>类型。</p>
+<p><strong>select语句的参数有：</strong></p>
+<ul>
+<li>id : 唯一标识，与Mapper.java的接口文件的方法名一致（eg:xml中的id为<code>getRole</code>的语句对应接口文件中的<code>getRole(long id)</code>）</li>
+<li>parameterType : 传入到SQL中参数的类型，可以是全限定名，也可以是别名。（JavaBean、Map等）</li>
+<li>resultType ： 结果集类型，可以是全限定名，也可以是别名。（JavaBean、Map、int等）</li>
+<li>resultMap : 结果集类型，通过引用已经定义的ResultMap节点的映射关系。（不与resultType同时使用）</li>
+<li>flushCache ： 清空之前的本地缓存和二级缓存(true/false),默认值:false</li>
+<li>useCache : 启动二级缓存，缓存查询结果 （true/false）,默认值:true</li>
+<li><code>#{param}</code> : 被传递入SQL的参数，参数的名称一般在Mapper.java接口文件中定义。即：<ul>
+<li>getRole(long id)//直接采用id作为传入参数的名词</li>
+<li>getRole(@Param(“id”)long roleId)，通过注解将roleId重命名为id，传入SQL。<strong>此方法可省略xml中的parameterType属性</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>多参数的传入的方式：</strong></p>
+<ul>
+<li>普通参数传入 ： 少于等于5个参数建议使用，可读性高。<ul>
+<li>eg: <code>List&lt;Role&gt; findRolesByParameter(@Param(&quot;roleName&quot;)String rolename,@Param(&quot;note&quot;)String note);</code></li>
+</ul>
+</li>
+<li>Map传入 ： 不推荐，不能限定数据类型且可读性差。<ul>
+<li>eg:<code>List&lt;Role&gt; findRolesByMap(Map&lt;String,Object&gt; parameterMap);</code></li>
+</ul>
+</li>
+<li>JavaBean传入 : 当参数多于5个时候建议使用，通过javaBean限定,可以多处复用<ul>
+<li>eg:<code>List&lt;Role&gt; findRolesByBean(@Param(&quot;params&quot;) RoleParams roleParams);</code>注：xml通过params.roleName引用</li>
+</ul>
+</li>
+<li>多JavaBean传入：单参数涉及多个JavaBean的时，采用多个javaBean封装参数<ul>
+<li>eg:<code>List&lt;Role&gt; findRolesByBean(@Param(&quot;params&quot;) RoleParams roleParams,@Param(&quot;page&quot;) PageParams pageParams);</code></li>
+</ul>
+</li>
+</ul>
+<p>需要注意的:</p>
+<ul>
+<li><strong>resultType</strong>指定的POJO的属性名与select语句的列名要一一对应，不对应的可以通过SQL列名指定别名修改，例如<code>role_name as roleName</code></li>
+<li><strong>resultType</strong>可以指定为<strong>map</strong>和<strong>list</strong>,只是可读性会下降</li>
+<li>通过配置<code>mapUnderscoreToCamelCase:true</code>可以把自动映射规则变为<strong>A_COLMN(下划线) <-> aColmn(驼峰)</-></strong>，缺点是降低了灵活性。</li>
+<li><strong>resultType与resultMap不能同时使用。</strong></li>
+</ul>
+<p>###2.1 insert元素 ——插入语句</p>
+<pre><code>&lt;insert id=&quot;insertRole&quot; parameterType=&quot;role&quot; useGeneratedKeys=&quot;true&quot;
+    keyProperty=&quot;id&quot;&gt;
+    insert into t_role(role_name, note) values(#{roleName},#{note})
+&lt;/insert&gt;
+</code></pre><p>上述例子主要作用：插入一条role记录到数据库中，并将<code>Statement对象</code>的<code>getGeneratedKeys方法</code>返回的主键传递给<code>role对象</code>的<code>id属性</code></p>
+<p>insert的元素：</p>
+<ul>
+<li>id ： 唯一标识，供调用使用。命名空间+id+databaseId必须唯一，否则异常</li>
+<li>parameterType : 传入参数类型</li>
+<li>useGeneratedKeys：是否启用JDBC的getGeneratedKeys方法,取出数据库内部生成的主键（默认值：false）</li>
+<li>keyProperty:将getGeneratedKeys回传的主键存放到POJO对象指定的属性中。<ul>
+<li>主键为联合主键时，可以通过”,”隔开</li>
+</ul>
+</li>
+</ul>
+<p><strong>自定义主键：</strong></p>
+<pre><code>&lt;insert id=&quot;insertRole2&quot; parameterType=&quot;role&quot;&gt;
+    &lt;selectKey keyProperty=&quot;id&quot; resultType=&quot;long&quot; order=&quot;BEFORE&quot;&gt; &lt;!--自定义主键--&gt;
+        select
+        if (max(id) = null, 1, max(id) + 3) from t_role
+    &lt;/selectKey&gt;
+    insert into t_role2(id, role_name, note) values(#{id}, #{roleName},#{note}) &lt;!--使用自定义主键--&gt;
+&lt;/insert&gt;
+</code></pre><p>上述例子主要作用：从role表查出已存在的最大id,并用最大id+3作为新插入记录的id主键。如果数据库没有记录，则设置新插入记录的id为1。</p>
+<p>selectKey的元素：</p>
+<ul>
+<li>keyProperty ： 对应POJO的主键属性，eg:Role类中的id属性<ul>
+<li>主键为联合主键时，可以通过”,”隔开</li>
+</ul>
+</li>
+<li>resultType ： 结果集类型</li>
+<li>order：执行顺序<ul>
+<li>BEFORE : sql语句执行前，预先自定义主键可用</li>
+<li>AFTER     : SQL语句执行后，执行完插入语句后获取数据库主键，插入完触发其他事件等。</li>
+</ul>
+</li>
+</ul>
+<p>###2.2 sql元素</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.RoleMapper&quot;&gt;
+    &lt;sql id=&quot;roleCols&quot;&gt; &lt;!--sql元素定义SQL语句片段--&gt;
+        id,role_name,note
+    &lt;/sql&gt;    
+
+&lt;select id=&quot;getRoleUseResultMap&quot; parameterType=&quot;long&quot; resultMap=&quot;roleMap&quot;&gt; 
+    select &lt;include refid=&quot;roleCols&quot;/&gt; from t_role where id = #{id} &lt;!--使用sql片段--&gt;
+&lt;/select&gt; 
+    //...
+&lt;/mapper&gt;
+</code></pre><p>上述例子主要作用：预先定义sql语句片段，例如此例子的列名，通过include导入到select语句中。最大的好处是复用 。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.RoleMapper&quot;&gt;
+    &lt;sql id=&quot;roleCols&quot;&gt; &lt;!--sql元素定义带有变量的SQL语句片段--&gt;
+        ${alias}.id,${alias}.role_name,${alias}.note
+    &lt;/sql&gt;    
+
+&lt;select id=&quot;getRoleUseResultMap&quot; parameterType=&quot;long&quot; resultMap=&quot;roleMap&quot;&gt; 
+    select 
+        &lt;include refid=&quot;roleCols&quot;&gt;  &lt;!--使用sql片段--&gt;
+            &lt;property name=&quot;alias&quot; value=&quot;r&quot;&gt;     &lt;!--配置sql片段的参数： alias = r --&gt;
+        &lt;/include&gt;    
+     from t_role r where id = #{id} &lt;!--使用sql片段--&gt;
+&lt;/select&gt; 
+    //...
+&lt;/mapper&gt;
+</code></pre><p>上述例子主要作用：预先定义带参数的sql语句片段，通过include导入到select语句中，并对参数进行赋值。多表查询可以使用。</p>
+<p>###2.3 参数</p>
+<ol>
+<li>控制精度<ul>
+<li>参数传入可以通过numericScale控制数值进度，eg:{width,javaType=double,jdbcType=NUMERIC,numericScale=2}</li>
+</ul>
+</li>
+<li><p>存储过程</p>
+<ul>
+<li>IN：输入参数 eg:#{id,mode=IN}</li>
+<li>OUT:输出参数</li>
+<li><p>INOUT：输入输出参数</p>
+<pre><code>&lt;select id=&quot;findRole&quot; parameterType=&quot;com.ssm.chapter5.param.PdFindRoleParams&quot;
+    statementType=&quot;CALLABLE&quot;&gt;  &lt;!--statementType指定为调用存储过程--&gt;
+    {call find_role(
+    #{roleName, mode=IN, jdbcType=VARCHAR},
+    #{start, mode=IN,jdbcType=INTEGER},
+    #{end, mode=IN, jdbcType=INTEGER},
+    #{total, mode=OUT,jdbcType=INTEGER},
+    #{roleList,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=roleMap2}
+    )}
+&lt;/select&gt;
+</code></pre></li>
+</ul>
+</li>
+<li><code>#</code>和<code>$</code><ul>
+<li>#{}:预编译处理,处理#{}时,会将sql中的#{}替换为?号，调用PreparedStatement的set方法来赋值.以有效的防止SQL注入，提高系统安全性。</li>
+<li>${}:字符串替换,处理${}时,就是把${}替换成变量的值.</li>
 </ul>
 </li>
 </ol>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.10.22</p>
+<blockquote>
+<p>使用PreparedStatement的参数化的查询可以阻止大部分的SQL注入。在使用参数化查询的情况下，数据库系统不会将参数的内容视为SQL指令的一部分来处理，而是在数据库完成SQL指令的编译后，才套用参数运行，因此就算参数中含有破坏性的指令，也不会被数据库所运行。因为对于参数化查询来说，查询SQL语句的格式是已经规定好了的，需要查的数据也设置好了，缺的只是具体的那几个数据而已。所以用户能提供的只是数据，而且只能按需提供，无法更进一步做出影响数据库的其他举动来。</p>
+</blockquote>
+<p>###2.4 resultMap 结果集映射</p>
+<pre><code>&lt;!--resultMap结构--&gt;
+&lt;resultMap&gt;
+    &lt;constructor&gt;          &lt;!--构造器:配置可能不存在无参构造器的POJO类--&gt;
+        &lt;idArg /&gt;
+        &lt;arg /&gt;
+    &lt;/constructor&gt;
+
+    &lt;id /&gt;                &lt;!--主键：联合主键下可以存在多个&lt;id /&gt;节点--&gt;
+    &lt;result /&gt;            &lt;!--属性--&gt;
+    &lt;association /&gt;        &lt;!--一对一关系--&gt;
+    &lt;collection /&gt;        &lt;!--一对多关系--&gt;
+    &lt;discriminator&gt;        &lt;!--鉴别器--&gt;
+        &lt;case /&gt;
+    &lt;/discriminator&gt;
+&lt;/resultMap&gt;
+</code></pre><p>不存在无参构造器的POJO类，可以使用resultMap的构造器配置</p>
+<pre><code>&lt;resultMap type=&quot;role&quot;&gt;
+    &lt;constructor&gt;          
+        &lt;idArg column=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+        &lt;arg column=&quot;role_name&quot; javaType=&quot;string&quot;/&gt;
+    &lt;/constructor&gt;
+    //...
+&lt;/resultMap&gt;
+</code></pre><p>上述配置对应着Role的构造器：<code>public Role(int id,String roleName){...};</code></p>
+<p>常用的映射配置:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.RoleMapper&quot;&gt;
+    &lt;resultMap id=&quot;roleMap&quot; type=&quot;role&quot;&gt; &lt;!--resultMap定义--&gt;
+        &lt;id property=&quot;id&quot; column=&quot;id&quot; /&gt;  &lt;!--resultMap子元素--&gt;
+        &lt;result property=&quot;roleName&quot; column=&quot;role_name&quot; /&gt;
+        &lt;result property=&quot;note&quot; column=&quot;note&quot; /&gt;
+    &lt;/resultMap&gt;
+
+&lt;select id=&quot;getRoleUseResultMap&quot; parameterType=&quot;long&quot; resultMap=&quot;roleMap&quot;&gt; &lt;!--此处通过id引用--&gt;
+    select id, role_name, note from t_role where id = #{id}
+&lt;/select&gt;
+    //...
+&lt;/mapper&gt;
+</code></pre><p>如上述例子，resultMap的元素：</p>
+<ul>
+<li>resultMap中的<code>id属性</code> ： 唯一标识，用于下面select语句中resultMap的赋值</li>
+<li>resultMap中的<code>type属性</code>: 指定resultMap映射的POJO类，可以是全限定名或者别名</li>
+<li>resultMap的子元素：<ul>
+<li>id : resultMap的主键，含有property和column属性，<strong>property对应POJO的属性名，column对应SQL列名</strong></li>
+<li>result:resultMap的属性，<strong>property对应POJO的属性名，column对应SQL列名</strong></li>
+</ul>
+</li>
+</ul>
+<p>###3. 总结<br>本文记录MyBatis的Mapper常规使用的配置和说明，对Mapper的使用进行归纳以便查看。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.12.05</p>
 
         
         </div>
@@ -391,7 +496,7 @@ public static String getTextString(TextView view) {
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/23/Databinding使用记录/" data-id="cjpcb7lnu000de4vw2qw9sv54" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/05/MyBatis学习记录03——Mapper/" data-id="cjpcb7lo0000me4vweswbi01c" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -466,19 +571,10 @@ public static String getTextString(TextView view) {
         
 <nav id="article-nav">
     
-        <a href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    react-native学习笔记-0 环境搭建问题记录
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/10/19/自定义ListView快速滑动条图标的几种方式/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/12/03/MyBatis学习记录02——配置/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">自定义ListView快速滑动条图标的几种方式</div>
+            <div class="article-nav-title">MyBatis学习记录02——配置</div>
         </a>
     
 </nav>
