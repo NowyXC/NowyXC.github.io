@@ -5,18 +5,18 @@
     
     <title>MyBatis学习记录03——Mapper(上) | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###0.前言Mapper的学习记录 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert :">
+    <meta name="description" content="###0.前言 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper的学习记录 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert">
 <meta name="keywords" content="MyBatis学习记录,SSM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MyBatis学习记录03——Mapper(上)">
 <meta property="og:url" content="http://yoursite.com/2018/12/05/MyBatis学习记录03——Mapper/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###0.前言Mapper的学习记录 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert :">
+<meta property="og:description" content="###0.前言 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper的学习记录 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-06T07:57:56.880Z">
+<meta property="og:updated_time" content="2018-12-07T14:44:47.473Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis学习记录03——Mapper(上)">
-<meta name="twitter:description" content="###0.前言Mapper的学习记录 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert :">
+<meta name="twitter:description" content="###0.前言 《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper的学习记录 Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。 Mapper的配置元素主要有：  select : 查询语句，返回指定结果集 insert">
     
 
     
@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                28
+                29
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -230,8 +230,9 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>###0.前言<br>Mapper的学习记录</p>
+            <p>###0.前言</p>
 <p>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>Mapper的学习记录</p>
 <p>Mapper(映射器)主要由接口文件和xml文件组成（xml文件可以用注解代替），用于配置各类SQL语句并将结果映射为指定的POJO对象。</p>
 <p>Mapper的配置元素主要有：</p>
 <ul>
@@ -402,29 +403,13 @@ public interface RoleMapper {
 </code></pre><p>上述例子主要作用：预先定义带参数的sql语句片段，通过include导入到select语句中，并对参数进行赋值。多表查询可以使用。</p>
 <p>###2.3 参数</p>
 <ol>
-<li>控制精度<ul>
+<li><p>控制精度</p>
+<ul>
 <li>参数传入可以通过numericScale控制数值进度，eg:{width,javaType=double,jdbcType=NUMERIC,numericScale=2}</li>
 </ul>
 </li>
-<li><p>存储过程</p>
+<li><p><code>#</code>和<code>$</code></p>
 <ul>
-<li>IN：输入参数 eg:#{id,mode=IN}</li>
-<li>OUT:输出参数</li>
-<li><p>INOUT：输入输出参数</p>
-<pre><code>&lt;select id=&quot;findRole&quot; parameterType=&quot;com.ssm.chapter5.param.PdFindRoleParams&quot;
-    statementType=&quot;CALLABLE&quot;&gt;  &lt;!--statementType指定为调用存储过程--&gt;
-    {call find_role(
-    #{roleName, mode=IN, jdbcType=VARCHAR},
-    #{start, mode=IN,jdbcType=INTEGER},
-    #{end, mode=IN, jdbcType=INTEGER},
-    #{total, mode=OUT,jdbcType=INTEGER},
-    #{roleList,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=roleMap2}
-    )}
-&lt;/select&gt;
-</code></pre></li>
-</ul>
-</li>
-<li><code>#</code>和<code>$</code><ul>
 <li>#{}:预编译处理,处理#{}时,会将sql中的#{}替换为?号，调用PreparedStatement的set方法来赋值.以有效的防止SQL注入，提高系统安全性。</li>
 <li>${}:字符串替换,处理${}时,就是把${}替换成变量的值.</li>
 </ul>
@@ -484,7 +469,38 @@ public interface RoleMapper {
 </ul>
 </li>
 </ul>
-<p>###3. 总结<br>本文记录MyBatis的Mapper常规使用的配置和说明，对Mapper的使用进行归纳以便查看。</p>
+<p>###3.存储过程<br>存储过程是数据库预先编译好的一段程序片段，存放在数据库内存中。它有3中类型的参数：</p>
+<ul>
+<li>输入参数(IN):外界传入存储过程的参数</li>
+<li>输出参数(OUT)：存储过程返回给程序的结果参数</li>
+<li>输入输出参数(INOUT)：一开始作为参数传入存储过程，而存储过程修改后将其返回的参数（例如：库存的修改）</li>
+</ul>
+<p>delimiter $$ //将语句的结束符号从分号;临时改为两个$$<br>CREATE PROCEDURE count_role(<br>IN p_role_name VARCHAR,<br>OUT count_total INTEGER<br>)<br>BEGIN<br>select count(*) into count_total from t_role where role_name like concat(‘%’, p_role_name, ‘%’);<br>END$$</p>
+<p>delimiter;//将语句的结束符号恢复为分号</p>
+<ol start="2">
+<li>存储过程</li>
+</ol>
+<p>存储过程对应的Mode:</p>
+<ul>
+<li>IN：输入参数 eg:#{id,mode=IN}</li>
+<li>OUT:输出参数</li>
+<li><p>INOUT：输入输出参数</p>
+<pre><code>&lt;select id=&quot;findRole&quot; parameterType=&quot;com.ssm.chapter5.param.PdFindRoleParams&quot;
+    statementType=&quot;CALLABLE&quot;&gt;  &lt;!--statementType指定为调用存储过程--&gt;
+    {call find_role(
+    #{roleName, mode=IN, jdbcType=VARCHAR},
+    #{countTotal, mode=OUT,jdbcType=INTEGER}
+    )}
+&lt;/select&gt;
+</code></pre></li>
+</ul>
+<p>调用存储过程需要修改<code>statementType=&quot;CALLABLE&quot;</code>,说明它是存储过程,参数的传入需要指定参数的<code>mode</code>和<code>jdbcType</code>。</p>
+<p>###4. 总结<br>Mapper的配置元素主要由3部分组成：</p>
+<ul>
+<li>SQL语句：select、insert、update、delete和sql片段</li>
+<li>结果集映射配置：resultMap配置数据结果集与POJO类的映射关系 </li>
+<li>缓存配置（后面单独记录）：<code>&lt;cache /&gt;</code>配置二级缓存</li>
+</ul>
 <h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.12.05</p>
 
         
@@ -496,7 +512,7 @@ public interface RoleMapper {
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/05/MyBatis学习记录03——Mapper/" data-id="cjpcb7lo0000me4vweswbi01c" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/05/MyBatis学习记录03——Mapper/" data-id="cjpe56r8n000og0vwvtbs7xqd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -571,6 +587,15 @@ public interface RoleMapper {
         
 <nav id="article-nav">
     
+        <a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    MyBatis学习记录04——Mapper(下)
+                
+            </div>
+        </a>
+    
     
         <a href="/2018/12/03/MyBatis学习记录02——配置/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
@@ -597,6 +622,25 @@ public interface RoleMapper {
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" class="title">MyBatis学习记录04——Mapper(下)</a></p>
+                            <p class="item-date"><time datetime="2018-12-06T08:00:21.000Z" itemprop="datePublished">2018-12-06</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -674,25 +718,6 @@ public interface RoleMapper {
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/11/27/react-native实践记录（05）/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/react-native/">react-native</a></p>
-                            <p class="item-title"><a href="/2018/11/27/react-native实践记录（05）/" class="title">react-native实践记录（05）</a></p>
-                            <p class="item-date"><time datetime="2018-11-27T13:56:44.000Z" itemprop="datePublished">2018-11-27</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -702,7 +727,7 @@ public interface RoleMapper {
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -711,16 +736,16 @@ public interface RoleMapper {
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -729,7 +754,7 @@ public interface RoleMapper {
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Android/" style="font-size: 12.5px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 12.5px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 15px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 15px;">MyBatis学习记录</a> <a href="/tags/React-Navigation/" style="font-size: 12.5px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 15px;">SSM</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 17.5px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+            <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 12px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 14px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 16px;">MyBatis学习记录</a> <a href="/tags/React-Navigation/" style="font-size: 12px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 16px;">SSM</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 18px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
         </div>
     </div>
 

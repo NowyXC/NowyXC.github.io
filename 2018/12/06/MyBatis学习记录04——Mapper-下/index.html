@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>MyBatis学习记录04——Mapper(下) | Nowy_Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper的学习记录 本文主要记录Mapper的级联以及缓存设置">
+<meta name="keywords" content="MyBatis学习记录,SSM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis学习记录04——Mapper(下)">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/MyBatis学习记录04——Mapper-下/index.html">
+<meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper的学习记录 本文主要记录Mapper的级联以及缓存设置">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T14:15:01.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis学习记录04——Mapper(下)">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 Mapper的学习记录 本文主要记录Mapper的级联以及缓存设置">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Nowy_Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Nowy</h2>
+            <h3 id="title">无名的Android开发者</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>GuangZhou(广州), China</span>
+            <a id="follow" target="_blank" href="https://github.com/NowyXC">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                29
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                24
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/NowyXC" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-MyBatis学习记录04——Mapper-下" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            MyBatis学习记录04——Mapper(下)
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/12/06/MyBatis学习记录04——Mapper-下/">
+            <time datetime="2018-12-06T08:00:21.000Z" itemprop="datePublished">2018-12-06</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/MyBatis/">MyBatis</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a>, <a class="tag-link" href="/tags/SSM/">SSM</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>Mapper的学习记录</p>
+<p>本文主要记录Mapper的<strong>级联</strong>以及<strong>缓存设置</strong></p>
+<a id="more"></a>
+<p>###1.级联<br>通过级联获取关联数据十分便捷，但是级联过多会增加系统的复杂度，降低系统的性能。建议超过3层时就不要考虑级联。</p>
+<p>MyBatis中的级联有3种：</p>
+<ol>
+<li>一对一：association</li>
+<li>一对多：collection</li>
+<li>鉴别器：discriminator，根据某些条件决定采取具体实现类的方案。（eg:根据性别获取员工信息）</li>
+</ol>
+<p>####1.1 association 一对一级联<br>一个员工对应着一个工牌：</p>
+<pre><code>//Employee.java POJO类
+public class Employee {
+
+    private Long id;
+    private String realName;
+    private SexEnum sex = null;
+    //...
+    //工牌按一对一级联
+    private WorkCard workCard;
+    //...
+}
+
+//WorkCard.java POJO类
+public class WorkCard {
+    private Long id;
+    private Long empId;
+    private String realName;
+    private String department;
+    private String mobile;
+    private String position;
+    private String note;
+    //...
+}
+
+
+//EmployeeMapper.xml
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.EmployeeMapper&quot;&gt;
+    &lt;resultMap type=&quot;com.ssm.chapter5.pojo.Employee&quot; id=&quot;employee&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;real_name&quot; property=&quot;realName&quot; /&gt;
+        //...
+        &lt;association property=&quot;workCard&quot; column=&quot;id&quot;
+            select=&quot;com.ssm.chapter5.mapper.WorkCardMapper.getWorkCardByEmpId&quot; /&gt;
+        //...
+    &lt;/resultMap&gt;
+&lt;/mapper&gt;
+
+//WorkCardMapper.xml
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.WorkCardMapper&quot;&gt;
+    &lt;select id=&quot;getWorkCardByEmpId&quot; parameterType=&quot;long&quot; resultType=&quot;com.ssm.chapter5.pojo.WorkCard&quot;&gt;
+        SELECT  id, emp_id as empId, real_name as realName, department, mobile, position, note FROM t_work_card
+        where emp_id = #{empId} 
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre><p>上述是association的示例，各个参数的含义：</p>
+<ul>
+<li>property：对应POJO中的属性,用于接收<code>association</code>中<code>select</code>返回的结果集</li>
+<li>column : 对应SQL的列，作为属性传递给select属性定义的sql,多属性以”,”隔开<ul>
+<li>多参数格式：<strong>column=”{prop1=col1,prop2=col2}”</strong></li>
+</ul>
+</li>
+<li>select ：Mapper类的全限定名+id组成，对应SQL语句，接收column指定的值作为参数<ul>
+<li>接收多参数时，参数类型指定为<strong>parameterType=”map”</strong></li>
+</ul>
+</li>
+<li>javaType:用于定义实体映射 </li>
+</ul>
+<p>####1.2 collection 一对多级联<br>一个员工对应着多个任务：</p>
+<pre><code>//Employee.java POJO类
+public class Employee {
+    private Long id;
+    private String realName;
+    private SexEnum sex = null;
+    //...
+    //雇员任务，一对多级联
+    private List&lt;EmployeeTask&gt; employeeTaskList = null;
+    //...
+}
+
+//EmployeeTask.java POJO类
+public class EmployeeTask {
+    private Long id;
+    private Long empId;
+    private Task task = null;
+    private String taskName;
+    private String note;
+    //...
+}
+
+//EmployeeMapper.xml
+&lt;resultMap type=&quot;com.ssm.chapter5.pojo.Employee&quot; id=&quot;employee&quot;&gt;
+    &lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+    &lt;result column=&quot;real_name&quot; property=&quot;realName&quot; /&gt;
+    //...
+    &lt;collection property=&quot;employeeTaskList&quot; column=&quot;id&quot;
+        select=&quot;com.ssm.chapter5.mapper.EmployeeTaskMapper.getEmployeeTaskByEmpId&quot; /&gt;
+    //...
+&lt;/resultMap&gt;
+
+//EmployeeTask.xml
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.EmployeeTaskMapper&quot;&gt;
+
+    &lt;resultMap type=&quot;com.ssm.chapter5.pojo.EmployeeTask&quot; id=&quot;EmployeeTaskMap&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot;/&gt;
+        &lt;result column=&quot;emp_id&quot; property=&quot;empId&quot;/&gt;
+        &lt;result column=&quot;task_name&quot; property=&quot;taskName&quot;/&gt;
+        &lt;result column=&quot;note&quot; property=&quot;note&quot;/&gt;
+        &lt;association property=&quot;task&quot; column=&quot;task_id&quot;
+            select=&quot;com.ssm.chapter5.mapper.TaskMapper.getTask&quot;/&gt;
+    &lt;/resultMap&gt;
+
+    &lt;select id=&quot;getEmployeeTaskByEmpId&quot; resultMap=&quot;EmployeeTaskMap&quot;&gt;
+        select id, emp_id, task_name, task_id, note from t_employee_task 
+        where emp_id = #{empId}
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre><p>上述是<code>collection</code>的示例，各个参数的含义与<code>association</code>相似。</p>
+<ul>
+<li>property：对应POJO中的属性,用于接收<code>collection</code>中<code>select</code>返回的结果集</li>
+<li>column : 对应SQL的列，作为属性传递给select属性定义的sql,多属性以”,”隔开<ul>
+<li>多参数格式：<strong>column=”{prop1=col1,prop2=col2}”</strong></li>
+</ul>
+</li>
+<li>select ：Mapper类的全限定名+id组成，对应SQL语句，接收column指定的值作为参数<ul>
+<li>接收多参数时，参数类型指定为<strong>parameterType=”map”</strong></li>
+</ul>
+</li>
+<li>ofType:用于定义实体映射 </li>
+</ul>
+<p>####1.3 多对多级联<br>多对多级联通常会被拆分为两个一对多级联处理。</p>
+<p>例如：一个用户拥有多个角色，一个角色可以有多个用户担当。</p>
+<pre><code>//Role2.java POJO类
+public class Role2 {
+    private Long id;
+    private String roleName;
+    private String note;
+    // 关联用户信息，一对多关联
+    private List&lt;User2&gt; userList;
+    //...
+}
+
+//User2.java POJO类
+public class User2 {
+    private Long id;
+    private String userName;
+    private String realName;
+    private SexEnum sex;
+    private String moble;
+    private String email;
+    private String note;
+    // 对角色一对多关联
+    private List&lt;Role2&gt; roleList;
+    //...
+}
+
+//RoleMapper2.xml
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper2.RoleMapper2&quot;&gt;
+    &lt;resultMap type=&quot;com.ssm.chapter5.pojo2.Role2&quot; id=&quot;roleMapper&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;role_name&quot; property=&quot;roleName&quot; /&gt;
+        &lt;result column=&quot;note&quot; property=&quot;note&quot; /&gt;
+        &lt;collection property=&quot;userList&quot; column=&quot;id&quot; 
+            select=&quot;com.ssm.chapter5.mapper2.UserMapper2.findUserByRoleId&quot; /&gt;
+    &lt;/resultMap&gt;
+    //...
+    &lt;select id=&quot;findRoleByUserId&quot; parameterType=&quot;long&quot; resultMap=&quot;roleMapper&quot;&gt;
+        select r.id, r.role_name, r.note from t_role r, t_user_role ur
+        where r.id = ur.role_id and ur.user_id = #{userId}
+    &lt;/select&gt;
+&lt;/mapper&gt;
+
+//UserMapper2.xml
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper2.UserMapper2&quot;&gt;
+    &lt;resultMap type=&quot;com.ssm.chapter5.pojo2.User2&quot; id=&quot;userMapper&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;user_name&quot; property=&quot;userName&quot; /&gt;
+        //...
+        &lt;collection property=&quot;roleList&quot; column=&quot;id&quot; 
+            select=&quot;com.ssm.chapter5.mapper2.RoleMapper2.findRoleByUserId&quot; /&gt;
+    &lt;/resultMap&gt;
+    //...
+    &lt;select id=&quot;findUserByRoleId&quot; parameterType=&quot;long&quot; resultMap=&quot;userMapper&quot;&gt;
+        select u.id, u.user_name, u.real_name, u.sex, u.moble, u.email, u.note
+        from
+        t_user u , t_user_role ur where u.id = ur.user_id and ur.role_id =#{roleId}
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre><p>上述为多对多拆分为两个一对多的例子。<br>为用户添加一个<code>角色列表roleList</code>,为角色添加一个<code>用户列表userList</code>。另一个方法是创建一个用户角色关系表记录关系。</p>
+<p>####1.4 discriminator 鉴别器<br>鉴别器，通过指定字段的值返回不同的结果集。类似java中的switch语句。 </p>
+<p>示例：员工分为男性员工与女性员工，如果需要体检，那么男性员工与女性员工的体检项目不同。即显示的体检项目表不同。</p>
+<pre><code>//Employee.java POJO类
+public class Employee {
+    private Long id;
+    private String realName;
+    private SexEnum sex = null;
+    //...
+}
+
+//MaleEmployee.java POJO类,继承Employee
+public class MaleEmployee extends Employee {
+    private MaleHealthForm maleHealthForm = null; //男性员工体检表
+    public MaleHealthForm getMaleHealthForm() {
+        return maleHealthForm;
+    }
+    public void setMaleHealthForm(MaleHealthForm maleHealthForm) {
+        this.maleHealthForm = maleHealthForm;
+    }
+}
+
+//EmployeeMapper.xml
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.EmployeeMapper&quot;&gt;
+    &lt;resultMap type=&quot;com.ssm.chapter5.pojo.Employee&quot; id=&quot;employee&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;real_name&quot; property=&quot;realName&quot; /&gt;
+        &lt;result column=&quot;sex&quot; property=&quot;sex&quot;
+            typeHandler=&quot;com.ssm.chapter5.typeHandler.SexTypeHandler&quot; /&gt;
+        //...
+        &lt;!--核心代码--&gt;
+        &lt;discriminator javaType=&quot;int&quot; column=&quot;sex&quot;&gt;     &lt;!--根据性别指定体检表结果集的类型--&gt;
+            &lt;case value=&quot;1&quot; resultMap=&quot;maleHealthFormMapper&quot; /&gt;
+            &lt;case value=&quot;2&quot; resultMap=&quot;femaleHealthFormMapper&quot; /&gt;
+        &lt;/discriminator&gt;
+    &lt;/resultMap&gt;
+
+    &lt;resultMap type=&quot;com.ssm.chapter5.pojo.MaleEmployee&quot; id=&quot;maleHealthFormMapper&quot;
+        extends=&quot;employee&quot;&gt;                             &lt;!--定义体检表结果集，此处继承基类--&gt;
+        &lt;association property=&quot;maleHealthForm&quot; column=&quot;id&quot;
+            select=&quot;com.ssm.chapter5.mapper.MaleHealthFormMapper.getMaleHealthForm&quot; /&gt;
+    &lt;/resultMap&gt;
+
+    //...
+&lt;/mapper&gt;
+
+//MaleHealthFormMapper.xml
+&lt;mapper namespace=&quot;com.ssm.chapter5.mapper.MaleHealthFormMapper&quot;&gt;
+    &lt;select id=&quot;getMaleHealthForm&quot; parameterType=&quot;long&quot;
+        resultType=&quot;com.ssm.chapter5.pojo.MaleHealthForm&quot;&gt;
+        select id, heart, liver, spleen, lung, kidney, prostate, note from
+        t_male_health_form where emp_id = #{id}
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre><p><strong>discriminator元素说明：</strong></p>
+<ul>
+<li>column :指定用于鉴别的SQL字段名(eg:column=”sex”指定SQL中列名为sex的字段作为鉴别字段)</li>
+<li>javaType :指定字段对应的值的类型(eg:sex字段对应的值为整型：1、2)</li>
+<li>case：排它性的条件分支。case的结果集可以通过resultType或者resultMap设置（不能同时使用）<ul>
+<li>resultMap：指定返回数据的结果集映射关系。</li>
+<li>resultType:指定返回数据的类型，自动映射。当列名与属性名不对应时，可以重新设置<code>&lt;id /&gt;</code>、<code>&lt;result /&gt;</code>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>discriminator的作用归纳：</strong> </p>
+<p>根据数据库查询出的数据的指定值，判断返回哪一个结果集。<code>discriminator</code>中的<code>case</code>定义了返回的结果集。</p>
+<ul>
+<li>没有鉴别器时，<code>&lt;select resultMap=&quot;employee&quot;&gt;</code>语句的返回结果集由<code>id=employee</code>的resultMap决定</li>
+<li>存在鉴别器时，<code>&lt;select resultMap=&quot;employee&quot;&gt;</code>语句的返回结果集根据<code>discriminator</code>中的<code>case</code>决定</li>
+</ul>
+<p>eg:上述例子中<code>EmployeeMapper.xml</code>的结果集存在鉴别器，即调用<code>&lt;select resultMap=&quot;employee&quot;&gt;</code>等语句返回的结果集的类型为：</p>
+<ul>
+<li>sex = 1 =&gt; id = maleHealthFormMapper 的 resultMap（MaleEmployee类）</li>
+<li>sex = 2 =&gt; id = femaleHealthFormMapper 的 resultMap(FemaleEmployee类）</li>
+<li>sex != 1和2（即未定义）=&gt; id = employee的resultMap(Employee类-默认)</li>
+</ul>
+<p>可以理解为<code>&lt;select resultMap=&quot;employee&quot;&gt;</code>等语句返回类型有3种，分别是MaleEmployee、FemaleEmployee和Employee。</p>
+<p><strong>Case使用的注意事项：</strong></p>
+<p>case中可以指定返回结果集的类型，即<code>resultType</code>或者<code>resultMap中的type</code>,需要动态的修改结果文件mapper.java中的返回类型，否则会抛类型转化异常。</p>
+<p>eg:</p>
+<pre><code>//mapper.xml
+//...
+&lt;discriminator javaType=&quot;int&quot; column=&quot;sex&quot;&gt;
+    &lt;case value=&quot;1&quot; resultType=&quot;string&quot; /&gt; 
+    &lt;case value=&quot;2&quot; resultType=&quot;int&quot; /&gt;      
+&lt;/discriminator&gt; 
+//...
+
+//mapper.java
+int getData();
+</code></pre><p>如上述示例，getData()在case=1的情况下，如果结果集无法强转为int类型，那么抛出异常。</p>
+<p><strong>Case设置自身属性：</strong></p>
+<pre><code>//mapper.xml
+&lt;resultMap type=&quot;com.ssm.chapter5.pojo.Employee&quot; id=&quot;employee&quot;&gt;
+//...
+&lt;result column=&quot;col&quot; property=&quot;prop&quot;/&gt; 如果不配置此项，只要执行case语句，则POJO中的prop为空（列名与POJO属性名一样） 
+&lt;discriminator javaType=&quot;int&quot; column=&quot;sex&quot;&gt;
+    &lt;case value=&quot;1&quot; resultType=&quot;com.ssm.chapter5.pojo.Employee&quot; &gt; 
+        &lt;result column=&quot;col&quot; property=&quot;prop1&quot;/&gt;
+    &lt;/case&gt;
+    &lt;case value=&quot;2&quot; resultType=&quot;com.ssm.chapter5.pojo.Employee&quot; /&gt;    
+        &lt;result column=&quot;col&quot; property=&quot;prop2&quot;/&gt;
+    &lt;/case&gt;
+&lt;/discriminator&gt;   
+&lt;/resultMap&gt;
+//...
+</code></pre><p>resultType指定的类型与外部的resultMap类型一致：</p>
+<ul>
+<li>case 1：{prop:null,prop1:col,prop2:null}</li>
+<li>case 2: {prop:null,prop1:null,prop2:col}</li>
+<li>case (value!=1&amp;&amp;value!=2) :{prop:col,prop1:null,prop2:null} (假设POJO的属性prop与SQL的列名col相等)</li>
+</ul>
+<p>设置了<code>&lt;result column=&quot;col&quot; property=&quot;prop&quot;/&gt;</code>后：</p>
+<ul>
+<li>case 1：{prop:col,prop1:col,prop2:null}</li>
+<li>case 2：{prop:col,prop1:null,prop2:col}</li>
+<li>case (value!=1&amp;&amp;value!=2) :{prop:col,prop1:null,prop2:null}</li>
+</ul>
+<p><strong>resultMap中的<code>extends</code>的作用：</strong></p>
+<ul>
+<li>继承指定resultMap的所有参数(所有的<code>&lt;id /&gt;</code>、<code>&lt;result /&gt;</code>),注意：POJO类如果不存在该属性会抛异常</li>
+<li>resultType不需<code>extends</code></li>
+</ul>
+<p>eg:</p>
+<ul>
+<li>resultMap不使用extends时，MaleEmployee只会设置<code>id</code>、<code>sex</code>、<code>maleHealthForm</code>3个属性，其他属性为空</li>
+<li><p>resultMap使用extends后，等价于下面的配置（即<code>MaleEmployee</code>包含<code>Employee</code>所有的<code>&lt;id /&gt;</code>、<code>&lt;result /&gt;</code>）</p>
+<pre><code>&lt;resultMap type=&quot;com.ssm.chapter5.pojo.MaleEmployee&quot; id=&quot;maleHealthFormMapper&quot;&gt; 
+    &lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+    &lt;result column=&quot;real_name&quot; property=&quot;realName&quot; /&gt;   &lt;!--原属于employee的配置--&gt;
+    &lt;result column=&quot;sex&quot; property=&quot;sex&quot;                    &lt;!--原属于employee的配置--&gt;
+        typeHandler=&quot;com.ssm.chapter5.typeHandler.SexTypeHandler&quot; /&gt;
+    //...
+    &lt;!--定义体检表结果集，此处继承基类--&gt;                
+    &lt;association property=&quot;maleHealthForm&quot; column=&quot;id&quot;
+        select=&quot;com.ssm.chapter5.mapper.MaleHealthFormMapper.getMaleHealthForm&quot; /&gt;
+&lt;/resultMap&gt;
+</code></pre></li>
+</ul>
+<p>###1.5 延迟加载<br>对于不常的级联采用延时加载的策略，避免N+1问题。</p>
+<ol>
+<li>MyBatis的settings配置延时加载：</li>
+</ol>
+<ul>
+<li>lazyLoadingEnable：延时加载全局开关。如果为false，则所有级联都会被初始化加载。（默认值:false）</li>
+<li>aggressiveLazyLoading:按需加载属性，如果为true,只要加载对象就会加载该对象的所有属性（lazyLoadingEnable：true时。只限于属性同一层级，即属性内部的层级暂不加载）。如果false，该属性则会按需加载，即<strong>使用到某关联属性</strong>时，实时执行嵌套查询加载该属性(默认值:3.4.1之前为true,之后为false)</li>
+</ul>
+<ol start="2">
+<li>级联(association、collection)元素配置 fetch </li>
+</ol>
+<p>fetch的属性值：</p>
+<ul>
+<li>eager:获取当前POJO后立即加载</li>
+<li>lazy:获得当前POJO后延迟加载对应数据</li>
+</ul>
+<p>fetch会忽略全局的lazyLoadingEnable和aggressiveLazyLoading配置</p>
+<p>####1.6 基于SQL表连接的级联方式(join)<br>在编写SQL联表查询时，通常会使用join关键字（eg:Left join）。</p>
+<pre><code>//Mapper.xml中的select语句 =&gt; left jion
+&lt;select id=&quot;getEmployee2&quot; parameterType=&quot;long&quot; resultMap=&quot;employee2&quot;&gt;
+    select
+    emp.id, emp.real_name, emp.sex, emp.birthday,
+    emp.mobile, emp.email,
+    emp.position, emp.note,
+    et.id as et_id, et.task_id as et_task_id,
+    et.task_name as et_task_name,
+    et.note as et_note,
+    if (emp.sex = 1,
+    mhf.id, fhf.id) as h_id,
+    if (emp.sex = 1, mhf.heart, fhf.heart) as
+    h_heart,
+    if (emp.sex = 1, mhf.liver, fhf.liver) as h_liver,
+    if (emp.sex
+    = 1, mhf.spleen, fhf.spleen) as h_spleen,
+    if (emp.sex = 1, mhf.lung,
+    fhf.lung) as h_lung,
+    if (emp.sex = 1, mhf.kidney, fhf.kidney) as
+    h_kidney,
+    if (emp.sex = 1, mhf.note, fhf.note) as h_note,
+    mhf.prostate
+    as h_prostate, fhf.uterus as h_uterus,
+    wc.id wc_id, wc.real_name
+    wc_real_name, wc.department wc_department,
+    wc.mobile wc_mobile,
+    wc.position wc_position, wc.note as wc_note,
+    t.id as t_id, t.title as
+    t_title, t.context as t_context, t.note as t_note
+    from t_employee emp
+    left join t_employee_task et on emp.id = et.emp_id
+    left join
+    t_female_health_form fhf on emp.id = fhf.emp_id
+    left join
+    t_male_health_form mhf on emp.id = mhf.emp_id
+    left join t_work_card wc
+    on emp.id = wc.emp_id
+    left join t_task t on et.task_id = t.id
+    where
+    emp.id = #{id}
+&lt;/select&gt;
+
+//Mapper.xml中对应的resultMap ---BEG
+&lt;resultMap id=&quot;employee2&quot; type=&quot;com.ssm.chapter5.pojo.Employee&quot;&gt;
+    &lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+    &lt;result column=&quot;real_name&quot; property=&quot;realName&quot; /&gt;
+    &lt;result column=&quot;sex&quot; property=&quot;sex&quot;
+        typeHandler=&quot;com.ssm.chapter5.typeHandler.SexTypeHandler&quot; /&gt;
+    &lt;result column=&quot;birthday&quot; property=&quot;birthday&quot; /&gt;
+    &lt;result column=&quot;mobile&quot; property=&quot;mobile&quot; /&gt;
+    &lt;result column=&quot;email&quot; property=&quot;email&quot; /&gt;
+    &lt;result column=&quot;position&quot; property=&quot;position&quot; /&gt;
+    &lt;association property=&quot;workCard&quot; javaType=&quot;com.ssm.chapter5.pojo.WorkCard&quot;
+        column=&quot;id&quot;&gt;                    &lt;!--声明POJO映射类型--&gt;
+        &lt;id column=&quot;wc_id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;id&quot; property=&quot;empId&quot; /&gt;
+        &lt;result column=&quot;wc_real_name&quot; property=&quot;realName&quot; /&gt;
+        &lt;result column=&quot;wc_department&quot; property=&quot;department&quot; /&gt;
+        &lt;result column=&quot;wc_mobile&quot; property=&quot;mobile&quot; /&gt;
+        &lt;result column=&quot;wc_position&quot; property=&quot;position&quot; /&gt;
+        &lt;result column=&quot;wc_note&quot; property=&quot;note&quot; /&gt;
+    &lt;/association&gt;
+    &lt;collection property=&quot;employeeTaskList&quot; ofType=&quot;com.ssm.chapter5.pojo.EmployeeTask&quot;
+        column=&quot;id&quot;&gt;            &lt;!--声明POJO映射类型--&gt;
+        &lt;id column=&quot;et_id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;id&quot; property=&quot;empId&quot; /&gt;
+        &lt;result column=&quot;task_name&quot; property=&quot;taskName&quot; /&gt;
+        &lt;result column=&quot;note&quot; property=&quot;note&quot; /&gt;
+        &lt;association property=&quot;task&quot; javaType=&quot;com.ssm.chapter5.pojo.Task&quot; &lt;!--定义POJO映射类型--&gt;
+            column=&quot;et_task_id&quot;&gt;            
+            &lt;id column=&quot;t_id&quot; property=&quot;id&quot; /&gt;
+            &lt;result column=&quot;t_title&quot; property=&quot;title&quot; /&gt;
+            &lt;result column=&quot;t_context&quot; property=&quot;context&quot; /&gt;
+            &lt;result column=&quot;t_note&quot; property=&quot;note&quot; /&gt;
+        &lt;/association&gt;
+    &lt;/collection&gt;
+    &lt;discriminator javaType=&quot;int&quot; column=&quot;sex&quot;&gt;
+        &lt;case value=&quot;1&quot; resultMap=&quot;maleHealthFormMapper2&quot; /&gt;
+        &lt;case value=&quot;2&quot; resultMap=&quot;femaleHealthFormMapper2&quot; /&gt;
+    &lt;/discriminator&gt;
+&lt;/resultMap&gt;
+
+&lt;resultMap type=&quot;com.ssm.chapter5.pojo.MaleEmployee&quot; id=&quot;maleHealthFormMapper2&quot;
+    extends=&quot;employee2&quot;&gt;
+    &lt;association property=&quot;maleHealthForm&quot; column=&quot;id&quot;
+        javaType=&quot;com.ssm.chapter5.pojo.MaleHealthForm&quot;&gt; &lt;!--定义POJO映射类型--&gt;
+        &lt;id column=&quot;h_id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;h_heart&quot; property=&quot;heart&quot; /&gt;
+        &lt;result column=&quot;h_liver&quot; property=&quot;liver&quot; /&gt;
+        &lt;result column=&quot;h_spleen&quot; property=&quot;spleen&quot; /&gt;
+        &lt;result column=&quot;h_lung&quot; property=&quot;lung&quot; /&gt;
+        &lt;result column=&quot;h_kidney&quot; property=&quot;kidney&quot; /&gt;
+        &lt;result column=&quot;h_prostate&quot; property=&quot;prostate&quot; /&gt;
+        &lt;result column=&quot;h_note&quot; property=&quot;note&quot; /&gt;
+    &lt;/association&gt;
+&lt;/resultMap&gt;
+
+&lt;resultMap type=&quot;com.ssm.chapter5.pojo.FemaleEmployee&quot; id=&quot;femaleHealthFormMapper2&quot;
+    extends=&quot;employee&quot;&gt;
+    &lt;association property=&quot;femaleHealthForm&quot; column=&quot;id&quot;
+        javaType=&quot;com.ssm.chapter5.pojo.FemaleHealthForm&quot;&gt; &lt;!--声明POJO映射类型--&gt;
+        &lt;id column=&quot;h_id&quot; property=&quot;id&quot; /&gt;
+        &lt;result column=&quot;h_heart&quot; property=&quot;heart&quot; /&gt;
+        &lt;result column=&quot;h_liver&quot; property=&quot;liver&quot; /&gt;
+        &lt;result column=&quot;h_spleen&quot; property=&quot;spleen&quot; /&gt;
+        &lt;result column=&quot;h_lung&quot; property=&quot;lung&quot; /&gt;
+        &lt;result column=&quot;h_kidney&quot; property=&quot;kidney&quot; /&gt;
+        &lt;result column=&quot;h_uterus&quot; property=&quot;uterus&quot; /&gt;
+        &lt;result column=&quot;h_note&quot; property=&quot;note&quot; /&gt;
+    &lt;/association&gt;
+&lt;/resultMap&gt;
+
+//Mapper.xml中对应的resultMap ---END
+</code></pre><p>这种方式虽然消除了N+1问题，但一次性取出所有数据造成内存的浪费,且后期维护困难。</p>
+<p>如果SQL联表查询仅仅单次使用，用resultType=”map”会减少很多resultMap的定义。缺点是map的可读性比较低。</p>
+<p>###2.缓存<br>MyBatis中存在一级缓存和二级缓存。</p>
+<ul>
+<li>一级缓存：SqlSession上的缓存，需要采用同一SqlSession对象（默认启动）</li>
+<li>二级缓存：SqlSessionFactory上的缓存，可以在不同的SqlSession中获取同一条记录<ul>
+<li>mapper.xml中配置<code>&lt;cache /&gt;</code></li>
+<li>序列化POJO类（即实现Serializable接口）</li>
+<li>SqlSession调用语句后，调用sqlSession.commit()才会缓存到SqlSessionFactory层面</li>
+</ul>
+</li>
+</ul>
+<p><code>&lt;cache /&gt;</code>节点说明：加入该元素后，MyBatis会缓存对应命名空间的所有select元素SQL查询结果，而<strong>insert、delete和update语句在操作时会刷新缓存。</strong></p>
+<p><code>&lt;cache /&gt;</code>的属性：</p>
+<ul>
+<li>blocking:是否使用阻塞性缓存，在读写加入JNI的锁进行操作。保证读写安全，但性能不佳(默认：false)</li>
+<li>readonly:缓存是否只读。多线程读写一致性。（默认：false）</li>
+<li>eviction：缓存策略。<ul>
+<li>LRU：最近最少使用的，移除最长时间不被使用的对象</li>
+<li>FIFO：先进先出，按对象进入缓存的顺序来移除</li>
+<li>SOFT：软引用，移除基于软引用规则的对象</li>
+<li>WEAK：弱引用，移除基于弱引用规则的对象</li>
+</ul>
+</li>
+<li>flushInterval：缓存有效期，以毫秒为单位（默认：null，即没有刷新时间，所以只有insert、delete和update语句在操作时会刷新缓存）</li>
+<li>type:自定义缓存，需要实现Cache接口</li>
+<li>size：缓存对象个数。（默认值：1024）</li>
+</ul>
+<p><code>&lt;cache /&gt;</code>属性会缓存当前命名空间的select元素SQL查询结果，如果需要个别处理，可通过在语句中加入属性：</p>
+<ul>
+<li>flushCache:是否刷新缓存(select、insert、delete、update均可用)</li>
+<li>useCache：是否使用缓存(只限于select语句)</li>
+</ul>
+<p>提示：引用其他映射器的缓存配置可以通过<code>&lt;cache-ref namespace=&quot;...&quot;/&gt;</code>引用</p>
+<p>###3.总结</p>
+<ul>
+<li>MyBatis的级联主要是方便关联数据的读取，但级联层数过多会影响系统的性能，增加系统复杂度。所以在使用级联的时候需要考虑级联的深度（最好小于等于3层），</li>
+<li>在使用级联时，可以通过配置延时加载来减少内存消耗<ul>
+<li>全局配置lazyLoadingEnable 和aggressiveLazyLoading</li>
+<li>局部配置fetch</li>
+</ul>
+</li>
+<li>可以通过开启缓存来优化数据的加载性能和速度。<ul>
+<li>一级缓存：SqlSession</li>
+<li>二级缓存：SqlSessionFactory</li>
+</ul>
+</li>
+</ul>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy    <br><br>– 2018.12.07</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/12/06/MyBatis学习记录04——Mapper-下/" data-id="cjpe56r8t0011g0vwwio2qk7z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/05/MyBatis学习记录03——Mapper/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">MyBatis学习记录03——Mapper(上)</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" class="title">MyBatis学习记录04——Mapper(下)</a></p>
+                            <p class="item-date"><time datetime="2018-12-06T08:00:21.000Z" itemprop="datePublished">2018-12-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/05/MyBatis学习记录03——Mapper/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/05/MyBatis学习记录03——Mapper/" class="title">MyBatis学习记录03——Mapper(上)</a></p>
+                            <p class="item-date"><time datetime="2018-12-05T13:49:28.000Z" itemprop="datePublished">2018-12-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/03/MyBatis学习记录02——配置/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/03/MyBatis学习记录02——配置/" class="title">MyBatis学习记录02——配置</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T12:24:59.000Z" itemprop="datePublished">2018-12-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/30/MyBatis学习记录01——基础搭建/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/11/30/MyBatis学习记录01——基础搭建/" class="title">MyBatis学习记录01——基础搭建</a></p>
+                            <p class="item-date"><time datetime="2018-11-30T08:41:51.000Z" itemprop="datePublished">2018-11-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/29/springMVC设置默认启动页/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/springMVC/">springMVC</a></p>
+                            <p class="item-title"><a href="/2018/11/29/springMVC设置默认启动页/" class="title">springMVC设置默认启动页</a></p>
+                            <p class="item-date"><time datetime="2018-11-29T08:57:57.000Z" itemprop="datePublished">2018-11-29</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 12px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 14px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 16px;">MyBatis学习记录</a> <a href="/tags/React-Navigation/" style="font-size: 12px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 16px;">SSM</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 18px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Nowy<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
