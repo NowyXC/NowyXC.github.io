@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: hexo | Nowy_Blog</title>
+    <title>MyBatis学习记录05——动态SQL | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/tags/hexo/index.html">
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Mapper中的动态SQL语句的使用示例 动态SQL关键字：  if:条件判断（一般与test连用） test:判断条件的真假 chose(when,otherwise)：多条件分支，类似Java中switch语句。 foreach：循环语句 w">
+<meta name="keywords" content="MyBatis学习记录,SSM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis学习记录05——动态SQL">
+<meta property="og:url" content="http://yoursite.com/2018/12/08/MyBatis学习记录05——动态SQL/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Mapper中的动态SQL语句的使用示例 动态SQL关键字：  if:条件判断（一般与test连用） test:判断条件的真假 chose(when,otherwise)：多条件分支，类似Java中switch语句。 foreach：循环语句 w">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-08T09:18:56.103Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="MyBatis学习记录05——动态SQL">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Mapper中的动态SQL语句的使用示例 动态SQL关键字：  if:条件判断（一般与test连用） test:判断条件的真假 chose(when,otherwise)：多条件分支，类似Java中switch语句。 foreach：循环语句 w">
     
 
     
@@ -182,86 +187,298 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#hexo</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-MyBatis学习记录05——动态SQL" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/photoTest/">photoTest</a>
+        <h1 class="article-title" itemprop="name">
+            MyBatis学习记录05——动态SQL
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/photoTest/">
-            <time datetime="2018-10-08T18:05:50.000Z" itemprop="datePublished">2018-10-09</time>
+        <a href="/2018/12/08/MyBatis学习记录05——动态SQL/">
+            <time datetime="2018-12-08T07:44:41.000Z" itemprop="datePublished">2018-12-08</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
+        <a class="article-category-link" href="/categories/MyBatis/">MyBatis</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
+        <a class="tag-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a>, <a class="tag-link" href="/tags/SSM/">SSM</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/08/categoriesTest/">CategoriesTest</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>本文主要记录Mapper中的动态SQL语句的使用示例</p>
+<p>动态SQL关键字：</p>
+<ul>
+<li>if:条件判断（一般与test连用）</li>
+<li>test:判断条件的真假</li>
+<li>chose(when,otherwise)：多条件分支，类似Java中switch语句。</li>
+<li>foreach：循环语句</li>
+<li>where:只会在至少有一个子元素的条件返回SQL子句的情况下才去插入“WHERE”子句。若语句的开头为“AND”或“OR”，where 元素也会将它们去除。</li>
+<li>set:动态设置字段到update语句中，会动态移除语句结尾的多余的”,”</li>
+<li>trim:移除prefixOverrides或者suffixOverrides属性中指定的内容，并且插入 prefix 属性中指定的内容</li>
+<li>bind:从 OGNL 表达式中创建一个变量并将其绑定到上下文</li>
+</ul>
+<a id="more"></a>
+<p>###1.if和test<br>只要条件成立，子语句拼接到SQL中</p>
+<pre><code>&lt;select id=&quot;findActiveBlogLike&quot;
+     resultType=&quot;Blog&quot;&gt;
+  SELECT * FROM BLOG WHERE state = ‘ACTIVE’ 
+  &lt;if test=&quot;title != null&quot;&gt;
+    AND title like #{title}
+  &lt;/if&gt;
+  &lt;if test=&quot;author != null and author.name != null&quot;&gt;
+    AND author_name like #{author.name}
+  &lt;/if&gt;
+&lt;/select&gt;
+</code></pre><p>上述示例的含义：如果<code>参数title</code>不为空，对<code>列名title</code>进行模糊查询,如果<code>参数author</code>不为空，则添加对<code>列author_name</code>的模糊查询</p>
+<p>###2.chose(when,otherwise) 多条件查询<br>类似java中的switch，从子语句中选择成立的一条语句执行。</p>
+<pre><code>&lt;select id=&quot;findActiveBlogLike&quot;
+     resultType=&quot;Blog&quot;&gt;
+  SELECT * FROM BLOG WHERE state = ‘ACTIVE’
+  &lt;choose&gt;
+    &lt;when test=&quot;title != null&quot;&gt;
+      AND title like #{title}
+    &lt;/when&gt;
+    &lt;when test=&quot;author != null and author.name != null&quot;&gt;
+      AND author_name like #{author.name}
+    &lt;/when&gt;
+    &lt;otherwise&gt;
+      AND featured = 1
+    &lt;/otherwise&gt;
+  &lt;/choose&gt;
+&lt;/select&gt;
+</code></pre><p>###3.foreach 循环语句<br>对一个集合进行遍历，通常是在构建 IN 条件语句的时候</p>
+<pre><code>&lt;select id=&quot;selectPostIn&quot; resultType=&quot;domain.blog.Post&quot;&gt;
+  SELECT *
+  FROM POST P
+  WHERE ID in
+  &lt;foreach item=&quot;item&quot; index=&quot;index&quot; collection=&quot;list&quot;
+      open=&quot;(&quot; separator=&quot;,&quot; close=&quot;)&quot;&gt;
+        #{item}
+  &lt;/foreach&gt;
+&lt;/select&gt;
+</code></pre><p>参数说明：</p>
+<ul>
+<li>item：循环中的当前对象</li>
+<li>index:循环中的当前索引（下标值）</li>
+<li>collection:传入的集合，支持数组、List、Set、Map等。（使用Map时，index 是键，item 是值） </li>
+<li>open:拼接字符串的开头</li>
+<li>close:拼接字符串的结尾</li>
+<li>separator:字符串的分隔符</li>
+</ul>
+<p>上述示例拼接结果：</p>
+<pre><code>SELECT *
+     FROM POST P
+     WHERE ID in (item1,item2,...itemN)
+</code></pre><p>###4.where<br>根据子语句的成立情况，在SQL语句中插入where子语句。</p>
+<pre><code>&lt;select id=&quot;findActiveBlogLike&quot;
+     resultType=&quot;Blog&quot;&gt;
+  SELECT * FROM BLOG 
+  &lt;where&gt;     &lt;!--其中只要有一个if成立，为SQL语句添加where子语句--&gt;
+    &lt;if test=&quot;state != null&quot;&gt;
+         state = #{state}
+    &lt;/if&gt; 
+    &lt;if test=&quot;title != null&quot;&gt;
+        AND title like #{title}
+    &lt;/if&gt;
+    &lt;if test=&quot;author != null and author.name != null&quot;&gt;
+        AND author_name like #{author.name}
+    &lt;/if&gt;
+  &lt;/where&gt;
+&lt;/select&gt;
+</code></pre><p>###5.set<br>动态设置字段到update语句中，会动态移除语句结尾的多余的”,”</p>
+<pre><code>&lt;update id=&quot;updateAuthorIfNecessary&quot;&gt;
+  update Author
+    &lt;set&gt;
+      &lt;if test=&quot;username != null&quot;&gt;username=#{username},&lt;/if&gt;
+      &lt;if test=&quot;password != null&quot;&gt;password=#{password},&lt;/if&gt;
+      &lt;if test=&quot;email != null&quot;&gt;email=#{email},&lt;/if&gt;
+      &lt;if test=&quot;bio != null&quot;&gt;bio=#{bio}&lt;/if&gt;
+    &lt;/set&gt;
+  where id=#{id}
+&lt;/update&gt;
+</code></pre><p>###6.trim<br>移除prefixOverrides或者suffixOverrides属性中指定的内容，并且插入 prefix 属性中指定的内容</p>
+<ul>
+<li>prefixOverrides：移除前缀</li>
+<li>suffixOverrides：移除后缀</li>
+</ul>
+<p>示例代码：</p>
+<pre><code>//示例1
+&lt;select id=&quot;findActiveBlogLike&quot;
+     resultType=&quot;Blog&quot;&gt;
+  SELECT * FROM BLOG 
+  &lt;trim prefix=&quot;where&quot; prefixOverrides=&quot;AND&quot;&gt;     &lt;!--其中只要有一个if成立，为SQL语句添加where子语句--&gt;
+    &lt;if test=&quot;state != null&quot;&gt;
+         state = #{state}
+    &lt;/if&gt; 
+    &lt;if test=&quot;title != null&quot;&gt;
+        AND title like #{title}
+    &lt;/if&gt;
+    &lt;if test=&quot;author != null and author.name != null&quot;&gt;
+        AND author_name like #{author.name}
+    &lt;/if&gt;
+  &lt;/trim&gt;
+&lt;/select&gt;
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/categoriesTest/">
-            <time datetime="2018-10-08T15:54:32.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
+//示例2
+&lt;update id=&quot;updateAuthorIfNecessary&quot;&gt;
+  update Author
+    &lt;trim prefix=&quot;SET&quot; suffixOverrides=&quot;,&quot;&gt;
+      &lt;if test=&quot;username != null&quot;&gt;username=#{username},&lt;/if&gt;
+      &lt;if test=&quot;password != null&quot;&gt;password=#{password},&lt;/if&gt;
+      &lt;if test=&quot;email != null&quot;&gt;email=#{email},&lt;/if&gt;
+      &lt;if test=&quot;bio != null&quot;&gt;bio=#{bio}&lt;/if&gt;
+    &lt;/trim&gt;
+  where id=#{id}
+&lt;/update&gt;
+</code></pre><p>where与set变为trim语句</p>
+<ol>
+<li><p>where =&gt; trim </p>
+<pre><code>&lt;trim prefix=&quot;WHERE&quot; prefixOverrides=&quot;AND |OR &quot;&gt;
+  ... 
+&lt;/trim&gt;
+</code></pre></li>
+<li><p>set =&gt; trim </p>
+<pre><code>&lt;trim prefix=&quot;SET&quot; suffixOverrides=&quot;,&quot;&gt;
+  ...
+&lt;/trim&gt;
+</code></pre></li>
+</ol>
+<p>###7. bind<br>从 OGNL 表达式中创建一个变量并将其绑定到上下文</p>
+<pre><code>&lt;select id=&quot;selectBlogsLike&quot; resultType=&quot;RoleBean&quot;&gt;
+      &lt;bind name=&quot;pattern_roleName&quot; value=&quot;&apos;%&apos; + roleName + &apos;%&apos;&quot; /&gt;
+    &lt;bind name=&quot;pattern_note&quot; value=&quot;&apos;%&apos; + note + &apos;%&apos;&quot; /&gt;
+  SELECT * FROM t_role
+  WHERE role_name LIKE #{pattern_roleName}
+  AND note LIKE #{pattern_note}  
+&lt;/select&gt;
+</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.08</p>
 
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="http://yoursite.com/2018/12/08/MyBatis学习记录05——动态SQL/" data-id="cjpf8z4g1000ktwvws0e51u1h" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">MyBatis学习记录04——Mapper(下)</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
