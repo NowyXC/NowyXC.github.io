@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Spring学习记录(01)——装配Spring Bean | Nowy_Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
+<meta name="keywords" content="SSM,Spring学习记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习记录(01)——装配Spring Bean">
+<meta property="og:url" content="http://yoursite.com/2018/12/09/Spring学习记录-01-——装配Spring-Bean/index.html">
+<meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-10T08:01:04.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习记录(01)——装配Spring Bean">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Nowy_Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Nowy</h2>
+            <h3 id="title">无名的Android开发者</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>GuangZhou(广州), China</span>
+            <a id="follow" target="_blank" href="https://github.com/NowyXC">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                31
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                25
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/NowyXC" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Spring学习记录-01-——装配Spring-Bean" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Spring学习记录(01)——装配Spring Bean
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/">
+            <time datetime="2018-12-09T13:06:23.000Z" itemprop="datePublished">2018-12-09</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spring/">Spring</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/Spring学习记录/">Spring学习记录</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>本文主要记录装配Spring Bean的学习笔记。</p>
+<a id="more"></a>
+<p>###1.Spring</p>
+<ul>
+<li>Spring框架的核心理念是IoC(控制反转)和AOP（面向切面编程）。</li>
+<li>Spring会认为一切java类都是资源，而资源都是Bean，容纳这些Bean的就是Spring所提供的IoC容器。（基于Bean的编程）</li>
+<li>Spring中的IoC容器的实现方法是依赖注入(DI)(通常有两种方法：依赖查找和依赖注入)</li>
+</ul>
+<p><strong>IoC(控制反转)：</strong>由容器帮助对象查找和注入资源属性，而非通过对象主动请求获取资源属性。</p>
+<p><strong>AOP(面向切面编程):</strong>将每个业务块定义为一个切面，由一个个切面组成业务流。在需要扩展功能时，利用如代理之类的方式对切面进行功能扩展，而不影响切面原来的代码逻辑。</p>
+<p><strong>IoC的两种实现方式：</strong></p>
+<ul>
+<li><p><strong>依赖查找</strong>：容器提供回调接口和上下文条件给组件。组件必须使用容器提供的API来查找资源和协作对象，仅有的控制反转只体现在那些回调方法上。容器将调用这些回调方法，从而让应用代码获得相关资源。</p>
+</li>
+<li><p><strong>依赖注入(DI)</strong>：组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。容器全权负责的组件的装配，它会把符合依赖关系的对象通过JavaBean属性或者构造函数传递给需要的对象。</p>
+</li>
+</ul>
+<p>Spring的IoC容器是为了容纳开发中的各种Bean，并让开发者<strong>通过描述</strong>获取到Bean。（Bean可以是资源、java类等）</p>
+<p><strong>依赖注入的3种方式：</strong></p>
+<ol>
+<li>构造器注入：Spring采用反射的方式，通过使用构造方法来完成注入。</li>
+<li>设值注入：Spring采用反射的方式，通过获取Java Bean规范的setter方法完成注入。（较为灵活和可读性高）</li>
+<li>接口注入：从外部注入。（例如Tomcat配置数据库连接资源，通过JNDI的形式获取，生成连接实例）</li>
+</ol>
+<p><strong>构造器注入：</strong></p>
+<pre><code>&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt; &lt;!--对应Role(String,String)--&gt;
+    &lt;constructor-arg index=&quot;0&quot; value=&quot;高级工程师&quot; /&gt; &lt;!--构造器第一个参数--&gt;
+    &lt;constructor-arg index=&quot;1&quot; value=&quot;重要人员&quot; /&gt;   &lt;!--构造器第二个参数--&gt;
+&lt;/bean&gt;
+</code></pre><p><strong>setter注入：</strong></p>
+<pre><code>&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt;
+    &lt;property name=&quot;roleName&quot; value=&quot;高级工程师&quot; /&gt;  &lt;!--对应setRoleName(String)--&gt;
+    &lt;property name=&quot;note&quot; value=&quot;重要人员&quot; /&gt;        &lt;!--对应setNote(String)--&gt;
+&lt;/bean&gt;
+</code></pre><p><strong>接口注入:</strong>(配置Tomcat数据源)</p>
+<pre><code>//Tomcat的context.xml,Tomcat的lib目录下需要mysql的驱动包
+&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos; ?&gt;
+&lt;Context&gt;
+&lt;Resource name=&quot;jdbc/ssm&quot;  &lt;!--JNDI名称--&gt;
+auth=&quot;Container&quot;
+type=&quot;javax.sql.DataSource&quot;
+driverClassName=&quot;com.mysql.jdbc.Driver&quot;
+url=&quot;jdbc:mysql://localhost:3306/ssm?zeroDataTimeBehavior=convertToNull&quot; &lt;!--数据库的JDBC连接--&gt;
+userName=&quot;root&quot;
+password=&quot;root&quot;
+/&gt;
+&lt;/Context&gt;
+
+//spring配置
+&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&gt;
+    &lt;property name=&quot;jndiName&quot;&gt; 
+        &lt;value&gt;java:comp/env/jdbc/ssm&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+</code></pre><p>###2.Spring Bean的装配<br>Spring Bean的装配有3种方式：</p>
+<ol>
+<li>xml配置</li>
+<li>java的接口和类中实现配置（注解配置）</li>
+<li>隐式bean的发现机制(组件扫描等)和自动装配原则</li>
+</ol>
+<p>配置的使用优先级遵循：基于约定优于配置原则。（即 使用优先级： 3 &gt; 2 &gt; 1）</p>
+<p>普遍推荐的做法：</p>
+<ul>
+<li>第三方库的配置放入xml中，便于维护和理解</li>
+<li>自身开发的使用注解进行配置。 </li>
+</ul>
+<p>###2.1 XML的配置<br>在使用xml配置bean的时候，需要注意xml模板文件的导入。</p>
+<pre><code>xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+</code></pre><p><strong>简易的装配示例：</strong></p>
+<pre><code>&lt;bean id=&quot;permissionBean&quot; class=&quot;com.ssm.chapter9.pojo.PermissionBean&quot; /&gt;
+
+&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt;
+    &lt;property name=&quot;roleName&quot; value=&quot;高级工程师&quot; /&gt;  &lt;!--对应setRoleName(String)--&gt;
+    &lt;property name=&quot;note&quot; value=&quot;重要人员&quot; /&gt;        &lt;!--对应setNote(String)--&gt;
+    &lt;property name=&quot;permissionBean&quot; ref=&quot;permissionBean&quot; /&gt;
+&lt;/bean&gt;
+</code></pre><p>元素说明：</p>
+<ul>
+<li>id : bean的唯一标识。如果不声明，则用”全限定名#{number}”的格式生成</li>
+<li>class：类的全限定名，指定bean配置的的类。</li>
+<li>property:定义的类的属性配置。<ul>
+<li>name: 属性名称</li>
+<li>value: 属性值(基础类型。)</li>
+<li>ref: 属性值,引用其他bean的id。</li>
+</ul>
+</li>
+</ul>
+<p><strong>集合类型的装配示例：</strong></p>
+<pre><code>&lt;bean id=&quot;complexAssembly&quot; class=&quot;com.ssm.chapter10.pojo.ComplexAssembly&quot;&gt;
+    &lt;property name=&quot;id&quot; value=&quot;1&quot; /&gt;
+    &lt;property name=&quot;list&quot;&gt; &lt;!--基础类型的list--&gt;
+        &lt;list&gt;
+            &lt;value&gt;value-list-1&lt;/value&gt;
+            &lt;value&gt;value-list-2&lt;/value&gt;
+            &lt;value&gt;value-list-3&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;list2&quot;&gt; &lt;!--对象类型的list--&gt;
+        &lt;list&gt;
+            &lt;ref bean=&quot;beanId_1&quot;/&gt;
+            &lt;ref bean=&quot;beanId_2&quot;/&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+
+    &lt;property name=&quot;map&quot;&gt; &lt;!--基础类型的map--&gt;
+        &lt;map&gt;
+            &lt;entry key=&quot;key1&quot; value=&quot;value-key-1&quot; /&gt;
+            &lt;entry key=&quot;key2&quot; value=&quot;value-key-2&quot; /&gt;
+            &lt;entry key=&quot;key3&quot; value=&quot;value-key-3&quot; /&gt;
+        &lt;/map&gt;
+    &lt;/property&gt;
+
+    &lt;property name=&quot;map2&quot;&gt; &lt;!--对象类型的map--&gt;
+        &lt;map&gt;
+            &lt;entry key-ref=&quot;key_beanId_1&quot; value-ref=&quot;value_beanId_1&quot; /&gt;
+            &lt;entry key-ref=&quot;key_beanId_2&quot; value-ref=&quot;value_beanId_2&quot; /&gt;
+            &lt;entry key-ref=&quot;key_beanId_3&quot; value-ref=&quot;value_beanId_3&quot; /&gt;
+        &lt;/map&gt;
+    &lt;/property&gt;
+
+    &lt;property name=&quot;props&quot;&gt;
+        &lt;props&gt;
+            &lt;prop key=&quot;prop1&quot;&gt;value-prop-1&lt;/prop&gt;
+            &lt;prop key=&quot;prop2&quot;&gt;value-prop-2&lt;/prop&gt;
+            &lt;prop key=&quot;prop3&quot;&gt;value-prop-3&lt;/prop&gt;
+        &lt;/props&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;set&quot;&gt;
+        &lt;set&gt;
+            &lt;value&gt;value-set-1&lt;/value&gt;
+            &lt;value&gt;value-set-2&lt;/value&gt;
+            &lt;value&gt;value-set-3&lt;/value&gt;
+        &lt;/set&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;array&quot;&gt;
+        &lt;array&gt;
+            &lt;value&gt;value-array-1&lt;/value&gt;
+            &lt;value&gt;value-array-2&lt;/value&gt;
+            &lt;value&gt;value-array-3&lt;/value&gt;
+        &lt;/array&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+</code></pre><p>元素说明：</p>
+<ul>
+<li>List：List集合<ul>
+<li><code>&lt;list&gt;...&lt;/list&gt;</code></li>
+<li>子元素(基础值)：value：设置值</li>
+<li>子元素(对象值)：ref：设置引用的id</li>
+</ul>
+</li>
+<li>Map：Map集合<ul>
+<li><code>&lt;map&gt;...&lt;/map&gt;</code></li>
+<li>子元素(基础值)：<code>&lt;entry key=&quot;key1&quot; value=&quot;value-key-1&quot; /&gt;</code></li>
+<li>子元素(对象值)：<code>&lt;entry key-ref=&quot;key_beanId_3&quot; value-ref=&quot;value_beanId_3&quot; /&gt;</code></li>
+</ul>
+</li>
+<li>Properties：配置文件类型<ul>
+<li><code>&lt;props&gt;...&lt;/props&gt;</code></li>
+<li>子元素：<code>&lt;prop key=&quot;prop2&quot;&gt;value-prop-2&lt;/prop&gt;</code></li>
+</ul>
+</li>
+<li>Set：Set集合(子元素同list)<ul>
+<li><code>&lt;set&gt;...&lt;/set&gt;</code></li>
+</ul>
+</li>
+<li>array：数组(子元素同list)<ul>
+<li><code>&lt;array&gt;...&lt;/array&gt;</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>命名空间定义的装配：</strong></p>
+<pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:c=&quot;http://www.springframework.org/schema/c&quot; &lt;!--引入命名空间的定义--&gt;
+    xmlns:p=&quot;http://www.springframework.org/schema/p&quot; &lt;!--引入命名空间的定义--&gt;
+    xmlns:util=&quot;http://www.springframework.org/schema/util&quot; 
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util &lt;!--引入命名空间的定义--&gt;
+       http://www.springframework.org/schema/util/spring-util.xsd&quot;&gt;  &lt;!--引入util的模板文件--&gt;
+    &lt;bean id=&quot;role1&quot; class=&quot;com.ssm.chapter10.pojo.Role&quot; 
+    c:_0=&quot;1&quot; c:_1=&quot;role_name_1&quot; c:_2=&quot;role_note_1&quot; /&gt;
+    &lt;bean id=&quot;role2&quot; class=&quot;com.ssm.chapter10.pojo.Role&quot; 
+        p:id=&quot;2&quot; p:roleName=&quot;role_name_2&quot; p:note=&quot;role_note_2&quot; /&gt;
+    &lt;bean id=&quot;user1&quot; class=&quot;com.ssm.chapter10.pojo.User&quot; 
+        p:id=&quot;1&quot; p:userName=&quot;role_name_1&quot; p:note=&quot;user_note_1&quot; /&gt;
+    &lt;bean id=&quot;user2&quot; class=&quot;com.ssm.chapter10.pojo.User&quot; 
+        p:id=&quot;2&quot; p:userName=&quot;role_name_2&quot; p:note=&quot;user_note_2&quot; /&gt;
+
+    &lt;util:list id=&quot;list&quot;&gt;
+        &lt;ref bean=&quot;role1&quot; /&gt;
+        &lt;ref bean=&quot;role2&quot; /&gt;
+    &lt;/util:list&gt;
+
+    &lt;util:map id=&quot;map&quot;&gt;
+        &lt;entry key-ref=&quot;role1&quot; value-ref=&quot;user1&quot; /&gt;
+        &lt;entry key-ref=&quot;role2&quot; value-ref=&quot;user2&quot; /&gt;
+    &lt;/util:map&gt;
+
+    &lt;util:set id=&quot;set&quot;&gt;
+        &lt;ref bean=&quot;role1&quot; /&gt;
+        &lt;ref bean=&quot;role2&quot; /&gt;
+    &lt;/util:set&gt;
+
+    &lt;bean id=&quot;userRoleAssembly&quot; class=&quot;com.ssm.chapter10.pojo. UserRoleAssembly&quot;
+        p:id=&quot;1&quot; p:list-ref=&quot;list&quot; p:map-ref=&quot;map&quot; p:set-ref=&quot;set&quot; /&gt;
+&lt;/beans&gt;
+</code></pre><p>元素说明：</p>
+<ul>
+<li>c:代表构造器方法的参数，c:_(1,2,3,…N)：(第一，第二，第三，。。。第N)个构造器参数</li>
+<li>p:代表属性的引用，p:[属性名]</li>
+<li>util:集合类型</li>
+</ul>
+<p>###2.2 注解配置<br>Spring提供了2种方式来让Spring IoC容器发现Bean：</p>
+<ol>
+<li>组件扫描：通过定义资源方式，让Spring IoC容器扫描对应的包，从而把Bean装配进去。</li>
+<li>自动装配： 通过注解定义，使得一些依赖关系可以通过注解完成。</li>
+</ol>
+<p>注解及作用：</p>
+<ul>
+<li>@Component:声明为Bean，可写作：<code>@Component(value=&quot;beanName&quot;)</code>或<code>@Component(&quot;beanName&quot;)</code>,不设置默认为首字母小写的类名。</li>
+<li>@Value:类中属性注入的值。</li>
+<li>@ComponentScan:组件扫描，默认扫描当前包路径下。<ul>
+<li>basePackages:指定扫描包路径下的组件。eg:<code>basePackageClasses = { Role.class, RoleServiceImpl.class }</code></li>
+<li>basePackageClasses:指定扫描eg:<code>basePackages = {&quot;com.ssm.chapter10.annotation.pojo&quot;,&quot;包路径..&quot;}</code></li>
+<li>excludeFilters:指定不适合组件扫描的类型。eg:<code>excludeFilters = {@Filter(type = FilterType.REGEX, pattern=&quot;类全限定名&quot;)}</code></li>
+<li>includeFilters：指定哪些类型有资格用于组件扫描。</li>
+</ul>
+</li>
+<li>@Autowired:自动装配。为引用对象的属性注入值。 <ul>
+<li>eg: <code>@Autowired Role role = null;</code>//会查找容器中对应类型的Bean，然后注入。</li>
+<li>eg: <code>@Autowired public void setRole(Role role){...}</code></li>
+<li>eg: <code>public RoleController(@Autowired RoleService roleService) {...}</code>//构造器装配</li>
+</ul>
+</li>
+<li>@Primary:装配优先级设置，设置后存在多个相同类型的Bean，会优先使用设置<code>@Primary</code>的Bean,通过</li>
+<li>@Qualifier：指定自动装配的具体Bean。消除装配的不确定性</li>
+<li>@Bean：提供一种注解到方法上的Bean装配到Spring IoC容器中。可以将方法的返回值作为Bean装配到IoC容器中。eg:<code>@Bean(name=&quot;beanId&quot;)</code></li>
+<li>@import：存在多个配置类时使用，导入其他配置类。eg:<code>@Import({AppConfig1.class,AppConfig2.class})</code></li>
+<li>@importResource：导入xml配置。eg:<code>@ImportResource({&quot;classpath:spring-dataSource.xml&quot;})</code>，可同时导入多个<ul>
+<li>xml中通过:<code>&lt;import resourse=&quot;spring-dataSource.xml&quot;/&gt;</code>引入其他配置文件。</li>
+</ul>
+</li>
+<li>@PropertySource：导入properties文件配置。eg:<code>@PropertySource(value = { &quot;classpath:database-config.properties&quot; }, ignoreResourceNotFound = true)</code></li>
+<li>@Profile:为一个Bean配置多个不同的环境设置。</li>
+<li>@Conditional：通过条件配置装配Bean，需要实现Condition接口。eg:<code>@Conditional（{DataSourceCondition.class}）</code></li>
+<li>@Scope:设置Bean的作用域<ul>
+<li>singleton：单例，整个应用只生成一个Bean实例。</li>
+<li>prototype：原型，通过Spring IoC容器获取Bean是，都会为它创建一个新的实例。</li>
+<li>session：一个会话一个实例。</li>
+<li>request：一次请求中创建一个实例。</li>
+</ul>
+</li>
+</ul>
+<p>###3.总结</p>
+<p>Spring框架主要是提供一个Spring IoC容器，用于装配和管理各种资源（Bean）。在程序开发中可以便捷的获取指定业务相关的Bean实例，加速开发和减少第三方库集成使用的难度。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.09</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/12/09/Spring学习记录-01-——装配Spring-Bean/" data-id="cjpi13a8g001og4vwiimmsyzw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/08/MyBatis学习记录05——动态SQL/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">MyBatis学习记录05——动态SQL</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spring/">Spring</a></p>
+                            <p class="item-title"><a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/" class="title">Spring学习记录(01)——装配Spring Bean</a></p>
+                            <p class="item-date"><time datetime="2018-12-09T13:06:23.000Z" itemprop="datePublished">2018-12-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/08/MyBatis学习记录05——动态SQL/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/08/MyBatis学习记录05——动态SQL/" class="title">MyBatis学习记录05——动态SQL</a></p>
+                            <p class="item-date"><time datetime="2018-12-08T07:44:41.000Z" itemprop="datePublished">2018-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/06/MyBatis学习记录04——Mapper-下/" class="title">MyBatis学习记录04——Mapper(下)</a></p>
+                            <p class="item-date"><time datetime="2018-12-06T08:00:21.000Z" itemprop="datePublished">2018-12-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/05/MyBatis学习记录03——Mapper/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/05/MyBatis学习记录03——Mapper/" class="title">MyBatis学习记录03——Mapper(上)</a></p>
+                            <p class="item-date"><time datetime="2018-12-05T13:49:28.000Z" itemprop="datePublished">2018-12-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/03/MyBatis学习记录02——配置/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MyBatis/">MyBatis</a></p>
+                            <p class="item-title"><a href="/2018/12/03/MyBatis学习记录02——配置/" class="title">MyBatis学习记录02——配置</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T12:24:59.000Z" itemprop="datePublished">2018-12-03</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring学习记录/">Spring学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 12px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 14px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 16px;">MyBatis学习记录</a> <a href="/tags/React-Navigation/" style="font-size: 12px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 18px;">SSM</a> <a href="/tags/Spring学习记录/" style="font-size: 10px;">Spring学习记录</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 16px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Nowy<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
