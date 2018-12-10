@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-10T08:01:04.260Z">
+<meta property="og:updated_time" content="2018-12-10T08:49:30.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring学习记录(01)——装配Spring Bean">
 <meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
@@ -240,7 +240,7 @@
 <li>Spring中的IoC容器的实现方法是依赖注入(DI)(通常有两种方法：依赖查找和依赖注入)</li>
 </ul>
 <p><strong>IoC(控制反转)：</strong>由容器帮助对象查找和注入资源属性，而非通过对象主动请求获取资源属性。</p>
-<p><strong>AOP(面向切面编程):</strong>将每个业务块定义为一个切面，由一个个切面组成业务流。在需要扩展功能时，利用如代理之类的方式对切面进行功能扩展，而不影响切面原来的代码逻辑。</p>
+<p><strong>AOP(面向切面编程):</strong>将一个业务块通过<strong>动态代理</strong>的方式生成一个切面，在切面上面监听具体业务(<strong>连接点</strong>)的开始、执行、完成和完成结果等<strong>通知</strong>。即<strong>不影响原来业务块代码</strong>的同时，可以为业务块动态扩展额外功能甚至拦截修改原有功能(around)。</p>
 <p><strong>IoC的两种实现方式：</strong></p>
 <ul>
 <li><p><strong>依赖查找</strong>：容器提供回调接口和上下文条件给组件。组件必须使用容器提供的API来查找资源和协作对象，仅有的控制反转只体现在那些回调方法上。容器将调用这些回调方法，从而让应用代码获得相关资源。</p>
@@ -721,7 +721,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tags</h3>
+        <h3 class="widget-title">Etiquetas</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring学习记录/">Spring学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
         </div>
