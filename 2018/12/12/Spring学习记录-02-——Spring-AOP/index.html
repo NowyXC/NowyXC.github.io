@@ -3,15 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: 学习笔记 | Nowy_Blog</title>
+    <title>Spring学习记录(02)——Spring AOP | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/tags/学习笔记/index.html">
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring AOP的学习笔记。">
+<meta name="keywords" content="SSM,Spring学习记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习记录(02)——Spring AOP">
+<meta property="og:url" content="http://yoursite.com/2018/12/12/Spring学习记录-02-——Spring-AOP/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring AOP的学习笔记。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.imgur.com/5uAjYTO.png">
+<meta property="og:updated_time" content="2018-12-13T08:04:16.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="Spring学习记录(02)——Spring AOP">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring AOP的学习笔记。">
+<meta name="twitter:image" content="https://i.imgur.com/5uAjYTO.png">
     
 
     
@@ -182,266 +189,326 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#学习笔记</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-Spring学习记录-02-——Spring-AOP" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/11/21/文本对比生成差分包——diff-match-patch/">文本对比生成差分包——diff-match-patch</a>
+        <h1 class="article-title" itemprop="name">
+            Spring学习记录(02)——Spring AOP
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/11/21/文本对比生成差分包——diff-match-patch/">
-            <time datetime="2018-11-21T12:08:19.000Z" itemprop="datePublished">2018-11-21</time>
+        <a href="/2018/12/12/Spring学习记录-02-——Spring-AOP/">
+            <time datetime="2018-12-12T08:25:06.000Z" itemprop="datePublished">2018-12-12</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
+        <a class="article-category-link" href="/categories/Spring/">Spring</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
+        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/Spring学习记录/">Spring学习记录</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/30/react-native-React-Navigation常用参数配置/">react-native React Navigation常用参数配置</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>本文主要记录Spring AOP的学习笔记。</p>
+<a id="more"></a>
+<p>###1. AOP (面向切面编程)<br>将程序中的横切关注点模块化形成切面，通过切点匹配程序中的连接点，将切面织入到目标对象,即创建目标对象的代理对象。代理对象可对原对象的功能进行拦截修改和增强（引入）。</p>
+<p>概念描述：</p>
+<ul>
+<li><p>原有对象：真实的对象</p>
+</li>
+<li><p>横切关注点：是一些具有横越多个模块的行为，使用传统的软件开发方法不能够达到有效的模块化的一类特殊关注点。（eg:日志、事务等）</p>
+</li>
+<li><p>切面(Aspect)：横切关系封装进切面来保持程序的模块化。</p>
+</li>
+<li><p>通知(Advice)：切面中的方法，主要用于增强原有对象的方法。</p>
+<ul>
+<li>前置通知(before)：原有对象方法执行前调用</li>
+<li>后置通知(after)：原有对象方法执行后调用</li>
+<li>返回通知(afterReturning)：原有方法执行后正常返回（无异常），则执行此通知</li>
+<li>异常通知(afterThrowing)：原有方法执行后产生异常则执行此通知</li>
+<li>环绕通知(around)：可取代原有对象方法，通常会提供原有对象的方法的作为参数。<br><br><br></li>
+</ul>
+</li>
+<li><p>织入(Weaving)：将切面中的功能加入到原有对象方法的流程中，通过代理对象实现。</p>
+</li>
+<li><p>连接点(join Point)：原有对象(真实对象)中需要织入切面内容的位置。</p>
+</li>
+<li><p>切点(Pointcut)：通过一定规则判断哪些方法是连接点。通常使用正则匹配。</p>
+</li>
+<li><p>引入(Introduction)：增强原有对象(真实对象)的功能，通常采用动态代理的getInterfaces()实现。</p>
+</li>
+</ul>
+<p><br><br><br>通过 &lt;切点&gt;的限定规则 找到 &lt;连接点&gt;,对 &lt;原有对象&gt;存在的&lt;连接点&gt; 的方法进行 &lt;切面&gt;  的 &lt;织入&gt;。</p>
+<ul>
+<li>&lt;切面&gt;描述了需要做的事情,事情的内容根据功能划分为各种通知(before、after、around等)</li>
+<li>&lt;切点&gt;描述了哪些地方需要插入这些事情，即通过一定规则拿到<strong>连接点</strong></li>
+</ul>
+<p>###2.Spring AOP的使用<br>Spring框架中的AOP是基于方法拦截的的AOP（即不支持参数拦截），主要基于AspectJ框架</p>
+<p>开发具体流程：</p>
+<ol>
+<li>启用AspectJ框架的自动代理</li>
+<li>创建切面，定义切点</li>
+<li>切面织入</li>
+</ol>
+<p><strong>通过注解方式使用AOP：</strong></p>
+<ol>
+<li><p>启用AspectJ的自动代理功能：<strong>@EnableAspectJAutoProxy</strong></p>
+<pre><code>//AopConfig.class
+@Configuration
+@EnableAspectJAutoProxy //开启AspectJ的自动代理功能
+@ComponentScan(basePackages = &quot;com.ssm.chapter11.aop&quot;)
+public class AopConfig {
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/30/react-native-React-Navigation常用参数配置/">
-            <time datetime="2018-10-30T12:59:09.000Z" itemprop="datePublished">2018-10-30</time>
-        </a>
-    </div>
+    @Bean    //注册切面实例到Spring IoC容器中
+    public RoleAspect getRoleAspect() {
+        return new RoleAspect(); 
+    }
+}
+</code></pre></li>
+</ol>
+<ol start="2">
+<li><p>创建切面类，定义切点（标记着<code>@Aspect</code>的类）</p>
+<pre><code>//RoleAspect.class
+@Aspect    //注明为切面类
+public class RoleAspect {
 
+    @DeclareParents(value= &quot;com.ssm.chapter11.aop.service.impl.RoleServiceImpl+&quot;, defaultImpl=RoleVerifierImpl.class)
+    public RoleVerifier roleVerifier; //引入，功能增强
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
-    </div>
+    //切点的定义
+    @Pointcut(&quot;execution(* com.ssm.chapter11.aop.service.impl.RoleServiceImpl.printRole(..))&quot;)
+    public void print() {
+    }
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/React-Navigation/">React Navigation</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
-    </div>
+    //前置通知
+    @Before(&quot;print()&quot;)
+    public void before() {
+        System.out.println(&quot;before ....&quot;);
+    }
 
-                </div>
-            </div>
+    //后置通知
+    @After(&quot;print()&quot;)
+    public void after() {
+        System.out.println(&quot;after ....&quot;);
+    }
+
+    //完成结果通知
+    @AfterReturning(&quot;print()&quot;)
+    // @AfterReturning(&quot;execution(*
+    // com.ssm.chapter11.aop.service.impl.RoleServiceImpl.printRole(..))&quot;)
+    public void afterReturning() {
+        System.out.println(&quot;afterReturning ....&quot;);
+    }
+
+    //完成异常通知
+    @AfterThrowing(&quot;print()&quot;)
+    public void afterThrowing() {
+        System.out.println(&quot;afterThrowing ....&quot;);
+    }
+
+    //环绕通知        
+    @Around(&quot;print()&quot;)
+    public void around(ProceedingJoinPoint jp) {
+        System.out.println(&quot;around before ....&quot;);
+        try {
+            jp.proceed(); //执行原方法
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        System.out.println(&quot;around after ....&quot;);
+    }
+
+    //参数附加
+    @Before(&quot;execution(* com.ssm.chapter11.aop.service.impl.RoleServiceImpl.printRole(..)) &quot; + &quot;&amp;&amp; args(role, sort)&quot;)
+    public void before(Role role, int sort) {
+        System.out.println(&quot;before ....&quot;);
+    }
+}
+
+//引入的接口，用于增强代理类功能
+public interface RoleVerifier {
+    public boolean verify(Role role);
+}
+</code></pre></li>
+<li><p>切面织入</p>
+<pre><code>//AopConfig.class
+@Configuration
+@EnableAspectJAutoProxy //开启AspectJ的自动代理功能
+@ComponentScan(basePackages = &quot;com.ssm.chapter11.aop&quot;)
+public class AopConfig {
+
+    @Bean    //注册切面实例到Spring IoC容器中
+    public RoleAspect getRoleAspect() {
+        return new RoleAspect(); 
+    }
+}
+</code></pre><p> 主要将切面类添加到Spring IoC容器中即可，Spring IoC会根据切点自动织入。</p>
+</li>
+</ol>
+<p><strong>通过XML使用AOP：</strong></p>
+<pre><code>//spring-config.xml
+
+//需要引入模板文件
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+
+&lt;aop:aspectj-autoproxy /&gt; &lt;!--开启AspectJ的自动代理功能--&gt;
+&lt;bean id=&quot;xmlAspect&quot; class=&quot;com.ssm.chapter11.xml.aspect.XmlAspect&quot; /&gt;
+&lt;bean id=&quot;roleService&quot; class=&quot;com.ssm.chapter11.xml.service.impl.RoleServiceImpl&quot; /&gt;
+&lt;aop:config&gt;
+    &lt;aop:aspect ref=&quot;xmlAspect&quot;&gt;
+        &lt;!-- 自定义切点 --&gt;
+        &lt;aop:pointcut id=&quot;printRole&quot;
+            expression=&quot;execution(* com.ssm.chapter11.xml.service.impl.RoleServiceImpl.printRole(..))&quot; /&gt;
+        &lt;!-- 定义通知 --&gt;
+        &lt;aop:before method=&quot;before&quot; pointcut-ref=&quot;printRole&quot; /&gt;
+        &lt;aop:after method=&quot;after&quot; pointcut-ref=&quot;printRole&quot; /&gt;
+        &lt;aop:after-throwing method=&quot;afterThrowing&quot;
+            pointcut-ref=&quot;printRole&quot; /&gt;
+        &lt;aop:after-returning method=&quot;afterReturning&quot;
+            pointcut-ref=&quot;printRole&quot; /&gt;
+        &lt;aop:around method=&quot;around&quot; pointcut-ref=&quot;printRole&quot; /&gt;
+        &lt;!-- 引入增强 --&gt;
+        &lt;aop:declare-parents
+            types-matching=&quot;com.ssm.chapter11.xml.service.impl.RoleServiceImpl+&quot;
+            implement-interface=&quot;com.ssm.chapter11.aop.verifier.RoleVerifier&quot;
+            default-impl=&quot;com.ssm.chapter11.aop.verifier.impl.RoleVerifierImpl&quot; /&gt;
+    &lt;/aop:aspect&gt;
+&lt;/aop:config&gt;
+</code></pre><p><strong>多切面配置执行顺序：</strong><br>默认为无序执行，即责任链下多个切面的代理顺序是无序的。</p>
+<ol>
+<li>注解方式：通过切面类上标注@Order(Number)配置。 Number小的优先执行</li>
+<li>xml方式：<code>&lt;aop:aspect ref=&quot;xmlAspect&quot; order=&quot;Number&quot;&gt;</code></li>
+</ol>
+<p><img src="https://i.imgur.com/5uAjYTO.png" alt="切面执行顺序图"></p>
+<p>责任链模式</p>
+<p>###3.总结<br>AOP（面向切面编程）是一种思想，主要是在不破坏原有模块的纯粹性和单一功能原则的情况下，扩展模块功能，同时对切面进行模块化管理。在实际使用中还得因地制宜。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy <br><br>–2018.12.12</p>
+
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/29/react-native-React-Navigation跳转页面/">react-native React Navigation跳转页面(StackNavigator)</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/29/react-native-React-Navigation跳转页面/">
-            <time datetime="2018-10-29T12:57:17.000Z" itemprop="datePublished">2018-10-29</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/React-Navigation/">React Navigation</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/26/react-native的网络访问-Fetch/">react-native的网络访问(Fetch)</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/26/react-native的网络访问-Fetch/">
-            <time datetime="2018-10-26T11:17:11.000Z" itemprop="datePublished">2018-10-26</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Fetch/">Fetch</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/26/react组件的生命周期/">react组件的生命周期</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/26/react组件的生命周期/">
-            <time datetime="2018-10-26T10:41:24.000Z" itemprop="datePublished">2018-10-26</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/25/react-native学习笔记-1-Flexbox布局/">react-native学习笔记-1 Flexbox布局</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/25/react-native学习笔记-1-Flexbox布局/">
-            <time datetime="2018-10-25T10:04:28.000Z" itemprop="datePublished">2018-10-25</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/">react-native学习笔记-0 环境搭建问题记录</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/25/react-native学习笔记-0-环境搭建问题记录/">
-            <time datetime="2018-10-25T09:58:44.000Z" itemprop="datePublished">2018-10-25</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>, <a class="tag-link" href="/tags/问题记录/">问题记录</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
 </div>
+
+    <a data-url="http://yoursite.com/2018/12/12/Spring学习记录-02-——Spring-AOP/" data-id="cjpmbipiu000qw8vw3emhqp43" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Spring学习记录(01)——装配Spring Bean</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
