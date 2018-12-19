@@ -3,20 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>react-native的网络访问(Fetch) | Nowy_Blog</title>
+    <title>SpringMVC学习记录01——处理流程 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="####使用Fetch API进行网络访问 Fetch API相关文档地址">
-<meta name="keywords" content="学习笔记,Fetch">
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录SpringMVC的处理流程，以便理解SpringMVC框架。">
+<meta name="keywords" content="SSM,SpringMVC学习记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react-native的网络访问(Fetch)">
-<meta property="og:url" content="http://yoursite.com/2018/10/26/react-native的网络访问-Fetch/index.html">
+<meta property="og:title" content="SpringMVC学习记录01——处理流程">
+<meta property="og:url" content="http://yoursite.com/2018/12/19/SpringMVC学习记录01——处理流程/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="####使用Fetch API进行网络访问 Fetch API相关文档地址">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录SpringMVC的处理流程，以便理解SpringMVC框架。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-26T11:18:34.700Z">
+<meta property="og:image" content="https://i.imgur.com/tsOKVwh.png">
+<meta property="og:updated_time" content="2018-12-19T07:40:54.367Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="react-native的网络访问(Fetch)">
-<meta name="twitter:description" content="####使用Fetch API进行网络访问 Fetch API相关文档地址">
+<meta name="twitter:title" content="SpringMVC学习记录01——处理流程">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录SpringMVC的处理流程，以便理解SpringMVC框架。">
+<meta name="twitter:image" content="https://i.imgur.com/tsOKVwh.png">
     
 
     
@@ -187,7 +189,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-react-native的网络访问-Fetch" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-SpringMVC学习记录01——处理流程" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -195,7 +197,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            react-native的网络访问(Fetch)
+            SpringMVC学习记录01——处理流程
         </h1>
     
 
@@ -204,8 +206,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/26/react-native的网络访问-Fetch/">
-            <time datetime="2018-10-26T11:17:11.000Z" itemprop="datePublished">2018-10-26</time>
+        <a href="/2018/12/19/SpringMVC学习记录01——处理流程/">
+            <time datetime="2018-12-19T05:31:09.000Z" itemprop="datePublished">2018-12-19</time>
         </a>
     </div>
 
@@ -213,13 +215,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/react-native/">react-native</a>
+        <a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Fetch/">Fetch</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
+        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a>
     </div>
 
                     </div>
@@ -230,82 +232,179 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>####使用Fetch API进行网络访问</p>
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank" rel="noopener">Fetch API相关文档地址</a></p>
+            <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>本文主要记录SpringMVC的处理流程，以便理解SpringMVC框架。</p>
+<p><img src="https://i.imgur.com/tsOKVwh.png" alt="SpringMVC处理流程图"></p>
 <a id="more"></a>
-<p>示例代码：（引用自<a href="https://reactnative.cn/docs/network/" target="_blank" rel="noopener">react-native中文网</a>）</p>
-<pre><code>fetch(&quot;https://mywebsite.com/endpoint/&quot;, 
-{
-  method: &quot;POST&quot;,//&quot;GET&quot;
-  headers: {//请求头设置
-    Accept: &quot;application/json&quot;,
-    &quot;Content-Type&quot;: &quot;application/json&quot; //form表单提交：application/x-www-form-urlencoded
-  },
-  body: JSON.stringify({  //请求参数JSON文本格式，也可以是url格式：key1=value1&amp;key2=value2
-    key1: &quot;value1&quot;,
-    key2: &quot;value2&quot;
-  })
-})
-.then(response =&gt; response.json()) //response转化为json的对象
-.then(responseJson =&gt; { //数据处理
-  //处理数据
-})
-.catch(error =&gt; {//异常抛出
-  console.error(error);
-});
-</code></pre><p>then()说明：<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">Promise对象</a>的链式调用。主要用于异步操作后的回调设置，这里是网络访问后的回调。</p>
-<p>####相关测试代码</p>
-<pre><code>export default class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {isLoading:true}
-  }
-
-  componentDidMount(){ //在react组件装载后加载数据。
-    this.setState({isLoading:true});
-    return this.getMoviesListDataAsync();
-  }
-
-  getMoviesListDataAsync(){
-    return fetch(&quot;https://facebook.github.io/react-native/movies.json&quot;)
-      .then(response =&gt; response.json())
-      .then(responseJsonData =&gt; {
-
-        this.setState({
-          isLoading:false,
-          respData:responseJsonData
-        });
-
-      })
-      .catch(error =&gt;{
-        Alert.alert(error);
-        console.error(error);
-      })
-
-  }
-  render(){
-    if(this.state.isLoading){
-      return(
-        &lt;View style={{flex:1,padding:20}}&gt;
-          &lt;ActivityIndicator /&gt;
-        &lt;/View&gt;
-      )
-    }
-
-    return(
-      &lt;View style={{flex:1,padding:20}}&gt;
-          &lt;Text&gt;{this.state.respData.title}&lt;/Text&gt;
-          &lt;Text&gt;{this.state.respData.description}&lt;/Text&gt;
-          &lt;FlatList 
-            data = {this.state.respData.movies}
-            renderItem = {({item}) =&gt; &lt;Text&gt;电影名称：{item.title},上映年份：{item.releaseYear}&lt;/Text&gt;}
-            keyExtractor = {(item,index) =&gt; index.toString()}
-          /&gt;
-      &lt;/View&gt;
-    );
-  }
+<p>###1.DispactherServlet初始化流程</p>
+<p>继承关系（父类-&gt;子类）：HttpServlet -&gt; HttpServletBean -&gt;  FramenworkServlet -&gt; DispactherServlet</p>
+<ul>
+<li>HttpServlet：Web容器提供的抽象类，可载入Web容器中</li>
+<li>HttpServletBean：SpringMVC框架提供</li>
+<li>FramenworkServlet：SpringMVC框架提供,初始化Spring Web Ioc容器</li>
+<li>DispactherServlet：SpringMVC框架提供，初始化核心组件</li>
+</ul>
+<p>DispactherServlet的初始化流程：</p>
+<ol>
+<li>HttpServletBean：<code>init()</code> -&gt; <code>initServletBean()</code>(空方法，子类覆写);</li>
+<li>FramenworkServlet:<code>initServletBean()</code> -&gt; <code>initWebApplicationContext()</code> -&gt; <code>onRefresh(context)</code>(空方法，子类覆写)</li>
+<li>DispactherServlet:<code>onRefresh(context)</code> -&gt; <code>initStrategies(context)</code></li>
+</ol>
+<p><strong>组件的初始化：</strong></p>
+<pre><code>//DispatcherServlet类
+/**
+ * Initialize the strategy objects that this servlet uses.
+ * &lt;p&gt;May be overridden in subclasses in order to initialize further strategy objects.
+ */
+protected void initStrategies(ApplicationContext context) {
+    initMultipartResolver(context);
+    initLocaleResolver(context);
+    initThemeResolver(context);
+    initHandlerMappings(context);
+    initHandlerAdapters(context);
+    initHandlerExceptionResolvers(context);
+    initRequestToViewNameTranslator(context);
+    initViewResolvers(context);
+    initFlashMapManager(context);
 }
-</code></pre><h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.10.26</p>
+</code></pre><ul>
+<li>MultipartResolver:文件解析器，用于支持服务器文件上传</li>
+<li>LocaleResolver：国家化解析器，提供国际化支持</li>
+<li>ThemeResolver:主题解析器，提供主题切换功能</li>
+<li>HandlerMapping:处理器映射器，存放用户提供的处理器(handler)和对应的多个拦截器(HandlerInterceptor)</li>
+<li>HandlerAdapter：处理器适配器，用于适配和执行处理器的方法。<ul>
+<li>SimpleControllerHandlerAdapter:控制器适配器(Controller接口)</li>
+<li>HttpRequestHandlerAdapter：普通请求适配器(HttpRequestHandler接口)</li>
+</ul>
+</li>
+<li>HandlerExceptionResolver：处理器异常解析器，对处理器发生的异常进行处理（指定跳异常页等）</li>
+<li>RequestToViewNameTranslator：视图逻辑名称转换器，将视图名称转化为实际的视图</li>
+<li>ViewResolver：视图解析器，把逻辑视图解析为实际视图</li>
+<li>FlashMapManager：Flash开发管理器</li>
+</ul>
+<p>###2.DispactherServlet的执行流程</p>
+<ol>
+<li>FramenworkServlet: <code>processRequest(request, response)</code> -&gt; <code>doService(request, response)(抽象方法,具体实现由子类完成)</code> 和 <code>publishRequestHandledEvent(...)(处理完成，响应用户)</code></li>
+<li>DispactherServlet:<code>doService(request, response)</code>-&gt;<code>doDispatch(request, response)(分派各个组件)</code></li>
+</ol>
+<p><strong>doDispatch的代码：</strong></p>
+<pre><code>//DispatcherServlet类
+/**
+ * Process the actual dispatching to the handler.
+ * &lt;p&gt;The handler will be obtained by applying the servlet&apos;s HandlerMappings in order.
+ * The HandlerAdapter will be obtained by querying the servlet&apos;s installed HandlerAdapters
+ * to find the first that supports the handler class.
+ * &lt;p&gt;All HTTP methods are handled by this method. It&apos;s up to HandlerAdapters or handlers
+ * themselves to decide which methods are acceptable.
+ * @param request current HTTP request
+ * @param response current HTTP response
+ * @throws Exception in case of any kind of processing failure
+ */
+protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    HttpServletRequest processedRequest = request;
+    HandlerExecutionChain mappedHandler = null;
+    boolean multipartRequestParsed = false;
+
+    WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+
+    try {
+        ModelAndView mv = null;
+        Exception dispatchException = null;
+
+        try {
+            processedRequest = checkMultipart(request); //1.多部分请求实体检测，多文件上传
+            multipartRequestParsed = (processedRequest != request);
+
+            // Determine handler for the current request.
+            mappedHandler = getHandler(processedRequest); //2. 获取处理器，返回HandlerExecutionChain
+            if (mappedHandler == null || mappedHandler.getHandler() == null) {
+                noHandlerFound(processedRequest, response);
+                return;
+            }
+
+
+            //3.根据handler获取合适的适配器
+            // Determine handler adapter for the current request.
+            HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+
+            // Process last-modified header, if supported by the handler.
+            String method = request.getMethod();
+            boolean isGet = &quot;GET&quot;.equals(method);
+            if (isGet || &quot;HEAD&quot;.equals(method)) {
+                long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
+                if (logger.isDebugEnabled()) {
+                    logger.debug(&quot;Last-Modified value for [&quot; + getRequestUri(request) + &quot;] is: &quot; + lastModified);
+                }
+                if (new ServletWebRequest(request, response).checkNotModified(lastModified) &amp;&amp; isGet) {
+                    return;
+                }
+            }
+
+            //额外处理1. 处理拦截器，实际调用interceptor.preHandle(...),异常直接triggerAfterCompletion(...)结束
+            if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+                return;
+            }
+
+            //4.通过处理器适配器执行处理器方法，返回逻辑视图（ModelAndView）
+            // Actually invoke the handler.
+            mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+            if (asyncManager.isConcurrentHandlingStarted()) {
+                return;
+            }
+
+            //5.设置ModelAndView对应的viewName,使用ViewNameTranslator
+            applyDefaultViewName(processedRequest, mv);
+
+            //额外处理2. 处理拦截器，实际调用interceptor.postHandle(...)
+            mappedHandler.applyPostHandle(processedRequest, response, mv);
+        }
+        catch (Exception ex) {
+            dispatchException = ex;
+        }
+        catch (Throwable err) {
+            // As of 4.3, we&apos;re processing Errors thrown from handler methods as well,
+            // making them available for @ExceptionHandler methods and other scenarios.
+            dispatchException = new NestedServletException(&quot;Handler dispatch failed&quot;, err);
+        }
+        //5.渲染视图-&gt;render(...)-&gt;view.render(mv.getModelInternal(), request, response);
+        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+    }
+    catch (Exception ex) {
+        triggerAfterCompletion(processedRequest, response, mappedHandler, ex);
+    }
+    catch (Throwable err) {
+        triggerAfterCompletion(processedRequest, response, mappedHandler,
+                new NestedServletException(&quot;Handler processing failed&quot;, err));
+    }
+    finally {
+        if (asyncManager.isConcurrentHandlingStarted()) {
+            // Instead of postHandle and afterCompletion
+            if (mappedHandler != null) {
+                mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+            }
+        }
+        else {
+            // Clean up any resources used by a multipart request.
+            if (multipartRequestParsed) {
+                cleanupMultipart(processedRequest);
+            }
+        }
+    }
+}
+</code></pre><p>通过源码可以知道，在获取请求(Request)后，最终是由<code>DispatcherServlet</code>的<code>doDispatch</code>方法进行处理。而<code>doDispatch</code>方法将请求(Request)根据流程分派给各个组件处理，最终返回响应实体（Response）到父类<code>FramenworkServlet</code>的<code>publishRequestHandledEvent(...)</code>处理。</p>
+<p>doDispatch的步骤：</p>
+<ol start="0">
+<li>processRequest处理请求（FramenworkServlet）</li>
+<li>多部分请求实体检测，多文件上传</li>
+<li>获取处理器，返回HandlerExecutionChain（包含一个Handler和多个拦截器interceptor）</li>
+<li>根据handler获取合适的适配器（handler可能是Controller）</li>
+<li>通过处理器适配器执行处理器方法，返回逻辑视图（ModelAndView）</li>
+<li>渲染视图-&gt;render(…)-&gt;view.render(mv.getModelInternal(), request, response)</li>
+<li>publishRequestHandledEvent处理Response，响应用户（FramenworkServlet）</li>
+</ol>
+<p>###3.总结<br>SpringMVC的核心功能主要体现在<code>DispactherServlet</code>类中，由<code>DispactherServlet</code>分派任务给各个组件。而作为开发者，需要完成的便是这些组件的配置，和<code>执行器Handler(Controller)</code>以及<code>拦截器interceptor</code>的编写。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.19</p>
 
         
         </div>
@@ -316,7 +415,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/10/26/react-native的网络访问-Fetch/" data-id="cjpuve13b003upcvwmu2giscb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/19/SpringMVC学习记录01——处理流程/" data-id="cjpuve10d000hpcvwlr7x81d6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -391,19 +490,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/29/react-native的组件和API/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    react-native的组件
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/10/26/react组件的生命周期/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">react组件的生命周期</div>
+            <div class="article-nav-title">Spring学习记录(03)——MyBatis-Spring项目</div>
         </a>
     
 </nav>
