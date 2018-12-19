@@ -14,7 +14,7 @@
 <meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录SpringMVC的处理流程，以便理解SpringMVC框架。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.imgur.com/tsOKVwh.png">
-<meta property="og:updated_time" content="2018-12-19T08:08:32.595Z">
+<meta property="og:updated_time" content="2018-12-19T08:09:53.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC学习记录01——处理流程">
 <meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录SpringMVC的处理流程，以便理解SpringMVC框架。">
@@ -284,7 +284,7 @@ protected void initStrategies(ApplicationContext context) {
 </ul>
 <p>###2.DispactherServlet的执行流程</p>
 <ol>
-<li>FramenworkServlet: <code>processRequest(request, response)</code> -&gt; <code>doService(request, response)(抽象方法,具体实现由子类完成)</code> 和 <code>publishRequestHandledEvent(...)(处理完成，响应用户)</code></li>
+<li>FrameworkServlet: <code>processRequest(request, response)</code> -&gt; <code>doService(request, response)(抽象方法,具体实现由子类完成)</code> 和 <code>publishRequestHandledEvent(...)(处理完成，响应用户)</code></li>
 <li>DispactherServlet:<code>doService(request, response)</code>-&gt;<code>doDispatch(request, response)(分派各个组件)</code></li>
 </ol>
 <p><strong>doDispatch的代码：</strong></p>
@@ -392,16 +392,16 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
         }
     }
 }
-</code></pre><p>通过源码可以知道，在获取请求(Request)后，最终是由<code>DispatcherServlet</code>的<code>doDispatch</code>方法进行处理。而<code>doDispatch</code>方法将请求(Request)根据流程分派给各个组件处理，最终返回响应实体（Response）到父类<code>FramenworkServlet</code>的<code>publishRequestHandledEvent(...)</code>处理。</p>
+</code></pre><p>通过源码可以知道，在获取请求(Request)后，最终是由<code>DispatcherServlet</code>的<code>doDispatch</code>方法进行处理。而<code>doDispatch</code>方法将请求(Request)根据流程分派给各个组件处理，最终返回响应实体（Response）到父类<code>FrameworkServlet</code>的<code>publishRequestHandledEvent(...)</code>处理。</p>
 <p>doDispatch的步骤：</p>
 <ol start="0">
-<li>processRequest处理请求（FramenworkServlet）</li>
+<li>processRequest处理请求（FrameworkServlet）</li>
 <li>多部分请求实体检测，多文件上传</li>
 <li>获取处理器，返回HandlerExecutionChain（包含一个Handler和多个拦截器interceptor）</li>
 <li>根据handler获取合适的适配器（handler可能是Controller）</li>
 <li>通过处理器适配器执行处理器方法，返回逻辑视图（ModelAndView）</li>
 <li>渲染视图-&gt;render(…)-&gt;view.render(mv.getModelInternal(), request, response)</li>
-<li>publishRequestHandledEvent处理Response，响应用户（FramenworkServlet）</li>
+<li>publishRequestHandledEvent处理Response，响应用户（FrameworkServlet）</li>
 </ol>
 <p>###3.总结<br>SpringMVC的核心功能主要体现在<code>DispactherServlet</code>类中，由<code>DispactherServlet</code>分派任务给各个组件。而作为开发者，需要完成的便是这些组件的配置，和<code>执行器Handler(Controller)</code>以及<code>拦截器interceptor</code>的编写。</p>
 <h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.19</p>
