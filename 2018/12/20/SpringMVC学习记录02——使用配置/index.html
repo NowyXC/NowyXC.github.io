@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Spring学习记录(01)——装配Spring Bean | Nowy_Blog</title>
+    <title>SpringMVC学习记录02——使用配置 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
-<meta name="keywords" content="SSM,Spring学习记录">
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：  SpringMVC的初始化配置流程： 通过xml初始化配置 通过注解初始化配置   常用注解的使用方法">
+<meta name="keywords" content="SSM,SpringMVC学习记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring学习记录(01)——装配Spring Bean">
-<meta property="og:url" content="http://yoursite.com/2018/12/09/Spring学习记录-01-——装配Spring-Bean/index.html">
+<meta property="og:title" content="SpringMVC学习记录02——使用配置">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/SpringMVC学习记录02——使用配置/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：  SpringMVC的初始化配置流程： 通过xml初始化配置 通过注解初始化配置   常用注解的使用方法">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-10T15:11:08.567Z">
+<meta property="og:updated_time" content="2018-12-20T09:04:33.544Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring学习记录(01)——装配Spring Bean">
-<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
+<meta name="twitter:title" content="SpringMVC学习记录02——使用配置">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：  SpringMVC的初始化配置流程： 通过xml初始化配置 通过注解初始化配置   常用注解的使用方法">
     
 
     
@@ -187,7 +187,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Spring学习记录-01-——装配Spring-Bean" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-SpringMVC学习记录02——使用配置" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -195,7 +195,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Spring学习记录(01)——装配Spring Bean
+            SpringMVC学习记录02——使用配置
         </h1>
     
 
@@ -204,8 +204,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/">
-            <time datetime="2018-12-09T13:06:23.000Z" itemprop="datePublished">2018-12-09</time>
+        <a href="/2018/12/20/SpringMVC学习记录02——使用配置/">
+            <time datetime="2018-12-20T05:51:11.000Z" itemprop="datePublished">2018-12-20</time>
         </a>
     </div>
 
@@ -213,13 +213,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Spring/">Spring</a>
+        <a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/Spring学习记录/">Spring学习记录</a>
+        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a>
     </div>
 
                     </div>
@@ -231,264 +231,238 @@
         
             
             <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
-<p>本文主要记录装配Spring Bean的学习笔记。</p>
-<a id="more"></a>
-<p>###1.Spring</p>
-<ul>
-<li>Spring框架的核心理念是IoC(控制反转)和AOP（面向切面编程）。</li>
-<li>Spring会认为一切java类都是资源，而资源都是Bean，容纳这些Bean的就是Spring所提供的IoC容器。（基于Bean的编程）</li>
-<li>Spring中的IoC容器的实现方法是依赖注入(DI)(通常有两种方法：依赖查找和依赖注入)</li>
-</ul>
-<p><strong>IoC(控制反转)：</strong>由容器帮助对象查找和注入资源属性，而非通过对象主动请求获取资源属性。</p>
-<p><strong>AOP(面向切面编程):</strong>将程序中的横切关注点模块化形成切面，通过切点匹配程序中的连接点，将切面织入到目标对象,即创建目标对象的代理对象。</p>
-<p><strong>IoC的两种实现方式：</strong></p>
-<ul>
-<li><p><strong>依赖查找</strong>：容器提供回调接口和上下文条件给组件。组件必须使用容器提供的API来查找资源和协作对象，仅有的控制反转只体现在那些回调方法上。容器将调用这些回调方法，从而让应用代码获得相关资源。</p>
-</li>
-<li><p><strong>依赖注入(DI)</strong>：组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。容器全权负责的组件的装配，它会把符合依赖关系的对象通过JavaBean属性或者构造函数传递给需要的对象。</p>
-</li>
-</ul>
-<p>Spring的IoC容器是为了容纳开发中的各种Bean，并让开发者<strong>通过描述</strong>获取到Bean。（Bean可以是资源、java类等）</p>
-<p><strong>依赖注入的3种方式：</strong></p>
+<p>本文主要记录：</p>
 <ol>
-<li>构造器注入：Spring采用反射的方式，通过使用构造方法来完成注入。</li>
-<li>设值注入：Spring采用反射的方式，通过获取Java Bean规范的setter方法完成注入。（较为灵活和可读性高）</li>
-<li>接口注入：从外部注入。（例如Tomcat配置数据库连接资源，通过JNDI的形式获取，生成连接实例）</li>
+<li>SpringMVC的初始化配置流程：<ul>
+<li>通过xml初始化配置</li>
+<li>通过注解初始化配置</li>
+</ul>
+</li>
+<li>常用注解的使用方法</li>
 </ol>
-<p><strong>构造器注入：</strong></p>
-<pre><code>&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt; &lt;!--对应Role(String,String)--&gt;
-    &lt;constructor-arg index=&quot;0&quot; value=&quot;高级工程师&quot; /&gt; &lt;!--构造器第一个参数--&gt;
-    &lt;constructor-arg index=&quot;1&quot; value=&quot;重要人员&quot; /&gt;   &lt;!--构造器第二个参数--&gt;
-&lt;/bean&gt;
-</code></pre><p><strong>setter注入：</strong></p>
-<pre><code>&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt;
-    &lt;property name=&quot;roleName&quot; value=&quot;高级工程师&quot; /&gt;  &lt;!--对应setRoleName(String)--&gt;
-    &lt;property name=&quot;note&quot; value=&quot;重要人员&quot; /&gt;        &lt;!--对应setNote(String)--&gt;
-&lt;/bean&gt;
-</code></pre><p><strong>接口注入:</strong>(配置Tomcat数据源)</p>
-<pre><code>//Tomcat的context.xml,Tomcat的lib目录下需要mysql的驱动包
-&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos; ?&gt;
-&lt;Context&gt;
-&lt;Resource name=&quot;jdbc/ssm&quot;  &lt;!--JNDI名称--&gt;
-auth=&quot;Container&quot;
-type=&quot;javax.sql.DataSource&quot;
-driverClassName=&quot;com.mysql.jdbc.Driver&quot;
-url=&quot;jdbc:mysql://localhost:3306/ssm?zeroDataTimeBehavior=convertToNull&quot; &lt;!--数据库的JDBC连接--&gt;
-userName=&quot;root&quot;
-password=&quot;root&quot;
-/&gt;
-&lt;/Context&gt;
-
-//spring配置
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&gt;
-    &lt;property name=&quot;jndiName&quot;&gt; 
-        &lt;value&gt;java:comp/env/jdbc/ssm&lt;/value&gt;
-    &lt;/property&gt;
-&lt;/bean&gt;
-</code></pre><p>###2.Spring Bean的装配<br>Spring Bean的装配有3种方式：</p>
-<ol>
-<li>xml配置</li>
-<li>java的接口和类中实现配置（注解配置）</li>
-<li>隐式bean的发现机制(组件扫描等)和自动装配原则</li>
-</ol>
-<p>配置的使用优先级遵循：基于约定优于配置原则。（即 使用优先级： 3 &gt; 2 &gt; 1）</p>
-<p>普遍推荐的做法：</p>
+<a id="more"></a> 
+<p>###1.xml配置SpringMVC<br>在通过xml配置springMVC框架时，需要配置的文件有：</p>
 <ul>
-<li>第三方库的配置放入xml中，便于维护和理解</li>
-<li>自身开发的使用注解进行配置。 </li>
+<li>web.xml：Web工程的配置文件</li>
+<li>dispatcher-servlet.xml：Spring MVC的配置文件</li>
+<li>applicationContext.xml：Spring IoC的配置文件</li>
 </ul>
-<p>###2.1 XML的配置<br>在使用xml配置bean的时候，需要注意xml模板文件的导入。</p>
-<pre><code>xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
-http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-</code></pre><p><strong>简易的装配示例：</strong></p>
-<pre><code>&lt;bean id=&quot;permissionBean&quot; class=&quot;com.ssm.chapter9.pojo.PermissionBean&quot; /&gt;
-
-&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt;
-    &lt;property name=&quot;roleName&quot; value=&quot;高级工程师&quot; /&gt;  &lt;!--对应setRoleName(String)--&gt;
-    &lt;property name=&quot;note&quot; value=&quot;重要人员&quot; /&gt;        &lt;!--对应setNote(String)--&gt;
-    &lt;property name=&quot;permissionBean&quot; ref=&quot;permissionBean&quot; /&gt;
-&lt;/bean&gt;
-</code></pre><p>元素说明：</p>
+<p><strong>Web.xml相关配置：</strong></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app version=&quot;3.1&quot; xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot; 
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;&gt;
+    &lt;!-- 配置Spring IoC配置文件路径 --&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;/WEB-INF/applicationContext.xml&lt;/param-value&gt;
+    &lt;/context-param&gt;
+    &lt;!-- 配置ContextLoaderListener用以初始化Spring IoC容器 --&gt;
+    &lt;listener&gt;
+      &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+    &lt;/listener&gt;
+    &lt;!-- 配置DispatcherServlet --&gt;
+    &lt;servlet&gt;
+        &lt;!-- 注意：Spring MVC框架会根据servlet-name配置，找到/WEB-INF/dispatcher-servlet.xml作为配置文件载入Web工程中 --&gt;
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;!-- 使得Dispatcher在服务器启动的时候就初始化 --&gt;
+        &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;!-- Servlet拦截配置 --&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre><p><strong>配置说明：</strong></p>
 <ul>
-<li>id : bean的唯一标识。如果不声明，则用”全限定名#{number}”的格式生成</li>
-<li>class：类的全限定名，指定bean配置的的类。</li>
-<li>property:定义的类的属性配置。<ul>
-<li>name: 属性名称</li>
-<li>value: 属性值(基础类型。)</li>
-<li>ref: 属性值,引用其他bean的id。</li>
+<li>context-param：配置Spring IoC配置文件的路径，默认的路径是<code>/WEB-INF/applicationContext.xml</code>。多个配置文件写法：<ul>
+<li>param-value中以“,”号分隔.eg:<code>/WEB-INF/applicationContext-services.xml,/WEB-INF/....xml</code></li>
+<li>param-value中采用通配符.eg:<code>/WEB-INF/applicationContext-*.xml</code><br><br><br></li>
 </ul>
 </li>
-</ul>
-<p><strong>集合类型的装配示例：</strong></p>
-<pre><code>&lt;bean id=&quot;complexAssembly&quot; class=&quot;com.ssm.chapter10.pojo.ComplexAssembly&quot;&gt;
-    &lt;property name=&quot;id&quot; value=&quot;1&quot; /&gt;
-    &lt;property name=&quot;list&quot;&gt; &lt;!--基础类型的list--&gt;
-        &lt;list&gt;
-            &lt;value&gt;value-list-1&lt;/value&gt;
-            &lt;value&gt;value-list-2&lt;/value&gt;
-            &lt;value&gt;value-list-3&lt;/value&gt;
-        &lt;/list&gt;
-    &lt;/property&gt;
-    &lt;property name=&quot;list2&quot;&gt; &lt;!--对象类型的list--&gt;
-        &lt;list&gt;
-            &lt;ref bean=&quot;beanId_1&quot;/&gt;
-            &lt;ref bean=&quot;beanId_2&quot;/&gt;
-        &lt;/list&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;map&quot;&gt; &lt;!--基础类型的map--&gt;
-        &lt;map&gt;
-            &lt;entry key=&quot;key1&quot; value=&quot;value-key-1&quot; /&gt;
-            &lt;entry key=&quot;key2&quot; value=&quot;value-key-2&quot; /&gt;
-            &lt;entry key=&quot;key3&quot; value=&quot;value-key-3&quot; /&gt;
-        &lt;/map&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;map2&quot;&gt; &lt;!--对象类型的map--&gt;
-        &lt;map&gt;
-            &lt;entry key-ref=&quot;key_beanId_1&quot; value-ref=&quot;value_beanId_1&quot; /&gt;
-            &lt;entry key-ref=&quot;key_beanId_2&quot; value-ref=&quot;value_beanId_2&quot; /&gt;
-            &lt;entry key-ref=&quot;key_beanId_3&quot; value-ref=&quot;value_beanId_3&quot; /&gt;
-        &lt;/map&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;props&quot;&gt;
-        &lt;props&gt;
-            &lt;prop key=&quot;prop1&quot;&gt;value-prop-1&lt;/prop&gt;
-            &lt;prop key=&quot;prop2&quot;&gt;value-prop-2&lt;/prop&gt;
-            &lt;prop key=&quot;prop3&quot;&gt;value-prop-3&lt;/prop&gt;
-        &lt;/props&gt;
-    &lt;/property&gt;
-    &lt;property name=&quot;set&quot;&gt;
-        &lt;set&gt;
-            &lt;value&gt;value-set-1&lt;/value&gt;
-            &lt;value&gt;value-set-2&lt;/value&gt;
-            &lt;value&gt;value-set-3&lt;/value&gt;
-        &lt;/set&gt;
-    &lt;/property&gt;
-    &lt;property name=&quot;array&quot;&gt;
-        &lt;array&gt;
-            &lt;value&gt;value-array-1&lt;/value&gt;
-            &lt;value&gt;value-array-2&lt;/value&gt;
-            &lt;value&gt;value-array-3&lt;/value&gt;
-        &lt;/array&gt;
-    &lt;/property&gt;
-&lt;/bean&gt;
-</code></pre><p>元素说明：</p>
-<ul>
-<li>List：List集合<ul>
-<li><code>&lt;list&gt;...&lt;/list&gt;</code></li>
-<li>子元素(基础值)：value：设置值</li>
-<li>子元素(对象值)：ref：设置引用的id</li>
+<li>ContextLoaderListener: 实现了<code>ServletContextListener</code>接口，监听了Web容器的初始化和关闭事件。ContextLoaderListener在初始化和关闭事件中调用了以下两个方法：<ul>
+<li>initWebApplicationContext：初始化Spring IoC容器</li>
+<li>closeWebApplicationContext：释放Spring IoC容器的资源<br><br><br></li>
 </ul>
 </li>
-<li>Map：Map集合<ul>
-<li><code>&lt;map&gt;...&lt;/map&gt;</code></li>
-<li>子元素(基础值)：<code>&lt;entry key=&quot;key1&quot; value=&quot;value-key-1&quot; /&gt;</code></li>
-<li>子元素(对象值)：<code>&lt;entry key-ref=&quot;key_beanId_3&quot; value-ref=&quot;value_beanId_3&quot; /&gt;</code></li>
+<li>DispatcherServlet：使用SpringMVC必须配置。默认会在WEB-INF文件夹下查找<code>[servlet-name]-servlet.xml</code>配置文件。<ul>
+<li>不使用默认名称:可以通过<code>&lt;init-param&gt;</code>配置<code>contextConfigLocation</code>修改。（类似<code>context-param</code>）</li>
+<li>load-on-startup:启动优先级，如果为负数或者没有设置，则容器会当Servlet被请求时再加载<br><br><br></li>
 </ul>
 </li>
-<li>Properties：配置文件类型<ul>
-<li><code>&lt;props&gt;...&lt;/props&gt;</code></li>
-<li>子元素：<code>&lt;prop key=&quot;prop2&quot;&gt;value-prop-2&lt;/prop&gt;</code></li>
+<li><p>servlet-mapping：Servlet拦截配置，如上面 配置会拦截URL中带<code>.do</code>的请求。为拦截REST风格的URL可能会配置<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>,从而导致<strong>静态文件被拦截</strong>。<br>解决方案：添加多个采用defaultServlet的<code>servlet-mapping</code></p>
+<pre><code>&lt;servlet-mapping&gt;
+   &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+   &lt;url-pattern&gt;*.png&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre></li>
 </ul>
-</li>
-<li>Set：Set集合(子元素同list)<ul>
-<li><code>&lt;set&gt;...&lt;/set&gt;</code></li>
-</ul>
-</li>
-<li>array：数组(子元素同list)<ul>
-<li><code>&lt;array&gt;...&lt;/array&gt;</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>命名空间定义的装配：</strong></p>
-<pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:c=&quot;http://www.springframework.org/schema/c&quot; &lt;!--引入命名空间的定义--&gt;
-    xmlns:p=&quot;http://www.springframework.org/schema/p&quot; &lt;!--引入命名空间的定义--&gt;
-    xmlns:util=&quot;http://www.springframework.org/schema/util&quot; 
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+<p><strong>dispatcher-servlet.xml相关配置：</strong></p>
+<pre><code>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos; ?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+    xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+    xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot; 
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
     xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
-    http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/util &lt;!--引入命名空间的定义--&gt;
-       http://www.springframework.org/schema/util/spring-util.xsd&quot;&gt;  &lt;!--引入util的模板文件--&gt;
-    &lt;bean id=&quot;role1&quot; class=&quot;com.ssm.chapter10.pojo.Role&quot; 
-    c:_0=&quot;1&quot; c:_1=&quot;role_name_1&quot; c:_2=&quot;role_note_1&quot; /&gt;
-    &lt;bean id=&quot;role2&quot; class=&quot;com.ssm.chapter10.pojo.Role&quot; 
-        p:id=&quot;2&quot; p:roleName=&quot;role_name_2&quot; p:note=&quot;role_note_2&quot; /&gt;
-    &lt;bean id=&quot;user1&quot; class=&quot;com.ssm.chapter10.pojo.User&quot; 
-        p:id=&quot;1&quot; p:userName=&quot;role_name_1&quot; p:note=&quot;user_note_1&quot; /&gt;
-    &lt;bean id=&quot;user2&quot; class=&quot;com.ssm.chapter10.pojo.User&quot; 
-        p:id=&quot;2&quot; p:userName=&quot;role_name_2&quot; p:note=&quot;user_note_2&quot; /&gt;
-
-    &lt;util:list id=&quot;list&quot;&gt;
-        &lt;ref bean=&quot;role1&quot; /&gt;
-        &lt;ref bean=&quot;role2&quot; /&gt;
-    &lt;/util:list&gt;
-
-    &lt;util:map id=&quot;map&quot;&gt;
-        &lt;entry key-ref=&quot;role1&quot; value-ref=&quot;user1&quot; /&gt;
-        &lt;entry key-ref=&quot;role2&quot; value-ref=&quot;user2&quot; /&gt;
-    &lt;/util:map&gt;
-
-    &lt;util:set id=&quot;set&quot;&gt;
-        &lt;ref bean=&quot;role1&quot; /&gt;
-        &lt;ref bean=&quot;role2&quot; /&gt;
-    &lt;/util:set&gt;
-
-    &lt;bean id=&quot;userRoleAssembly&quot; class=&quot;com.ssm.chapter10.pojo. UserRoleAssembly&quot;
-        p:id=&quot;1&quot; p:list-ref=&quot;list&quot; p:map-ref=&quot;map&quot; p:set-ref=&quot;set&quot; /&gt;
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd&quot;&gt;
+    &lt;!-- 使用注解驱动 --&gt;
+    &lt;mvc:annotation-driven /&gt;
+    &lt;!-- 定义扫描装载的包 --&gt;
+    &lt;context:component-scan base-package=&quot;com.*&quot; /&gt;
+    &lt;!-- 定义视图解析器 --&gt;
+    &lt;!-- 找到Web工程/WEB-INF/JSP文件夹，且文件结尾为jsp的文件作为映射 --&gt;
+    &lt;bean id=&quot;viewResolver&quot;
+        class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;
+        p:prefix=&quot;/WEB-INF/jsp/&quot; p:suffix=&quot;.jsp&quot; /&gt;
+    &lt;!-- 如果有配置数据库事务,需要开启注解事务的，需要开启这段代码 --&gt;
+    &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt; 
 &lt;/beans&gt;
-</code></pre><p>元素说明：</p>
+</code></pre><p><strong>配置说明：</strong></p>
 <ul>
-<li>c:代表构造器方法的参数，c:_(1,2,3,…N)：(第一，第二，第三，。。。第N)个构造器参数</li>
-<li>p:代表属性的引用，p:[属性名]</li>
-<li>util:集合类型</li>
+<li>&lt;mvc:annotation-driven /&gt;：SpringMVC的注解驱动，其实就是简化部分初始化配置。实现类:AnnotationDrivenBeanDefinitionParser,主要注册以下实例：<ol>
+<li>HandlerMapping：将URL映射到指定controller和其中的方法中。<ul>
+<li>RequestMappingHandlerMapping：解析@RequestMapping注解</li>
+<li>BeanNameUrlHandlerMapping：确定请求Url对应的Handler</li>
 </ul>
-<p>###2.2 注解配置<br>Spring提供了2种方式来让Spring IoC容器发现Bean：</p>
-<ol>
-<li>组件扫描：通过定义资源方式，让Spring IoC容器扫描对应的包，从而把Bean装配进去。</li>
-<li>自动装配： 通过注解定义，使得一些依赖关系可以通过注解完成。</li>
+</li>
+<li>HandlerAdapter：执行Controller的方法，不同适配器对应不同类型的Handler<ul>
+<li>RequestMappingHandlerAdapter：处理带注解的Handler</li>
+<li>HttpRequestHandlerAdapter：处理<code>HttpRequestHandler接口</code>的Handler</li>
+<li>SimpleControllerHandlerAdapter：处理<code>Controller接口</code>的Handler</li>
+</ul>
+</li>
+<li>HandlerExceptionResolver：处理器异常处理<ul>
+<li>ExceptionHandlerExceptionResolver</li>
+<li>ResponseStatusExceptionResolver</li>
+<li>DefaultHandlerExceptionResolver<br><br><br></li>
+</ul>
+</li>
 </ol>
-<p>注解及作用：</p>
+</li>
+<li>&lt;context:component-scan base-package=”com.*” /&gt;：扫描指定包目录下的组件，并注册为bean。<ul>
+<li>开启扫描带有@controller、@Service、@Repository、@Component等注解的java类</li>
+<li>激活<code>annotation-config</code>配置，即包含此标签配置。所以可以使用注解：@Required，@Autowired，@PostConstruct，@PreDestroy，@Resource，@PersistenceContext和@PersistenceUnit<br><br><br></li>
+</ul>
+</li>
+<li>ViewResolver:视图解析器，常用<code>InternalResourceViewResolver</code>：将controller返回的str转化为InternalResourceView对象。<ol>
+<li><code>p:prefix+[controller中返回的name]+p:suffix</code> -&gt; <code>/WEB-INF/jsp/[name].jsp</code></li>
+<li>根据路径(<code>/WEB-INF/jsp/[name].jsp</code>)查找对应的JSP文件。</li>
+</ol>
+</li>
+</ul>
+<p><strong>applicationContext.xml配置文件：</strong><br>Spring IoC容器的相关配置，配置说明查看:<a href="https://nowyxc.github.io/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/" target="_blank" rel="noopener">Spring-MyBatis配置说明</a></p>
+<p><strong>使用示例：</strong></p>
+<pre><code>//注解@Controller表示它是一个控制器
+@Controller(&quot;myController&quot;)
+//表明当请求的URI在/my下的时候才有该控制器响应
+@RequestMapping(&quot;/my&quot;)
+public class MyController {
+    //表明URI是/index的时候该方法才请求
+    @RequestMapping(&quot;/index&quot;)
+    public ModelAndView index() {
+        //模型和视图
+        ModelAndView mv = new ModelAndView();  
+        //视图逻辑名称为index
+        mv.setViewName(&quot;index&quot;);
+        //返回模型和视图
+        return mv;
+    }
+}
+</code></pre><p><strong>配置说明：</strong></p>
 <ul>
-<li>@Component:声明为Bean，可写作：<code>@Component(value=&quot;beanName&quot;)</code>或<code>@Component(&quot;beanName&quot;)</code>,不设置默认为首字母小写的类名。</li>
-<li>@Value:类中属性注入的值。</li>
-<li>@ComponentScan:组件扫描，默认扫描当前包路径下。<ul>
-<li>basePackages:指定扫描包路径下的组件。eg:<code>basePackageClasses = { Role.class, RoleServiceImpl.class }</code></li>
-<li>basePackageClasses:指定扫描eg:<code>basePackages = {&quot;com.ssm.chapter10.annotation.pojo&quot;,&quot;包路径..&quot;}</code></li>
-<li>excludeFilters:指定不适合组件扫描的类型。eg:<code>excludeFilters = {@Filter(type = FilterType.REGEX, pattern=&quot;类全限定名&quot;)}</code></li>
-<li>includeFilters：指定哪些类型有资格用于组件扫描。</li>
+<li>@Controller ： 标记为一个控制器，可定义别名</li>
+<li>@RequestMapping：指定该控制器和方法对应的请求的URI</li>
+<li>ModelAndView：定义视图。</li>
+</ul>
+<p>上述例子的含义是： </p>
+<ul>
+<li>请求路径为 <code>http://localhost:8080/项目/my/index.do</code></li>
+<li>返回视图的路径为： <code>/WEB-INF/jsp/index.jsp</code>（视图解析器配置）</li>
+</ul>
+<p>###2.通过注解配置SpringMVC<br>Serlvet3.0之后允许取消web.xml配置文件，只使用注解方式配置。通常需要配置：</p>
+<ul>
+<li>实现AbstractAnnotationConfigDispatcherServletInitializer接口：配置Spring IoC容器、WebConfig、servlet-mapping等</li>
+<li>WebConfig类：启用SpringMVC、配置扫描路径和定义视图解析器</li>
+</ul>
+<p><strong>AbstractAnnotationConfigDispatcherServletInitializer类相关代码：</strong></p>
+<pre><code>public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+     //Spring IoC容器配置
+    @Override
+    protected Class&lt;?&gt;[] getRootConfigClasses() {
+         //可以返回Spring的Java配置文件数组
+        return new Class&lt;?&gt;[] {};
+    }
+
+    //DispatcherServlet的URI映射关系配置
+    @Override
+    protected Class&lt;?&gt;[] getServletConfigClasses() {
+         //可以返回Spring的Java配置文件数组
+        return new Class&lt;?&gt;[] { WebConfig.class };
+    }
+
+    //DispatchServlet[修改为：DispatcherServlet]拦截内容
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] { &quot;*.do&quot; };
+    }
+
+}
+</code></pre><p><strong>配置说明：</strong></p>
+<ul>
+<li>getRootConfigClasses()：获取Spring IoC容器的java配置类，用以装载Spring Bean。</li>
+<li>getServletConfigClasses()：获取各类Spring MVC的URI和控制器关系类，用以生成Web请求上下文。</li>
+<li>getServletMappings():定义DispatchServlet拦截器的请求。</li>
+</ul>
+<p><strong>WebConfig类相关代码：</strong></p>
+<pre><code>@Configuration
+//定义扫描的包，加载控制器
+@ComponentScan(&quot;com.*&quot;)
+//启用Spring Web MVC
+@EnableWebMvc
+public class WebConfig { 
+    /***
+     * 创建视图解析器
+     * @return 视图解析器
+     */
+    @Bean(name=&quot;viewResolver&quot;)
+    public ViewResolver initViewResolver() {
+        InternalResourceViewResolver viewResolver =new InternalResourceViewResolver();
+        viewResolver.setPrefix(&quot;/WEB-INF/jsp/&quot;);
+        viewResolver.setSuffix(&quot;.jsp&quot;);
+        return viewResolver;
+    }    
+}
+</code></pre><p><strong>配置说明：</strong></p>
+<ul>
+<li>组件扫描</li>
+<li>@EnableWebMvc：启动Spring MVC框架的配置</li>
+<li>配置ViewResolver</li>
+</ul>
+<p>###3.常用注解</p>
+<ul>
+<li>@RequestMapping：指定URI与哪个类或者方法关联，该类或者方法作为一个处理请求的处理器。<ul>
+<li>eg:<code>@RequestMapping(value = &quot;/getRole&quot;, method = RequestMethod.GET)</code></li>
 </ul>
 </li>
-<li>@Autowired:自动装配。为引用对象的属性注入值。 <ul>
-<li>eg: <code>@Autowired Role role = null;</code>//会查找容器中对应类型的Bean，然后注入。</li>
-<li>eg: <code>@Autowired public void setRole(Role role){...}</code></li>
-<li>eg: <code>public RoleController(@Autowired RoleService roleService) {...}</code>//构造器装配</li>
+<li>@RequestParam：获取请求中的参数<ul>
+<li>eg:<code>getRole2(@RequestParam(&quot;id&quot;) Long id)</code></li>
+<li>eg:<code>getRole2(@RequestParam(value = &quot;id&quot;,required = false,defaultValue = &quot;0&quot;) Long id)</code>，允许为空，设置默认值</li>
 </ul>
 </li>
-<li>@Primary:装配优先级设置，设置后存在多个相同类型的Bean，会优先使用设置<code>@Primary</code>的Bean,通过</li>
-<li>@Qualifier：指定自动装配的具体Bean。消除装配的不确定性</li>
-<li>@Bean：提供一种注解到方法上的Bean装配到Spring IoC容器中。可以将方法的返回值作为Bean装配到IoC容器中。eg:<code>@Bean(name=&quot;beanId&quot;)</code></li>
-<li>@import：存在多个配置类时使用，导入其他配置类。eg:<code>@Import({AppConfig1.class,AppConfig2.class})</code></li>
-<li>@importResource：导入xml配置。eg:<code>@ImportResource({&quot;classpath:spring-dataSource.xml&quot;})</code>，可同时导入多个<ul>
-<li>xml中通过:<code>&lt;import resourse=&quot;spring-dataSource.xml&quot;/&gt;</code>引入其他配置文件。</li>
+<li>@ResponseBody：返回数据，返回非页面（eg:json、xml等）使用</li>
 </ul>
-</li>
-<li>@PropertySource：导入properties文件配置。eg:<code>@PropertySource(value = { &quot;classpath:database-config.properties&quot; }, ignoreResourceNotFound = true)</code></li>
-<li>@Profile:为一个Bean配置多个不同的环境设置。</li>
-<li>@Conditional：通过条件配置装配Bean，需要实现Condition接口。eg:<code>@Conditional（{DataSourceCondition.class}）</code></li>
-<li>@Scope:设置Bean的作用域<ul>
-<li>singleton：单例，整个应用只生成一个Bean实例。</li>
-<li>prototype：原型，通过Spring IoC容器获取Bean是，都会为它创建一个新的实例。</li>
-<li>session：一个会话一个实例。</li>
-<li>request：一次请求中创建一个实例。</li>
-</ul>
-</li>
-</ul>
-<p>###3.总结</p>
-<p>Spring框架主要是提供一个Spring IoC容器，用于装配和管理各种资源（Bean）。在程序开发中可以便捷的获取指定业务相关的Bean实例，加速开发和减少第三方库集成使用的难度。</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.09</p>
+<p>###4.总结<br>Spring MVC的初始化配置主要由<strong>Spring IoC容器配置</strong>和<strong>DispatcherServlet配置</strong>组成。需要注意<code>ContextLoaderListener</code>初始化Spring IoC容器。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.20</p>
 
         
         </div>
@@ -499,7 +473,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/09/Spring学习记录-01-——装配Spring-Bean/" data-id="cjpwdr5dk0018osvwpri3rrhh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/20/SpringMVC学习记录02——使用配置/" data-id="cjpwdr5do001eosvwie2cjvbo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -574,19 +548,10 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         
 <nav id="article-nav">
     
-        <a href="/2018/12/12/Spring学习记录-02-——Spring-AOP/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Spring学习记录(02)——Spring AOP
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/12/08/MyBatis学习记录05——动态SQL/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/12/19/SpringMVC学习记录01——处理流程/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">MyBatis学习记录05——动态SQL</div>
+            <div class="article-nav-title">SpringMVC学习记录01——处理流程</div>
         </a>
     
 </nav>
