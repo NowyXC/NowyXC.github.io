@@ -3,20 +3,15 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Spring学习记录(03)——MyBatis-Spring项目 | Nowy_Blog</title>
+    <title>标签: SSM | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用MyBatis-Spring项目项目 相关连接地址：  mybatis-spring的Github mybatis-spring的maven仓库">
-<meta name="keywords" content="SSM,Spring学习记录">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Spring学习记录(03)——MyBatis-Spring项目">
-<meta property="og:url" content="http://yoursite.com/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Nowy_Blog">
+<meta property="og:url" content="http://yoursite.com/tags/SSM/page/2/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用MyBatis-Spring项目项目 相关连接地址：  mybatis-spring的Github mybatis-spring的maven仓库">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-15T08:35:08.623Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring学习记录(03)——MyBatis-Spring项目">
-<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用MyBatis-Spring项目项目 相关连接地址：  mybatis-spring的Github mybatis-spring的maven仓库">
+<meta name="twitter:title" content="Nowy_Blog">
     
 
     
@@ -187,352 +182,54 @@
 </aside>
 
             
-            <section id="main"><article id="post-Spring学习记录-03-——MyBatis-Spring项目" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
+            <section id="main">
+<div class="timeline timeline-wrap">
+    <div class="timeline-row timeline-row-major">
+        <span class="node"><i class="fas fa-tag"></i></span>
+        <h1 class="title">#SSM</h1>
+    </div>
+    
+        <div class="timeline-row">
+            <span class="node"></span>
+            <div class="content">
                 
     
-        <h1 class="article-title" itemprop="name">
-            Spring学习记录(03)——MyBatis-Spring项目
+        <h1 itemprop="name">
+            <a class="timeline-article-title" href="/2018/11/30/MyBatis学习记录01——基础搭建/">MyBatis学习记录01——基础搭建</a>
         </h1>
     
 
-                
-                    <div class="article-meta">
-                        
+                <div class="article-meta">
+                    
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/">
-            <time datetime="2018-12-13T09:01:57.000Z" itemprop="datePublished">2018-12-13</time>
+        <a href="/2018/11/30/MyBatis学习记录01——基础搭建/">
+            <time datetime="2018-11-30T08:41:51.000Z" itemprop="datePublished">2018-11-30</time>
         </a>
     </div>
 
 
-                        
+                    
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Spring/">Spring</a>
+        <a class="article-category-link" href="/categories/MyBatis/">MyBatis</a>
     </div>
 
-                        
+                    
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/Spring学习记录/">Spring学习记录</a>
+        <a class="tag-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a>, <a class="tag-link" href="/tags/SSM/">SSM</a>
     </div>
 
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
-<p>本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用<strong>MyBatis-Spring项目</strong>项目</p>
-<p>相关连接地址：</p>
-<ul>
-<li><a href="https://github.com/mybatis/spring/releases" target="_blank" rel="noopener">mybatis-spring的Github</a></li>
-<li><a href="https://mvnrepository.com/artifact/org.mybatis/mybatis-spring" target="_blank" rel="noopener">mybatis-spring的maven仓库</a></li>
-</ul>
-<a id="more"></a>
-<p>###1. MyBatis-Spring的使用</p>
-<ul>
-<li>配置数据源</li>
-<li>配置SqlSessionFactory（可配置SqlSessionTemplate，同时存在优先使用SqlSessionTemplate）</li>
-<li>配置Mapper</li>
-<li>事务管理</li>
-</ul>
-<p><strong>配置数据源:</strong></p>
-<ol>
-<li><p>使用spring提供的简单数据库配置，不支持连接池</p>
-<pre><code>//spring-config.xml
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jdbc.datasource.SimpleDriverDataSource&quot;&gt; 
-&lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt; 
-&lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt; 
-&lt;property name=&quot;driverClass&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt; 
-&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/ssm&quot; /&gt; 
-&lt;/bean&gt;
-</code></pre></li>
-<li><p>使用第三方数据库连接池(DBCP)</p>
-<pre><code>//spring-config.xml 
-&lt;!-- 数据库连接池 --&gt;
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot;&gt;
-    &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;
-    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/ssm&quot; /&gt;
-    &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;
-    &lt;property name=&quot;password&quot; value=&quot;root&quot; /&gt;
-    &lt;!--连接池的最大数据库连接数 --&gt;
-    &lt;property name=&quot;maxActive&quot; value=&quot;255&quot; /&gt;
-    &lt;!--最大等待连接中的数量 --&gt;
-    &lt;property name=&quot;maxIdle&quot; value=&quot;5&quot; /&gt;
-    &lt;!--最大等待毫秒数 --&gt;
-    &lt;property name=&quot;maxWait&quot; value=&quot;10000&quot; /&gt;
-&lt;/bean&gt;
-</code></pre></li>
-<li><p>使用JNDI数据库连接池</p>
-<pre><code>//spring-config.xml 
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&gt; 
-    &lt;property name=&quot;jndiName&quot; value=&quot;java:comp/env/jdbc/ssm&quot; /&gt;
-&lt;/bean&gt;
-</code></pre></li>
-</ol>
-<p><strong>配置SqlSessionFactory:</strong><br>主要通过<strong>SqlSessionFactoryBean</strong>进行配置</p>
-<pre><code>//spring-config.xml
-&lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt; &lt;!--数据源配置--&gt;
-    &lt;property name=&quot;configLocation&quot; value=&quot;classpath:sqlMapConfig.xml&quot; /&gt; &lt;!--MyBatis配置--&gt;
-&lt;/bean&gt;
-
-//可选配置JdbcTemplate，同时存在sqlSessionFactory和SqlSessionTemplate,则优先使用SqlSessionTemplate
-//线程安全
-&lt;bean id=&quot;jdbcTemplate&quot; class=&quot;org.springframework.jdbc.core.JdbcTemplate&quot;&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
-&lt;/bean&gt;
-</code></pre><p>MyBatis相关配置：</p>
-<pre><code>//sqlMapConfig.xml
-&lt;!DOCTYPE configuration PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-&lt;configuration&gt;
-    &lt;settings&gt;
-        &lt;!-- 这个配置使全局的映射器启用或禁用缓存 --&gt;
-        &lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot; /&gt;
-        &lt;!-- 允许 JDBC 支持生成的键。需要适合[修改为：适当]的驱动。如果设置为true，则这个设置强制生成的键被使用，尽管一些驱动拒绝兼容但仍然有效（比如 Derby） --&gt;
-        &lt;setting name=&quot;useGeneratedKeys&quot; value=&quot;true&quot; /&gt;
-        &lt;!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新  --&gt;
-        &lt;setting name=&quot;defaultExecutorType&quot; value=&quot;REUSE&quot; /&gt;
-        &lt;!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载 --&gt;
-        &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
-        &lt;!-- 设置超时时间，它决定驱动等待一个数据库响应的时间  --&gt;
-        &lt;setting name=&quot;defaultStatementTimeout&quot; value=&quot;25000&quot;/&gt; 
-    &lt;/settings&gt;
-    &lt;!-- 别名配置 --&gt;
-    &lt;typeAliases&gt;
-        &lt;typeAlias alias=&quot;role&quot; type=&quot;com.ssm.chapter12.pojo.Role&quot; /&gt;
-    &lt;/typeAliases&gt;
-
-    &lt;!-- 指定映射器路径 --&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource=&quot;com/ssm/chapter12/sql/mapper/RoleMapper.xml&quot; /&gt;
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre><p><strong>配置Mapper：</strong></p>
-<ul>
-<li><p>单个配置：MapperFactoryBean</p>
-<pre><code>//Spring-config.xml
-&lt;bean id=&quot;roleMapper&quot; class=&quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt; 
-    &lt;property name=&quot;mapperInterface&quot; value=&quot;com.ssm.chapter12.mapper.RoleMapper&quot; /&gt;
-    &lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactory&quot; /&gt;
-    &lt;property name=&quot;sqlSessionTemplate&quot; ref=&quot;sqlSessionTemplate&quot;/&gt;
-&lt;/bean&gt;
-</code></pre><p>  mapperInterface：映射器的接口。</p>
-</li>
-</ul>
-<ul>
-<li><p>批量扫描： MapperScannerConfigurer</p>
-<pre><code>//Spring-config.xml
-&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
-    &lt;property name=&quot;basePackage&quot; value=&quot;com.ssm.chapter12.mapper&quot; /&gt;
-    &lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;
-    &lt;!-- 使用sqlSessionTemplateBeanName将覆盖sqlSessionFactoryBeanName的配置 --&gt;
-    &lt;!-- &lt;property name=&quot;sqlSessionTemplateBeanName&quot; value=&quot;sqlSessionFactory&quot;/&gt; --&gt;
-    &lt;!-- 指定标注才扫描成为Mapper：@Repository--&gt;
-    &lt;property name=&quot;annotationClass&quot; value=&quot;org.springframework.stereotype.Repository&quot; /&gt;
-    &lt;!-- 方式二：通过基类接口设置扫描
-    &lt;property name=&quot;markerInterface&quot; value=&quot;com.ssm.chapter12.mapper.BaseMapper&quot; /&gt;
-    --&gt;
-&lt;/bean&gt;
-
-//RoleMapper.java
-@Repository //通过注解标记这是一个DAO层
-public interface RoleMapper {
-    public int insertRole(Role role);
-}
-</code></pre><ul>
-<li>basePackage：指定自动扫描的包名，多个以”,”隔开。</li>
-<li>annotationClass:只扫描带有指定注解的类。eg:只扫描带有@Repository的类</li>
-<li>markerInterface:指定实现了特定接口的类才为Mapper。eg:<code>public interface RoleMapper extends BaseMapper{...}</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>配置事务管理器：</strong></p>
-<ol>
-<li><p>代码配置事务管理器</p>
-<ol>
-<li>config类实现<strong>TransactionManagementConfigurer接口</strong>，实现返回<strong>PlatFormTransactionManager</strong>的方法。</li>
-<li>config类上添加 <strong>@EnableTransactionManagement</strong>注解，开启Spring上下文使用事务注解<strong>@Transactional</strong></li>
-</ol>
-</li>
-</ol>
-<p>示例代码：</p>
-<pre><code>@Configuration   //类中存在Bean需要管理
-@ComponentScan(&quot;com.ssm.chapter13.*&quot;)  //扫描指定包底下的类，加入Spring IoC容器
-@EnableTransactionManagement           //开启上下文对事务注解@Transactional的使用
-public class DBConfig implements TransactionManagementConfigurer{
-    //1.配置数据源        
-    @Bean(name=&quot;dataSource&quot;)
-    public DataSource initDataSource(){...}
-
-    @Override
-    @Bean(name=&quot;transactionManager&quot;)
-    public PlatFormTransactionManager annotationDrivenTransactionManager(){
-        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-        transactionManager.setDataSource(initDataSource());
-        return transactionManager;
-    }
-} 
-</code></pre><ol start="2">
-<li>xml配置事务管理器</li>
-</ol>
-<p>需要添加命名空间和模板文件：</p>
-<pre><code>http://www.springframework.org/schema/tx 
-http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-</code></pre><p>事务管理器的配置：</p>
-<pre><code>&lt;!-- 事务管理器配置数据源事务 --&gt;
-&lt;bean id=&quot;transactionManager&quot;
-    class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
-&lt;/bean&gt;
-
-&lt;!--启用扫描机制，并指定扫描对应的包。--&gt;
-&lt;context:component-scan base-package=&quot;com.ssm.chapter13.*&quot; /&gt;
-
-&lt;!-- 使用注解定义事务 ：@Transactional的使用--&gt;
-&lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt;
-</code></pre><p>事务的使用：</p>
-<ol>
-<li><p>使用<strong>@Transactional</strong>标记方法为事务方法</p>
-<pre><code>@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT,timeout=3)
-public int insertRole(Role role){...}
-</code></pre></li>
-<li><p>使用<strong>TransactionDefinition</strong>进行编程式调用事务。</p>
-<pre><code>TransactionDefinition def = new DefaultTransactionDefinition();
-PlatfromTransactionManager transactionManager = ctx.getBean(PlatfromTransactionManager.class);
-TransactionStatus status = transactionManager.getTransaction(def);
-//SQL执行
-//transactionManager.commit(status); 或者 transactionManager.rollback(status);
-</code></pre></li>
-</ol>
-<p>@Transactional失效问题：</p>
-<p>@Transactional也是通过Spring AOP技术实现的，所以方法必须遵循以下几点：</p>
-<ul>
-<li>公用方法public</li>
-<li>非静态方法static</li>
-<li>非自调用，即不能直接调用自身事务方法，需要通过 xxService.mothed()调用。</li>
-</ul>
-<p>###2.总结<br>由于官方提供了MyBatis-Spring项目用于快速整合MyBatis和Spring，所以整合相对简单，只需要根据流程配置Spring和MyBatis即可。<br>需要注意的是MyBatis的Mapper只是一个接口文件，需要通过MapperScannerConfigurer扫描并注册到Spring IoC中。</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.14</p>
-
-        
+                </div>
+            </div>
         </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
+    
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/" data-id="cjpy6evn5001jl8vwvytakzf5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/12/19/SpringMVC学习记录01——处理流程/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    SpringMVC学习记录01——处理流程
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2018/12/12/Spring学习记录-02-——Spring-AOP/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Spring学习记录(02)——Spring AOP</div>
-        </a>
-    
-</nav>
-
-
-    
-</article>
-
-
-    
-    
-
+    <nav id="page-nav">
+        <a class="extend prev" rel="prev" href="/tags/SSM/">&laquo; 上一页</a><a class="page-number" href="/tags/SSM/">1</a><span class="page-number current">2</span>
+    </nav>
 </section>
             
                 

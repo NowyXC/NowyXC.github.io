@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Spring学习记录(03)——MyBatis-Spring项目 | Nowy_Blog</title>
+    <title>SpringMVC学习记录03——Controller与页面数据传递 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用MyBatis-Spring项目项目 相关连接地址：  mybatis-spring的Github mybatis-spring的maven仓库">
-<meta name="keywords" content="SSM,Spring学习记录">
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Controller与页面数据传递  Controller接收参数： 普通参数接收 对象类型参数接收 接收参数别名(@RequestParam) URL参数(@PathVariable) 请求实体提交(@RequestBody):数组类型、集合类">
+<meta name="keywords" content="SSM,SpringMVC学习记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring学习记录(03)——MyBatis-Spring项目">
-<meta property="og:url" content="http://yoursite.com/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/index.html">
+<meta property="og:title" content="SpringMVC学习记录03——Controller与页面数据传递">
+<meta property="og:url" content="http://yoursite.com/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用MyBatis-Spring项目项目 相关连接地址：  mybatis-spring的Github mybatis-spring的maven仓库">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Controller与页面数据传递  Controller接收参数： 普通参数接收 对象类型参数接收 接收参数别名(@RequestParam) URL参数(@PathVariable) 请求实体提交(@RequestBody):数组类型、集合类">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-15T08:35:08.623Z">
+<meta property="og:updated_time" content="2018-12-21T15:14:48.240Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring学习记录(03)——MyBatis-Spring项目">
-<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用MyBatis-Spring项目项目 相关连接地址：  mybatis-spring的Github mybatis-spring的maven仓库">
+<meta name="twitter:title" content="SpringMVC学习记录03——Controller与页面数据传递">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Controller与页面数据传递  Controller接收参数： 普通参数接收 对象类型参数接收 接收参数别名(@RequestParam) URL参数(@PathVariable) 请求实体提交(@RequestBody):数组类型、集合类">
     
 
     
@@ -187,7 +187,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Spring学习记录-03-——MyBatis-Spring项目" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-SpringMVC学习记录03——Controller与页面数据传递" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -195,7 +195,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Spring学习记录(03)——MyBatis-Spring项目
+            SpringMVC学习记录03——Controller与页面数据传递
         </h1>
     
 
@@ -204,8 +204,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/">
-            <time datetime="2018-12-13T09:01:57.000Z" itemprop="datePublished">2018-12-13</time>
+        <a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/">
+            <time datetime="2018-12-21T12:15:14.000Z" itemprop="datePublished">2018-12-21</time>
         </a>
     </div>
 
@@ -213,13 +213,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Spring/">Spring</a>
+        <a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/Spring学习记录/">Spring学习记录</a>
+        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a>
     </div>
 
                     </div>
@@ -231,198 +231,232 @@
         
             
             <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
-<p>本文主要记录Spring框架与MyBatis框架联合使用的说明，主要是使用<strong>MyBatis-Spring项目</strong>项目</p>
-<p>相关连接地址：</p>
-<ul>
-<li><a href="https://github.com/mybatis/spring/releases" target="_blank" rel="noopener">mybatis-spring的Github</a></li>
-<li><a href="https://mvnrepository.com/artifact/org.mybatis/mybatis-spring" target="_blank" rel="noopener">mybatis-spring的maven仓库</a></li>
-</ul>
+<p>本文主要记录<strong>Controller与页面数据传递</strong></p>
+<ol>
+<li>Controller接收参数：<ol>
+<li>普通参数接收</li>
+<li>对象类型参数接收</li>
+<li>接收参数别名(@RequestParam)</li>
+<li>URL参数(@PathVariable)</li>
+<li>请求实体提交(@RequestBody):数组类型、集合类型、JSON等</li>
+</ol>
+</li>
+<li>Controller传递参数：<ol>
+<li>基础参数传递</li>
+<li>对象类型参数传递</li>
+</ol>
+</li>
+<li>缓存数据到HTTP<ol>
+<li>@RequestAttribute:获取HTTP的请求(request)对象属性值，用来传递给控制器的参数。</li>
+<li>@SessionAttribute/@SessionAttributes：在HTTP的会话(Session)对象属性中，用来传递给控制器的参数</li>
+<li>@CookieValue：获取cookie参数</li>
+<li>@RequestHeader：获取请求头参数    </li>
+</ol>
+</li>
+<li>重定向（redirect）</li>
+</ol>
 <a id="more"></a>
-<p>###1. MyBatis-Spring的使用</p>
-<ul>
-<li>配置数据源</li>
-<li>配置SqlSessionFactory（可配置SqlSessionTemplate，同时存在优先使用SqlSessionTemplate）</li>
-<li>配置Mapper</li>
-<li>事务管理</li>
-</ul>
-<p><strong>配置数据源:</strong></p>
-<ol>
-<li><p>使用spring提供的简单数据库配置，不支持连接池</p>
-<pre><code>//spring-config.xml
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jdbc.datasource.SimpleDriverDataSource&quot;&gt; 
-&lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt; 
-&lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt; 
-&lt;property name=&quot;driverClass&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt; 
-&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/ssm&quot; /&gt; 
-&lt;/bean&gt;
-</code></pre></li>
-<li><p>使用第三方数据库连接池(DBCP)</p>
-<pre><code>//spring-config.xml 
-&lt;!-- 数据库连接池 --&gt;
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot;&gt;
-    &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;
-    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/ssm&quot; /&gt;
-    &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;
-    &lt;property name=&quot;password&quot; value=&quot;root&quot; /&gt;
-    &lt;!--连接池的最大数据库连接数 --&gt;
-    &lt;property name=&quot;maxActive&quot; value=&quot;255&quot; /&gt;
-    &lt;!--最大等待连接中的数量 --&gt;
-    &lt;property name=&quot;maxIdle&quot; value=&quot;5&quot; /&gt;
-    &lt;!--最大等待毫秒数 --&gt;
-    &lt;property name=&quot;maxWait&quot; value=&quot;10000&quot; /&gt;
-&lt;/bean&gt;
-</code></pre></li>
-<li><p>使用JNDI数据库连接池</p>
-<pre><code>//spring-config.xml 
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&gt; 
-    &lt;property name=&quot;jndiName&quot; value=&quot;java:comp/env/jdbc/ssm&quot; /&gt;
-&lt;/bean&gt;
-</code></pre></li>
-</ol>
-<p><strong>配置SqlSessionFactory:</strong><br>主要通过<strong>SqlSessionFactoryBean</strong>进行配置</p>
-<pre><code>//spring-config.xml
-&lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt; &lt;!--数据源配置--&gt;
-    &lt;property name=&quot;configLocation&quot; value=&quot;classpath:sqlMapConfig.xml&quot; /&gt; &lt;!--MyBatis配置--&gt;
-&lt;/bean&gt;
-
-//可选配置JdbcTemplate，同时存在sqlSessionFactory和SqlSessionTemplate,则优先使用SqlSessionTemplate
-//线程安全
-&lt;bean id=&quot;jdbcTemplate&quot; class=&quot;org.springframework.jdbc.core.JdbcTemplate&quot;&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
-&lt;/bean&gt;
-</code></pre><p>MyBatis相关配置：</p>
-<pre><code>//sqlMapConfig.xml
-&lt;!DOCTYPE configuration PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-&lt;configuration&gt;
-    &lt;settings&gt;
-        &lt;!-- 这个配置使全局的映射器启用或禁用缓存 --&gt;
-        &lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot; /&gt;
-        &lt;!-- 允许 JDBC 支持生成的键。需要适合[修改为：适当]的驱动。如果设置为true，则这个设置强制生成的键被使用，尽管一些驱动拒绝兼容但仍然有效（比如 Derby） --&gt;
-        &lt;setting name=&quot;useGeneratedKeys&quot; value=&quot;true&quot; /&gt;
-        &lt;!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新  --&gt;
-        &lt;setting name=&quot;defaultExecutorType&quot; value=&quot;REUSE&quot; /&gt;
-        &lt;!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载 --&gt;
-        &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
-        &lt;!-- 设置超时时间，它决定驱动等待一个数据库响应的时间  --&gt;
-        &lt;setting name=&quot;defaultStatementTimeout&quot; value=&quot;25000&quot;/&gt; 
-    &lt;/settings&gt;
-    &lt;!-- 别名配置 --&gt;
-    &lt;typeAliases&gt;
-        &lt;typeAlias alias=&quot;role&quot; type=&quot;com.ssm.chapter12.pojo.Role&quot; /&gt;
-    &lt;/typeAliases&gt;
-
-    &lt;!-- 指定映射器路径 --&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource=&quot;com/ssm/chapter12/sql/mapper/RoleMapper.xml&quot; /&gt;
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre><p><strong>配置Mapper：</strong></p>
-<ul>
-<li><p>单个配置：MapperFactoryBean</p>
-<pre><code>//Spring-config.xml
-&lt;bean id=&quot;roleMapper&quot; class=&quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt; 
-    &lt;property name=&quot;mapperInterface&quot; value=&quot;com.ssm.chapter12.mapper.RoleMapper&quot; /&gt;
-    &lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactory&quot; /&gt;
-    &lt;property name=&quot;sqlSessionTemplate&quot; ref=&quot;sqlSessionTemplate&quot;/&gt;
-&lt;/bean&gt;
-</code></pre><p>  mapperInterface：映射器的接口。</p>
-</li>
-</ul>
-<ul>
-<li><p>批量扫描： MapperScannerConfigurer</p>
-<pre><code>//Spring-config.xml
-&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
-    &lt;property name=&quot;basePackage&quot; value=&quot;com.ssm.chapter12.mapper&quot; /&gt;
-    &lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;
-    &lt;!-- 使用sqlSessionTemplateBeanName将覆盖sqlSessionFactoryBeanName的配置 --&gt;
-    &lt;!-- &lt;property name=&quot;sqlSessionTemplateBeanName&quot; value=&quot;sqlSessionFactory&quot;/&gt; --&gt;
-    &lt;!-- 指定标注才扫描成为Mapper：@Repository--&gt;
-    &lt;property name=&quot;annotationClass&quot; value=&quot;org.springframework.stereotype.Repository&quot; /&gt;
-    &lt;!-- 方式二：通过基类接口设置扫描
-    &lt;property name=&quot;markerInterface&quot; value=&quot;com.ssm.chapter12.mapper.BaseMapper&quot; /&gt;
-    --&gt;
-&lt;/bean&gt;
-
-//RoleMapper.java
-@Repository //通过注解标记这是一个DAO层
-public interface RoleMapper {
-    public int insertRole(Role role);
+<p>###1. Controller接收参数</p>
+<p>####1.1 普通参数接收<br>一般情况下保持<strong>HTTP的请求参数的名称</strong>和<strong>控制器方法的参数名称</strong>一致，就可以获取到HTTP的请求参数。</p>
+<p>eg:</p>
+<p>请求为: <code>http://..../getRole?id=1&amp;roleName=test</code></p>
+<p>Controller中方法：(<strong>普通参数接收</strong>)</p>
+<pre><code>public ModelAndView getRole(String id,String roleName){
+    //...
 }
-</code></pre><ul>
-<li>basePackage：指定自动扫描的包名，多个以”,”隔开。</li>
-<li>annotationClass:只扫描带有指定注解的类。eg:只扫描带有@Repository的类</li>
-<li>markerInterface:指定实现了特定接口的类才为Mapper。eg:<code>public interface RoleMapper extends BaseMapper{...}</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>配置事务管理器：</strong></p>
-<ol>
-<li><p>代码配置事务管理器</p>
-<ol>
-<li>config类实现<strong>TransactionManagementConfigurer接口</strong>，实现返回<strong>PlatFormTransactionManager</strong>的方法。</li>
-<li>config类上添加 <strong>@EnableTransactionManagement</strong>注解，开启Spring上下文使用事务注解<strong>@Transactional</strong></li>
-</ol>
-</li>
-</ol>
-<p>示例代码：</p>
-<pre><code>@Configuration   //类中存在Bean需要管理
-@ComponentScan(&quot;com.ssm.chapter13.*&quot;)  //扫描指定包底下的类，加入Spring IoC容器
-@EnableTransactionManagement           //开启上下文对事务注解@Transactional的使用
-public class DBConfig implements TransactionManagementConfigurer{
-    //1.配置数据源        
-    @Bean(name=&quot;dataSource&quot;)
-    public DataSource initDataSource(){...}
-
-    @Override
-    @Bean(name=&quot;transactionManager&quot;)
-    public PlatFormTransactionManager annotationDrivenTransactionManager(){
-        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-        transactionManager.setDataSource(initDataSource());
-        return transactionManager;
-    }
-} 
-</code></pre><ol start="2">
-<li>xml配置事务管理器</li>
-</ol>
-<p>需要添加命名空间和模板文件：</p>
-<pre><code>http://www.springframework.org/schema/tx 
-http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-</code></pre><p>事务管理器的配置：</p>
-<pre><code>&lt;!-- 事务管理器配置数据源事务 --&gt;
-&lt;bean id=&quot;transactionManager&quot;
-    class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
-&lt;/bean&gt;
-
-&lt;!--启用扫描机制，并指定扫描对应的包。--&gt;
-&lt;context:component-scan base-package=&quot;com.ssm.chapter13.*&quot; /&gt;
-
-&lt;!-- 使用注解定义事务 ：@Transactional的使用--&gt;
-&lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt;
-</code></pre><p>事务的使用：</p>
-<ol>
-<li><p>使用<strong>@Transactional</strong>标记方法为事务方法</p>
-<pre><code>@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT,timeout=3)
-public int insertRole(Role role){...}
-</code></pre></li>
-<li><p>使用<strong>TransactionDefinition</strong>进行编程式调用事务。</p>
-<pre><code>TransactionDefinition def = new DefaultTransactionDefinition();
-PlatfromTransactionManager transactionManager = ctx.getBean(PlatfromTransactionManager.class);
-TransactionStatus status = transactionManager.getTransaction(def);
-//SQL执行
-//transactionManager.commit(status); 或者 transactionManager.rollback(status);
-</code></pre></li>
-</ol>
-<p>@Transactional失效问题：</p>
-<p>@Transactional也是通过Spring AOP技术实现的，所以方法必须遵循以下几点：</p>
+</code></pre><p><br></p>
+<p>####1.2 对象类型参数接收<br>存在一些情况导致接收参数过多，可以考虑通过POJO来管理参数</p>
+<p>eg:</p>
+<p>请求为:<code>http://..../getRole?id=1&amp;roleName=test</code></p>
+<p>POJO类定义：</p>
+<pre><code>public class RoleParams{
+    private String id;
+    private String roleName;
+    //...getter/setter
+}
+</code></pre><p>Controller中方法： (<strong>对象类型参数接收</strong>)</p>
+<pre><code>public ModelAndView getRole(RoleParams roleParams){
+    //...
+}
+</code></pre><p><strong>只要请求参数名与controller中的接收参数的名称一致，那么就能接收。 </strong></p>
+<p><br></p>
+<p>####1.3 参数别名接收<br>在多人开发的过程中，前端请求可能由第三方完成，导致命名规范不一样。<br><br>那么在不修改程序命名的情况下接收参数就需要用到<strong>@RequestParam</strong></p>
+<p>eg:</p>
+<p>请求为:<code>http://..../getRole?id=1&amp;role_name=test</code></p>
+<p>Controller中方法：(<strong>参数别名接收</strong>)</p>
+<pre><code>public ModelAndView getRole(String id,@RequestParam(&quot;role_name&quot;)String roleName){
+    //...
+}
+</code></pre><p>需要注意的是：<strong>使用@RequestParam注解后，参数默认情况下不为空，为空会抛出异常。</strong></p>
+<p>允许为空的设置：设置<code>required = false</code></p>
+<p><code>@RequestParam(value = &quot;role_name&quot;,required = false)String roleName</code></p>
+<p><br></p>
+<p>####1.4 URL中的参数接收<br>如果使用RESTful风格的请求，那么参数的传递可能直接在在URL中。</p>
+<p>eg:</p>
+<p>请求为:<code>http://..../getRole/1</code></p>
+<p>Controller中方法：(<strong>URL中的参数接收</strong>)</p>
+<pre><code>@RequestMapping(&quot;/getRole/{id}&quot;)
+public ModelAndView getRole(@PathVariable(&quot;id&quot;)String id){ //@PathVariable允许参数为空
+    //...
+}
+</code></pre><p><br></p>
+<p>####1.5 请求实体提交<br>在HTTP的Post请求中，存在一类需求是将数据序列化后直接提交到报文中的。</p>
+<p>默认的POST提交的内容实体的格式为:<code>key1=value1&amp;key2=value2</code></p>
+<p>需求需要提交JSON数据到报文中：<code>contentType:&quot;application/json&quot;</code>，<br>内容为：<code>{&quot;key1&quot;:&quot;value1&quot;,&quot;key2&quot;:&quot;value2&quot;}</code></p>
+<p>POJO类定义：</p>
+<pre><code>public class JsonParams{
+    private String key1;
+    private String key2;
+    //...getter/setter
+}
+</code></pre><p>Controller中方法：(<strong>请求实体提交的参数接口</strong>)</p>
+<pre><code>public ModelAndView getData(@RequestBody JsonParams jsonParams){ 
+    //...
+}
+</code></pre><p>集合类JSON：<code>[{&quot;key1&quot;:&quot;value1&quot;,&quot;key2&quot;:&quot;value2&quot;},{&quot;key1&quot;:&quot;value1&quot;,&quot;key2&quot;:&quot;value2&quot;}]</code></p>
+<p>Controller中方法：(<strong>请求实体提交的参数接口(集合)</strong>)</p>
+<pre><code>public ModelAndView getData(@RequestBody List&lt;JsonParams&gt; jsonParamsList){
+    //...
+}
+</code></pre><p><strong>通常情况，复杂的数据结构都通过序列化为JSON格式后提交，controller中通过@RequestBody接收</strong></p>
+<p>###2. Controller传递参数<br>Controller可以通过Model、ModelMap和ModelAndView向页面传递参数，一般只需要在控制器的方法中添加它们的其中一个，<strong>Spring MVC运行的时候，会自动初始化它们</strong>。</p>
 <ul>
-<li>公用方法public</li>
-<li>非静态方法static</li>
-<li>非自调用，即不能直接调用自身事务方法，需要通过 xxService.mothed()调用。</li>
+<li><p>Model：</p>
+<pre><code>public ModelAndView getRoleByModel(@RequestParam(&quot;id&quot;) Long id, Model model) {
+    Role role = roleService.getRole(id);
+    ModelAndView mv = new ModelAndView();
+    mv.setViewName(&quot;roleDetails&quot;);
+    model.addAttribute(&quot;name&quot;,&quot;test&quot;);//传递字符串对象
+    model.addAttribute(&quot;role&quot;, role); //传递Role对象到页面
+    return mv;
+}    
+</code></pre></li>
 </ul>
-<p>###2.总结<br>由于官方提供了MyBatis-Spring项目用于快速整合MyBatis和Spring，所以整合相对简单，只需要根据流程配置Spring和MyBatis即可。<br>需要注意的是MyBatis的Mapper只是一个接口文件，需要通过MapperScannerConfigurer扫描并注册到Spring IoC中。</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.14</p>
+<ul>
+<li><p>ModelMap：</p>
+<pre><code>public ModelAndView getRoleByModelMap(@RequestParam(&quot;id&quot;) Long id, ModelMap modelMap) {
+        Role role = roleService.getRole(id);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName(&quot;roleDetails&quot;);
+        modelMap.addAttribute(&quot;name&quot;,&quot;test&quot;);//传递字符串对象
+        modelMap.addAttribute(&quot;role&quot;, role);//传递Role对象到页面
+        return mv;
+    }
+</code></pre></li>
+<li><p>ModelAndView:</p>
+<pre><code>public ModelAndView getRoleByMv(@RequestParam(&quot;id&quot;) Long id, ModelAndView mv) {
+    Role role = roleService.getRole(id);
+    mv.setViewName(&quot;roleDetails&quot;);
+    mv.addObject(&quot;name&quot;,&quot;test&quot;);//传递字符串对象
+    mv.addObject(&quot;role&quot;, role); //传递Role对象到页面
+    return mv;
+}
+</code></pre></li>
+</ul>
+<p>页面的接收：</p>
+<p>页面通过<code>${参数名}</code>获取Controller传递到页面的值:</p>
+<ul>
+<li><code>addAttribute(&quot;name&quot;,&quot;test&quot;)</code> 对应：<code>${name}</code></li>
+<li><code>addAttribute(&quot;role&quot;, role)</code> 对应：<code>${role.id}</code>、<code>${role.roleName}</code>等</li>
+</ul>
+<p>需要注意：<strong>重定向不能通过这种方式传递POJO对象（使用RedirectAttributes.addFlashAttribute）</strong></p>
+<p>###3. 缓存数据到HTTP</p>
+<p>####3.1 RequestAttribute<br>从Request对象中取出请求属性，有效期为：单次请求中。</p>
+<p>JSP页面代码：</p>
+<pre><code>&lt;%
+    //设置请求属性
+    request.setAttribute(&quot;id&quot;,1L);
+    //转发给控制器
+    request.getRequestDispatcher(&quot;./attribute/requestAttribute.do&quot;).forward(request, response);
+%&gt;
+</code></pre><p>Controller中接收代码：</p>
+<pre><code>@RequestMapping(&quot;/requestAttribute&quot;)
+public ModelAndView reqAttr(@RequestAttribute(&quot;id&quot;) Long id) {
+    //...
+}
+</code></pre><p>注：@RequestAttribute默认为非空。 可以为空需要设置：<code>required = false</code>（类似@RequestParam）</p>
+<p>####3.2 @SessionAttribute和@SessionAttributes<br>从HTTP的会话中取出属性，有效期是：本次会话期间</p>
+<p><strong>@SessionAttributes只能设置在类名上，不能设置在方法和参数上。</strong></p>
+<p>eg:</p>
+<pre><code>//可以配置数据模型的名称和类型，两者取或关系
+@SessionAttributes(names ={&quot;id&quot;}, types = { Role.class })
+public class AttributeController {
+
+    @RequestMapping(&quot;/sessionAttributes&quot;)
+    public ModelAndView sessionAttrs(Long id) {
+        ModelAndView mv = new ModelAndView();
+        Role role = roleService.getRole(id);
+        //根据类型，session将会保存角色信息
+        mv.addObject(&quot;role&quot;, role); 
+        //根据名称，session将会保存id
+        mv.addObject(&quot;id&quot;, id);
+        //视图名称，定义跳转到一个JSP文件上
+        mv.setViewName(&quot;sessionAttribute&quot;);
+        return mv;
+    }
+}
+</code></pre><p>如上述代码：<br>AttributeController配置了两个session属性。分别是：</p>
+<ul>
+<li>根据名称的：<code>id</code></li>
+<li>根据类型的：<code>Role.class</code></li>
+</ul>
+<p>JSP页面接收session代码：</p>
+<pre><code> &lt;%
+  Role role = (Role) session.getAttribute(&quot;role&quot;);//获取Role类型参数
+  out.println(&quot;id = &quot; + role.getId());
+
+  Long id = (Long) session.getAttribute(&quot;id&quot;);//获取名称为id的参数
+  out.println(&quot;id = &quot; + id + &quot;&lt;p/&gt;&quot;);
+
+  session.setAttribute(&quot;id&quot;,2L);//设置值到属性id中
+    //执行跳转
+  response.sendRedirect(&quot;./attribute/sessionAttribute.do&quot;);
+%&gt;
+</code></pre><p>Controller类中接收session属性的方法</p>
+<pre><code>@RequestMapping(&quot;/sessionAttribute&quot;)
+public ModelAndView sessionAttr(@SessionAttribute(&quot;id&quot;) Long id) {
+    //...
+}
+</code></pre><p>####3.3 @RequestHeader 和 @CookieValue<br>用户可以禁用Cookie，所以使用时候需要注意</p>
+<pre><code>@RequestMapping(&quot;/getHeaderAndCookie&quot;)
+public String testHeaderAndCookie(
+    @RequestHeader(value=&quot;User-Agent&quot;, required = false, defaultValue = &quot;attribute&quot;)
+         String userAgent,
+    @CookieValue(value = &quot;JSESSIONID&quot;, required = true, defaultValue = &quot;MyJsessionId&quot;) 
+         String jsessionId) {
+    System.out.println(&quot;User-Agent：&quot; + userAgent);
+    System.out.println(&quot;JSESSIONID：&quot; + jsessionId);
+    return &quot;index&quot;;
+}
+</code></pre><p>###4.重定向<br>在Spring MVC中当返回的字符串带有<strong>redirect</strong>的时候，它会认为这是一个重定向。</p>
+<p>eg:</p>
+<pre><code>@RequestMapping(&quot;/test&quot;)
+public String testRedirect(Model model){
+    model.addAttribute(&quot;name&quot;,&quot;test&quot;);//传递参数到index页面
+    return &quot;redirect:./index&quot;;
+}
+</code></pre><p>或者：</p>
+<pre><code>@RequestMapping(&quot;/test&quot;)
+public ModelAndView testRedirect(RedirectAttributes ra)
+    ModelAndView mv = new ModelAndView();
+    mv.addObject(&quot;name&quot;,&quot;test&quot;);//传递参数到index页面
+    ra.addFlashAttribute(&quot;obj&quot;,obj); //传递POJO对象参数到index页面
+    mv.setViewName(&quot;redirect:./index&quot;);
+    return mv;
+}
+</code></pre><p>addFlashAttribute(…)的功能主要是将POJO对象保存到session中，再执行重定向，在取出POJO数据后，清除session中保存的数据，最后显示页面。</p>
+<p>###5.总结</p>
+<ol>
+<li>Spring MVC 中，页面与Controller之间的参数传递相对比较简单。<ul>
+<li>Controller接收简单参数只需要在<code>方法中定义参数的名称</code>与<code>请求参数的名称</code><strong>一致</strong>就可以获取值。</li>
+<li>Controller中的数据传递到页面也只需要在方法中使用Model、ModelMap或者ModelAndView就可以了。</li>
+<li>复杂的数据类型可以通过<code>@RequestBody</code>进行接收，传递可以通过序列化为JSON字符串<br><br><br></li>
+</ul>
+</li>
+<li>把数据直接保存到HTTP的request对象、session对象、Cookie和请求头(Header)中，需要注意的是request和session需要遵循它们的有效期。 而Cookie需要考虑到用户是否禁止了Cookie功能。</li>
+<li>重定向传递数据时，需要POJO类型的传递需要使用<code>RedirectAttributes</code>进行</li>
+</ol>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.12.21</p>
 
         
         </div>
@@ -433,7 +467,7 @@ TransactionStatus status = transactionManager.getTransaction(def);
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/" data-id="cjpy6evn5001jl8vwvytakzf5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" data-id="cjpy6evmu000wl8vw07paxrmv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -508,19 +542,10 @@ TransactionStatus status = transactionManager.getTransaction(def);
         
 <nav id="article-nav">
     
-        <a href="/2018/12/19/SpringMVC学习记录01——处理流程/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    SpringMVC学习记录01——处理流程
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/12/12/Spring学习记录-02-——Spring-AOP/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/12/20/SpringMVC学习记录02——使用配置/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Spring学习记录(02)——Spring AOP</div>
+            <div class="article-nav-title">SpringMVC学习记录02——使用配置</div>
         </a>
     
 </nav>
