@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Controller与页面数据传递  Controller接收参数： 普通参数接收 对象类型参数接收 接收参数别名(@RequestParam) URL参数(@PathVariable) 请求实体提交(@RequestBody):数组类型、集合类">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-21T15:14:48.240Z">
+<meta property="og:updated_time" content="2018-12-21T15:20:32.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC学习记录03——Controller与页面数据传递">
 <meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录Controller与页面数据传递  Controller接收参数： 普通参数接收 对象类型参数接收 接收参数别名(@RequestParam) URL参数(@PathVariable) 请求实体提交(@RequestBody):数组类型、集合类">
@@ -291,7 +291,7 @@
 <p>允许为空的设置：设置<code>required = false</code></p>
 <p><code>@RequestParam(value = &quot;role_name&quot;,required = false)String roleName</code></p>
 <p><br></p>
-<p>####1.4 URL中的参数接收<br>如果使用RESTful风格的请求，那么参数的传递可能直接在在URL中。</p>
+<p>####1.4 URL中的参数接收<br>如果使用RESTful风格的请求，那么参数的传递可能直接在URL中。</p>
 <p>eg:</p>
 <p>请求为:<code>http://..../getRole/1</code></p>
 <p>Controller中方法：(<strong>URL中的参数接收</strong>)</p>
@@ -454,7 +454,7 @@ public ModelAndView testRedirect(RedirectAttributes ra)
 </ul>
 </li>
 <li>把数据直接保存到HTTP的request对象、session对象、Cookie和请求头(Header)中，需要注意的是request和session需要遵循它们的有效期。 而Cookie需要考虑到用户是否禁止了Cookie功能。</li>
-<li>重定向传递数据时，需要POJO类型的传递需要使用<code>RedirectAttributes</code>进行</li>
+<li>重定向传递数据时，需要POJO类型的传递需要使用<code>RedirectAttributes</code>进行。</li>
 </ol>
 <h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2018.12.21</p>
 
