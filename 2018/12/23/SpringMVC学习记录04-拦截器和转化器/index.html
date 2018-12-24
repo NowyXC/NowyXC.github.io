@@ -3,20 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Spring学习记录(01)——装配Spring Bean | Nowy_Blog</title>
+    <title>SpringMVC学习记录04————拦截器、验证器和转化器 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
-<meta name="keywords" content="SSM,Spring学习记录">
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：  拦截器(HandlerInterceptor) 验证器(Validator) 转换器(Converter)">
+<meta name="keywords" content="SSM,SpringMVC学习记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring学习记录(01)——装配Spring Bean">
-<meta property="og:url" content="http://yoursite.com/2018/12/09/Spring学习记录-01-——装配Spring-Bean/index.html">
+<meta property="og:title" content="SpringMVC学习记录04————拦截器、验证器和转化器">
+<meta property="og:url" content="http://yoursite.com/2018/12/23/SpringMVC学习记录04-拦截器和转化器/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
-<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：  拦截器(HandlerInterceptor) 验证器(Validator) 转换器(Converter)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-10T15:11:08.567Z">
+<meta property="og:image" content="https://i.imgur.com/2JQgUvV.png">
+<meta property="og:updated_time" content="2018-12-24T16:47:28.272Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring学习记录(01)——装配Spring Bean">
-<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录装配Spring Bean的学习笔记。">
+<meta name="twitter:title" content="SpringMVC学习记录04————拦截器、验证器和转化器">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：  拦截器(HandlerInterceptor) 验证器(Validator) 转换器(Converter)">
+<meta name="twitter:image" content="https://i.imgur.com/2JQgUvV.png">
     
 
     
@@ -187,7 +189,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Spring学习记录-01-——装配Spring-Bean" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-SpringMVC学习记录04-拦截器和转化器" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -195,7 +197,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Spring学习记录(01)——装配Spring Bean
+            SpringMVC学习记录04————拦截器、验证器和转化器
         </h1>
     
 
@@ -204,8 +206,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/">
-            <time datetime="2018-12-09T13:06:23.000Z" itemprop="datePublished">2018-12-09</time>
+        <a href="/2018/12/23/SpringMVC学习记录04-拦截器和转化器/">
+            <time datetime="2018-12-23T13:06:55.000Z" itemprop="datePublished">2018-12-23</time>
         </a>
     </div>
 
@@ -213,13 +215,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Spring/">Spring</a>
+        <a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/Spring学习记录/">Spring学习记录</a>
+        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a>
     </div>
 
                     </div>
@@ -231,264 +233,509 @@
         
             
             <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
-<p>本文主要记录装配Spring Bean的学习笔记。</p>
+<p>本文主要记录：</p>
+<ul>
+<li>拦截器(HandlerInterceptor)</li>
+<li>验证器(Validator)</li>
+<li>转换器(Converter)</li>
+</ul>
 <a id="more"></a>
-<p>###1.Spring</p>
+<p>###1.拦截器 HandlerInterceptor<br>在Spring MVC中，运行时通过请求找到对应的HandlerMapping，然后构建HandlerExecutionChain(执行链)对象。 </p>
+<pre><code>//HandlerExecutionChain.class
+public class HandlerExecutionChain {
+
+    private static final Log logger = LogFactory.getLog(HandlerExecutionChain.class);
+
+    private final Object handler;
+
+    private HandlerInterceptor[] interceptors;
+
+    private List&lt;HandlerInterceptor&gt; interceptorList;
+
+    //...
+
+}
+</code></pre><p>所以在开发过程中，一个执行器可以对应多个拦截器，类似责任链模式形成调用关系。</p>
+<p>####1.1 拦截器的源码和执行流程<br><code>HandlerInterceptorAdapter</code>实现<code>AsyncHandlerInterceptor</code>接口，<code>AsyncHandlerInterceptor</code>继承<code>HandlerInterceptor</code>接口,所以此处直接列举<code>HandlerInterceptorAdapter</code>源码。</p>
+<pre><code>//HandlerInterceptorAdapter.class
+public abstract class HandlerInterceptorAdapter implements AsyncHandlerInterceptor {
+
+    /**
+     * This implementation always returns {@code true}.
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        //处理器执行的前置方法，返回值会影响处理器的执行。（为false则终止处理器的执行，并跳回外层的责任链节点的post方法）
+        //如果为false，则可以使用response来响应请求
+        return true;
+    }
+
+    /**
+     * This implementation is empty.
+     */
+    @Override
+    public void postHandle(
+            HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+            throws Exception {
+        //处理器执行的后置方法，处理器执行完后运行它(在解析渲染之前)。可以对视图和模型做进一步渲染或修改
+    }
+
+    /**
+     * This implementation is empty.
+     */
+    @Override
+    public void afterCompletion(
+            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+        //视图解析和渲染视图后执行。可以做些资源清理工作，或日志记录等
+    }
+
+    /**
+     * This implementation is empty.
+     */
+    @Override
+    public void afterConcurrentHandlingStarted(
+            HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        //如果是异步请求的时候会触发此方法
+    }
+
+}
+</code></pre><p>DispatcherServlet类中相关代码：</p>
+<pre><code>//DispatcherServlet类简化代码
+protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    try {
+        try {
+            //...省略代码
+            HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+
+            //额外处理1. 处理拦截器，实际调用interceptor.preHandle(...),异常直接triggerAfterCompletion(...)结束
+            if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+                return;
+            }
+
+            //通过处理器适配器执行处理器方法，返回逻辑视图（ModelAndView）
+            // Actually invoke the handler.
+            mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+            //判断是否异步请求，为真则直接return，然后执行finally
+            if (asyncManager.isConcurrentHandlingStarted()) {
+                return;
+            }
+
+            //5.设置ModelAndView对应的viewName,使用ViewNameTranslator
+            applyDefaultViewName(processedRequest, mv);
+
+            //额外处理2. 处理拦截器，实际调用interceptor.postHandle(...)
+            mappedHandler.applyPostHandle(processedRequest, response, mv);
+        }
+        catch (Exception ex) {
+            dispatchException = ex;
+        }
+        catch (Throwable err) {
+            // As of 4.3, we&apos;re processing Errors thrown from handler methods as well,
+            // making them available for @ExceptionHandler methods and other scenarios.
+            dispatchException = new NestedServletException(&quot;Handler dispatch failed&quot;, err);
+        }
+        //5.渲染视图，里面会调用mappedHandler.triggerAfterCompletion(request, response, ex);
+        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+    }
+    catch (Exception ex) {//里面会调用mappedHandler.triggerAfterCompletion(request, response, ex);
+        triggerAfterCompletion(processedRequest, response, mappedHandler, ex);
+    }
+    catch (Throwable err) {//里面会调用mappedHandler.triggerAfterCompletion(request, response, ex);
+        triggerAfterCompletion(processedRequest, response, mappedHandler,
+                new NestedServletException(&quot;Handler processing failed&quot;, err));
+    }
+    finally {
+        if (asyncManager.isConcurrentHandlingStarted()) {
+            // Instead of postHandle and afterCompletion
+            //为异步请求则调用applyAfterConcurrentHandlingStarted
+            if (mappedHandler != null) {
+                mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+            }
+        }
+        else {
+            // Clean up any resources used by a multipart request.
+            if (multipartRequestParsed) {
+                cleanupMultipart(processedRequest);
+            }
+        }
+    }
+}
+</code></pre><p>从上述代码可以看出，一个HandlerExecutionChain(执行链)对象里面包含一个handler对象和多个HandlerInterceptor(拦截器)。在<strong>DispatcherServlet类</strong>的<code>doDispatch</code>方法中,会通过以下方法处理拦截器：</p>
 <ul>
-<li>Spring框架的核心理念是IoC(控制反转)和AOP（面向切面编程）。</li>
-<li>Spring会认为一切java类都是资源，而资源都是Bean，容纳这些Bean的就是Spring所提供的IoC容器。（基于Bean的编程）</li>
-<li>Spring中的IoC容器的实现方法是依赖注入(DI)(通常有两种方法：依赖查找和依赖注入)</li>
+<li>mappedHandler.applyPreHandle(processedRequest, response); //执行前</li>
+<li>mappedHandler.applyPostHandle(processedRequest, response, mv); //执行后</li>
+<li>mappedHandler.triggerAfterCompletion(request, response, ex);//完成后触发（包括异常）</li>
+<li>mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);//异步方法调用(finally中)</li>
 </ul>
-<p><strong>IoC(控制反转)：</strong>由容器帮助对象查找和注入资源属性，而非通过对象主动请求获取资源属性。</p>
-<p><strong>AOP(面向切面编程):</strong>将程序中的横切关注点模块化形成切面，通过切点匹配程序中的连接点，将切面织入到目标对象,即创建目标对象的代理对象。</p>
-<p><strong>IoC的两种实现方式：</strong></p>
-<ul>
-<li><p><strong>依赖查找</strong>：容器提供回调接口和上下文条件给组件。组件必须使用容器提供的API来查找资源和协作对象，仅有的控制反转只体现在那些回调方法上。容器将调用这些回调方法，从而让应用代码获得相关资源。</p>
-</li>
-<li><p><strong>依赖注入(DI)</strong>：组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。容器全权负责的组件的装配，它会把符合依赖关系的对象通过JavaBean属性或者构造函数传递给需要的对象。</p>
-</li>
-</ul>
-<p>Spring的IoC容器是为了容纳开发中的各种Bean，并让开发者<strong>通过描述</strong>获取到Bean。（Bean可以是资源、java类等）</p>
-<p><strong>依赖注入的3种方式：</strong></p>
+<p>此处需要注意的是<code>applyAfterConcurrentHandlingStarted(...)</code>方法的执行流程，在<code>ha.handle(...)</code>执行后，需要判断当前请求是否异步请求<code>isConcurrentHandlingStarted()</code>,如果为异步请求，则<strong>直接return停止向下执行,会执行finally操作</strong>.也就是不再执行<code>applyPostHandle</code>和<code>afterCompletion</code>。</p>
+<p>####1.2 拦截器的使用<br>在开发中使用Spring MVC框架提供的<strong>HandlerInterceptorAdapter</strong>来实现自定义拦截器。</p>
 <ol>
-<li>构造器注入：Spring采用反射的方式，通过使用构造方法来完成注入。</li>
-<li>设值注入：Spring采用反射的方式，通过获取Java Bean规范的setter方法完成注入。（较为灵活和可读性高）</li>
-<li>接口注入：从外部注入。（例如Tomcat配置数据库连接资源，通过JNDI的形式获取，生成连接实例）</li>
-</ol>
-<p><strong>构造器注入：</strong></p>
-<pre><code>&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt; &lt;!--对应Role(String,String)--&gt;
-    &lt;constructor-arg index=&quot;0&quot; value=&quot;高级工程师&quot; /&gt; &lt;!--构造器第一个参数--&gt;
-    &lt;constructor-arg index=&quot;1&quot; value=&quot;重要人员&quot; /&gt;   &lt;!--构造器第二个参数--&gt;
-&lt;/bean&gt;
-</code></pre><p><strong>setter注入：</strong></p>
-<pre><code>&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt;
-    &lt;property name=&quot;roleName&quot; value=&quot;高级工程师&quot; /&gt;  &lt;!--对应setRoleName(String)--&gt;
-    &lt;property name=&quot;note&quot; value=&quot;重要人员&quot; /&gt;        &lt;!--对应setNote(String)--&gt;
-&lt;/bean&gt;
-</code></pre><p><strong>接口注入:</strong>(配置Tomcat数据源)</p>
-<pre><code>//Tomcat的context.xml,Tomcat的lib目录下需要mysql的驱动包
-&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos; ?&gt;
-&lt;Context&gt;
-&lt;Resource name=&quot;jdbc/ssm&quot;  &lt;!--JNDI名称--&gt;
-auth=&quot;Container&quot;
-type=&quot;javax.sql.DataSource&quot;
-driverClassName=&quot;com.mysql.jdbc.Driver&quot;
-url=&quot;jdbc:mysql://localhost:3306/ssm?zeroDataTimeBehavior=convertToNull&quot; &lt;!--数据库的JDBC连接--&gt;
-userName=&quot;root&quot;
-password=&quot;root&quot;
-/&gt;
-&lt;/Context&gt;
+<li><p>实现拦截器</p>
+<pre><code>public class RoleInterceptor extends HandlerInterceptorAdapter {
 
-//spring配置
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&gt;
-    &lt;property name=&quot;jndiName&quot;&gt; 
-        &lt;value&gt;java:comp/env/jdbc/ssm&lt;/value&gt;
-    &lt;/property&gt;
-&lt;/bean&gt;
-</code></pre><p>###2.Spring Bean的装配<br>Spring Bean的装配有3种方式：</p>
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        System.err.println(&quot;preHandle&quot;);
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+        System.err.println(&quot;postHandle&quot;);
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, 
+             Object handler, Exception ex) throws Exception {
+        System.err.println(&quot;afterCompletion&quot;);
+    }
+
+}
+</code></pre></li>
+<li><p>xml配置拦截器</p>
+<pre><code>//dispatcher-servlet.xml
+&lt;mvc:interceptors&gt;
+
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/role/*.do&quot; /&gt; &lt;!--配置拦截的对应请求--&gt;
+        &lt;bean class=&quot;com.ssm.chapter15.interceptor.RoleInterceptor&quot; /&gt;
+    &lt;/mvc:interceptor&gt;
+    &lt;!--  多拦截器配置
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/role/*.do&quot; /&gt;
+        &lt;bean class=&quot;com.ssm.chapter15.interceptor.RoleInterceptor1&quot; /&gt;
+    &lt;/mvc:interceptor&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/role/*.do&quot; /&gt;
+        &lt;bean class=&quot;com.ssm.chapter15.interceptor.RoleInterceptor2&quot; /&gt;
+    &lt;/mvc:interceptor&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/role/*.do&quot; /&gt;
+        &lt;bean class=&quot;com.ssm.chapter15.interceptor.RoleInterceptor3&quot; /&gt;
+    &lt;/mvc:interceptor&gt;
+     --&gt;
+&lt;/mvc:interceptors&gt;
+</code></pre></li>
+<li><p>多拦截器下的执行顺序<br>拦截器的执行顺序和责任链一样，下面是拦截器的执行图</p>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/2JQgUvV.png" alt="拦截器的执行图"></p>
+<p>需要注意的是preHandle的返回值。如果返回值为<strong>false</strong>表示控制器逻辑和后续方法都将不会被执行。即：该拦截器的<strong>posthandle</strong>方法和<strong>afterCompletion</strong>方法将不会被执行。但是，因为外层的拦截器的<code>preHandle</code>方法返回的是<strong>true</strong>,所以外层的<strong>afterCompletion</strong>方法将继续执行。</p>
+<p>###2.验证器 Validator<br>在Spring MVC中，可以采用类似<code>validation-api-1.1.0.Final.jar</code>提供的验证注解。也可以使用Spring提供的Validator接口进行校验。</p>
+<p>注意：</p>
 <ol>
-<li>xml配置</li>
-<li>java的接口和类中实现配置（注解配置）</li>
-<li>隐式bean的发现机制(组件扫描等)和自动装配原则</li>
+<li>validation-api-1.1.0.Final.jar的引入还需要依赖：<ul>
+<li>classmate-1.3.3.jar</li>
+<li>jboss-logging-3.3.1.Final.jar<br><br><br></li>
+</ul>
+</li>
+<li>Validator接口：<ul>
+<li>属于Spring-context包底下的接口 </li>
+</ul>
+</li>
 </ol>
-<p>配置的使用优先级遵循：基于约定优于配置原则。（即 使用优先级： 3 &gt; 2 &gt; 1）</p>
-<p>普遍推荐的做法：</p>
+<p><strong>此处记录使用Validator接口验证的方式：</strong></p>
+<pre><code>Validator接口的定义：
+public interface Validator {
+
+    /**
+     * Can this {@link Validator} {@link #validate(Object, Errors) validate}
+     * instances of the supplied {@code clazz}?
+     * &lt;p&gt;This method is &lt;i&gt;typically&lt;/i&gt; implemented like so:
+     * &lt;pre class=&quot;code&quot;&gt;return Foo.class.isAssignableFrom(clazz);&lt;/pre&gt;
+     * (Where {@code Foo} is the class (or superclass) of the actual
+     * object instance that is to be {@link #validate(Object, Errors) validated}.)
+     * @param clazz the {@link Class} that this {@link Validator} is
+     * being asked if it can {@link #validate(Object, Errors) validate}
+     * @return {@code true} if this {@link Validator} can indeed
+     * {@link #validate(Object, Errors) validate} instances of the
+     * supplied {@code clazz}
+     * 判断当前杨志强是否用于检验指定Class类型的POJO
+     * true:启动校验  false：不校验
+     */
+    boolean supports(Class&lt;?&gt; clazz);
+
+    /**
+     * Validate the supplied {@code target} object, which must be
+     * of a {@link Class} for which the {@link #supports(Class)} method
+     * typically has (or would) return {@code true}.
+     * &lt;p&gt;The supplied {@link Errors errors} instance can be used to report
+     * any resulting validation errors.
+     * @param target the object that is to be validated (can be {@code null})
+     * @param errors contextual state about the validation process (never {@code null})
+     * @see ValidationUtils
+     *
+     * 检验指定POJO的对象的合法性。
+     */
+    void validate(Object target, Errors errors);
+
+}
+</code></pre><p>上述代码中，看到Validator接口提供了两个方法：</p>
 <ul>
-<li>第三方库的配置放入xml中，便于维护和理解</li>
-<li>自身开发的使用注解进行配置。 </li>
+<li>boolean supports(Class&lt;?&gt; clazz)：判断是否进行校验</li>
+<li>void validate(Object target, Errors errors)：检验方法，对象的传入和错误信息的设置。</li>
 </ul>
-<p>###2.1 XML的配置<br>在使用xml配置bean的时候，需要注意xml模板文件的导入。</p>
-<pre><code>xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
-http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-</code></pre><p><strong>简易的装配示例：</strong></p>
-<pre><code>&lt;bean id=&quot;permissionBean&quot; class=&quot;com.ssm.chapter9.pojo.PermissionBean&quot; /&gt;
-
-&lt;bean id=&quot;role_1&quot; class=&quot;com.ssm.chapter9.pojo.Role&quot;&gt;
-    &lt;property name=&quot;roleName&quot; value=&quot;高级工程师&quot; /&gt;  &lt;!--对应setRoleName(String)--&gt;
-    &lt;property name=&quot;note&quot; value=&quot;重要人员&quot; /&gt;        &lt;!--对应setNote(String)--&gt;
-    &lt;property name=&quot;permissionBean&quot; ref=&quot;permissionBean&quot; /&gt;
-&lt;/bean&gt;
-</code></pre><p>元素说明：</p>
-<ul>
-<li>id : bean的唯一标识。如果不声明，则用”全限定名#{number}”的格式生成</li>
-<li>class：类的全限定名，指定bean配置的的类。</li>
-<li>property:定义的类的属性配置。<ul>
-<li>name: 属性名称</li>
-<li>value: 属性值(基础类型。)</li>
-<li>ref: 属性值,引用其他bean的id。</li>
-</ul>
-</li>
-</ul>
-<p><strong>集合类型的装配示例：</strong></p>
-<pre><code>&lt;bean id=&quot;complexAssembly&quot; class=&quot;com.ssm.chapter10.pojo.ComplexAssembly&quot;&gt;
-    &lt;property name=&quot;id&quot; value=&quot;1&quot; /&gt;
-    &lt;property name=&quot;list&quot;&gt; &lt;!--基础类型的list--&gt;
-        &lt;list&gt;
-            &lt;value&gt;value-list-1&lt;/value&gt;
-            &lt;value&gt;value-list-2&lt;/value&gt;
-            &lt;value&gt;value-list-3&lt;/value&gt;
-        &lt;/list&gt;
-    &lt;/property&gt;
-    &lt;property name=&quot;list2&quot;&gt; &lt;!--对象类型的list--&gt;
-        &lt;list&gt;
-            &lt;ref bean=&quot;beanId_1&quot;/&gt;
-            &lt;ref bean=&quot;beanId_2&quot;/&gt;
-        &lt;/list&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;map&quot;&gt; &lt;!--基础类型的map--&gt;
-        &lt;map&gt;
-            &lt;entry key=&quot;key1&quot; value=&quot;value-key-1&quot; /&gt;
-            &lt;entry key=&quot;key2&quot; value=&quot;value-key-2&quot; /&gt;
-            &lt;entry key=&quot;key3&quot; value=&quot;value-key-3&quot; /&gt;
-        &lt;/map&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;map2&quot;&gt; &lt;!--对象类型的map--&gt;
-        &lt;map&gt;
-            &lt;entry key-ref=&quot;key_beanId_1&quot; value-ref=&quot;value_beanId_1&quot; /&gt;
-            &lt;entry key-ref=&quot;key_beanId_2&quot; value-ref=&quot;value_beanId_2&quot; /&gt;
-            &lt;entry key-ref=&quot;key_beanId_3&quot; value-ref=&quot;value_beanId_3&quot; /&gt;
-        &lt;/map&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;props&quot;&gt;
-        &lt;props&gt;
-            &lt;prop key=&quot;prop1&quot;&gt;value-prop-1&lt;/prop&gt;
-            &lt;prop key=&quot;prop2&quot;&gt;value-prop-2&lt;/prop&gt;
-            &lt;prop key=&quot;prop3&quot;&gt;value-prop-3&lt;/prop&gt;
-        &lt;/props&gt;
-    &lt;/property&gt;
-    &lt;property name=&quot;set&quot;&gt;
-        &lt;set&gt;
-            &lt;value&gt;value-set-1&lt;/value&gt;
-            &lt;value&gt;value-set-2&lt;/value&gt;
-            &lt;value&gt;value-set-3&lt;/value&gt;
-        &lt;/set&gt;
-    &lt;/property&gt;
-    &lt;property name=&quot;array&quot;&gt;
-        &lt;array&gt;
-            &lt;value&gt;value-array-1&lt;/value&gt;
-            &lt;value&gt;value-array-2&lt;/value&gt;
-            &lt;value&gt;value-array-3&lt;/value&gt;
-        &lt;/array&gt;
-    &lt;/property&gt;
-&lt;/bean&gt;
-</code></pre><p>元素说明：</p>
-<ul>
-<li>List：List集合<ul>
-<li><code>&lt;list&gt;...&lt;/list&gt;</code></li>
-<li>子元素(基础值)：value：设置值</li>
-<li>子元素(对象值)：ref：设置引用的id</li>
-</ul>
-</li>
-<li>Map：Map集合<ul>
-<li><code>&lt;map&gt;...&lt;/map&gt;</code></li>
-<li>子元素(基础值)：<code>&lt;entry key=&quot;key1&quot; value=&quot;value-key-1&quot; /&gt;</code></li>
-<li>子元素(对象值)：<code>&lt;entry key-ref=&quot;key_beanId_3&quot; value-ref=&quot;value_beanId_3&quot; /&gt;</code></li>
-</ul>
-</li>
-<li>Properties：配置文件类型<ul>
-<li><code>&lt;props&gt;...&lt;/props&gt;</code></li>
-<li>子元素：<code>&lt;prop key=&quot;prop2&quot;&gt;value-prop-2&lt;/prop&gt;</code></li>
-</ul>
-</li>
-<li>Set：Set集合(子元素同list)<ul>
-<li><code>&lt;set&gt;...&lt;/set&gt;</code></li>
-</ul>
-</li>
-<li>array：数组(子元素同list)<ul>
-<li><code>&lt;array&gt;...&lt;/array&gt;</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>命名空间定义的装配：</strong></p>
-<pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:c=&quot;http://www.springframework.org/schema/c&quot; &lt;!--引入命名空间的定义--&gt;
-    xmlns:p=&quot;http://www.springframework.org/schema/p&quot; &lt;!--引入命名空间的定义--&gt;
-    xmlns:util=&quot;http://www.springframework.org/schema/util&quot; 
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
-    http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/util &lt;!--引入命名空间的定义--&gt;
-       http://www.springframework.org/schema/util/spring-util.xsd&quot;&gt;  &lt;!--引入util的模板文件--&gt;
-    &lt;bean id=&quot;role1&quot; class=&quot;com.ssm.chapter10.pojo.Role&quot; 
-    c:_0=&quot;1&quot; c:_1=&quot;role_name_1&quot; c:_2=&quot;role_note_1&quot; /&gt;
-    &lt;bean id=&quot;role2&quot; class=&quot;com.ssm.chapter10.pojo.Role&quot; 
-        p:id=&quot;2&quot; p:roleName=&quot;role_name_2&quot; p:note=&quot;role_note_2&quot; /&gt;
-    &lt;bean id=&quot;user1&quot; class=&quot;com.ssm.chapter10.pojo.User&quot; 
-        p:id=&quot;1&quot; p:userName=&quot;role_name_1&quot; p:note=&quot;user_note_1&quot; /&gt;
-    &lt;bean id=&quot;user2&quot; class=&quot;com.ssm.chapter10.pojo.User&quot; 
-        p:id=&quot;2&quot; p:userName=&quot;role_name_2&quot; p:note=&quot;user_note_2&quot; /&gt;
-
-    &lt;util:list id=&quot;list&quot;&gt;
-        &lt;ref bean=&quot;role1&quot; /&gt;
-        &lt;ref bean=&quot;role2&quot; /&gt;
-    &lt;/util:list&gt;
-
-    &lt;util:map id=&quot;map&quot;&gt;
-        &lt;entry key-ref=&quot;role1&quot; value-ref=&quot;user1&quot; /&gt;
-        &lt;entry key-ref=&quot;role2&quot; value-ref=&quot;user2&quot; /&gt;
-    &lt;/util:map&gt;
-
-    &lt;util:set id=&quot;set&quot;&gt;
-        &lt;ref bean=&quot;role1&quot; /&gt;
-        &lt;ref bean=&quot;role2&quot; /&gt;
-    &lt;/util:set&gt;
-
-    &lt;bean id=&quot;userRoleAssembly&quot; class=&quot;com.ssm.chapter10.pojo. UserRoleAssembly&quot;
-        p:id=&quot;1&quot; p:list-ref=&quot;list&quot; p:map-ref=&quot;map&quot; p:set-ref=&quot;set&quot; /&gt;
-&lt;/beans&gt;
-</code></pre><p>元素说明：</p>
-<ul>
-<li>c:代表构造器方法的参数，c:_(1,2,3,…N)：(第一，第二，第三，。。。第N)个构造器参数</li>
-<li>p:代表属性的引用，p:[属性名]</li>
-<li>util:集合类型</li>
-</ul>
-<p>###2.2 注解配置<br>Spring提供了2种方式来让Spring IoC容器发现Bean：</p>
+<p>具体使用方法示例：</p>
 <ol>
-<li>组件扫描：通过定义资源方式，让Spring IoC容器扫描对应的包，从而把Bean装配进去。</li>
-<li>自动装配： 通过注解定义，使得一些依赖关系可以通过注解完成。</li>
+<li><p>实现Validator接口</p>
+<pre><code>public class TransactionValidator implements Validator {
+    @Override
+    public boolean supports(Class&lt;?&gt; clazz) {
+        //判断验证是否为Transaction，如果是则进行判断[修改为：验证]
+        return Transaction.class.equals(clazz);
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        Transaction trans = (Transaction) target;
+        //求交易金额和价格×数量的差额
+        double dis = trans.getAmount() - (trans.getPrice() * trans.getQuantity());
+        //如果差额大于0.01，则认为业务错误
+        if (Math.abs(dis) &gt; 0.01) {
+            //加入错误信息
+            errors.rejectValue(&quot;amount&quot;, null, &quot;交易金额和购买数量与价格不匹配&quot;);
+        }
+    }
+}
+</code></pre></li>
+<li><p>配置使用校验类</p>
+<pre><code>@Controller
+@RequestMapping(&quot;/validate&quot;)
+public class ValidateController {
+
+    @InitBinder
+    public void initBinder(DataBinder binder) {
+        // 数据绑定器加入验证器
+        binder.setValidator(new TransactionValidator());
+    }
+
+    @RequestMapping(&quot;/validator&quot;)
+    public ModelAndView validator(@Valid Transaction trans, Errors errors) {
+        // 是否存在错误
+        if (errors.hasErrors()) {
+            // 获取错误信息
+            List&lt;FieldError&gt; errorList = errors.getFieldErrors();
+            for (FieldError error : errorList) {
+                // 打印字段错误信息
+                System.err.println(&quot;fied :&quot; + error.getField() + &quot;\t&quot; + &quot;msg:&quot; + error.getDefaultMessage());
+            }
+        }
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName(&quot;index&quot;);
+        return mv;
+    }
+}
+</code></pre><p>从上述代码中看到，通过<code>@InitBinder</code>将验证器  绑定到当前控制器中。通过<code>@Valid</code>激活启动验证器，并通过Errors返回错误信息。</p>
+</li>
 </ol>
-<p>注解及作用：</p>
+<p>###3.转换器 Converter  和 GenericConverter</p>
+<p>####3.1 Converter （一对一转换器）</p>
+<p>在Spring MVC框架中，框架会将请求参数直接转化为POJO对象的参数。但这有一个限制条件，那就是只能对简单的数据类型进行转化。<br>在Spring MVC中已经内置了一些常用的转换器.</p>
 <ul>
-<li>@Component:声明为Bean，可写作：<code>@Component(value=&quot;beanName&quot;)</code>或<code>@Component(&quot;beanName&quot;)</code>,不设置默认为首字母小写的类名。</li>
-<li>@Value:类中属性注入的值。</li>
-<li>@ComponentScan:组件扫描，默认扫描当前包路径下。<ul>
-<li>basePackages:指定扫描包路径下的组件。eg:<code>basePackageClasses = { Role.class, RoleServiceImpl.class }</code></li>
-<li>basePackageClasses:指定扫描eg:<code>basePackages = {&quot;com.ssm.chapter10.annotation.pojo&quot;,&quot;包路径..&quot;}</code></li>
-<li>excludeFilters:指定不适合组件扫描的类型。eg:<code>excludeFilters = {@Filter(type = FilterType.REGEX, pattern=&quot;类全限定名&quot;)}</code></li>
-<li>includeFilters：指定哪些类型有资格用于组件扫描。</li>
+<li>CharacterToNumber:将字符转换为数字</li>
+<li>IntegerToEnum:将整型转换为枚举</li>
+<li>ObjectToStringConverter：将对象转换为字符串</li>
+<li>SerializingConverter：序列化转换器</li>
+<li>DeserializingConverter：反序列化转换器</li>
+<li>StringToBooleanConverter：字符串转布尔值</li>
+<li>StringToEnum：字符串转枚举</li>
+<li>StringToCurrencyConverter：字符串转金额</li>
+<li>EnumToStringConverter：枚举转字符串</li>
 </ul>
+<p>它们都实现了转换器接口：</p>
+<pre><code>public interface Converter&lt;S, T&gt; {
+    /**
+     * Convert the source object of type {@code S} to target type {@code T}.
+     * @param source the source object to convert, which must be an instance of {@code S} (never {@code null})
+     * @return the converted object, which must be an instance of {@code T} (potentially {@code null})
+     * @throws IllegalArgumentException if the source cannot be converted to the desired target type
+     */
+    T convert(S source);
+}
+</code></pre><p><strong>自定义Converter转换器步骤：</strong></p>
+<ol>
+<li><p>实现Converter接口</p>
+<p> public class StringToRoleConverter implements Converter&lt;String, Role&gt; {</p>
+<pre><code>@Override
+public Role convert(String str) {
+    //空串
+    if (StringUtils.isEmpty(str)) {
+        return null;
+    }
+    //不包含指定字符
+    if (str.indexOf(&quot;-&quot;) == -1) {
+        return null;
+    }
+    String[] arr = str.split(&quot;-&quot;);
+    //字符串长度不对
+    if (arr.length != 3) {
+        return null;
+    }
+    Role role = new Role();
+    role.setId(Long.parseLong(arr[0]));
+    role.setRoleName(arr[1]);
+    role.setNote(arr[2]);
+    return role;
+}
+</code></pre><p> }</p>
 </li>
-<li>@Autowired:自动装配。为引用对象的属性注入值。 <ul>
-<li>eg: <code>@Autowired Role role = null;</code>//会查找容器中对应类型的Bean，然后注入。</li>
-<li>eg: <code>@Autowired public void setRole(Role role){...}</code></li>
-<li>eg: <code>public RoleController(@Autowired RoleService roleService) {...}</code>//构造器装配</li>
-</ul>
+<li><p>注册到服务类中</p>
 </li>
-<li>@Primary:装配优先级设置，设置后存在多个相同类型的Bean，会优先使用设置<code>@Primary</code>的Bean,通过</li>
-<li>@Qualifier：指定自动装配的具体Bean。消除装配的不确定性</li>
-<li>@Bean：提供一种注解到方法上的Bean装配到Spring IoC容器中。可以将方法的返回值作为Bean装配到IoC容器中。eg:<code>@Bean(name=&quot;beanId&quot;)</code></li>
-<li>@import：存在多个配置类时使用，导入其他配置类。eg:<code>@Import({AppConfig1.class,AppConfig2.class})</code></li>
-<li>@importResource：导入xml配置。eg:<code>@ImportResource({&quot;classpath:spring-dataSource.xml&quot;})</code>，可同时导入多个<ul>
-<li>xml中通过:<code>&lt;import resourse=&quot;spring-dataSource.xml&quot;/&gt;</code>引入其他配置文件。</li>
+</ol>
+<p>方式一（代码注册）：</p>
+<pre><code>@Bean(name = &quot;myConverter&quot;)
+public List&lt;Converter&gt; initMyConverter() {
+    if (myConverter == null) {
+        myConverter = new ArrayList&lt;Converter&gt;();
+    }
+    //自定义的字符串和角色转换器
+    Converter roleConverter = new StringToRoleConverter();
+    myConverter.add(roleConverter);
+    //往转换服务类注册转换器
+    fcsfb.getObject().addConverter(roleConverter);
+    return myConverter;
+}
+</code></pre><p>方式二（xml配置注册）：</p>
+<pre><code>&lt;!-- 使用注解驱动 --&gt;
+&lt;mvc:annotation-driven /&gt;
+&lt;bean id=&quot;conversionService&quot; class=&quot;org.springframework.format.support.FormattingConversionServiceFactoryBean&quot;&gt;
+    &lt;property name=&quot;messageConverters&quot;&gt;
+            &lt;list&gt;
+                &lt;bean class=&quot;com.ssm.chapter16.converter.StringToRoleConverter&quot; /&gt;&lt;!--也可以用ref引用--&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+&lt;/bean&gt;
+</code></pre><p>需要注意的是使用转换器需要配置<code>&lt;mvc:annotation-driven /&gt;</code>或者代码中的<code>@EnableWebMvc</code>，让系统自动生成FormattingConversionServiceFactoryBean实例。通过它才能注册新的转换器。</p>
+<p>####3.2 GenericConverter （一对多转换器）<br>通常除了一对一的转换，还存在一对多的转换关系，如：String转List<string>或者String[]等。<br>在Spring MVC中已经内置了一些常用的转换器.</string></p>
+<ul>
+<li>StringToArrayConverter</li>
+<li>StringToCollectionConverter</li>
+<li>ArrayToObjectConverter</li>
+<li>ArrayToCollectConverter</li>
+<li>ArrayToStringConverter</li>
+<li>ByteBufferConverter</li>
+<li>CollectionToArrayConverter</li>
+<li>CollectionToObjectConverter</li>
+<li>CollectionToStringConverter</li>
 </ul>
-</li>
-<li>@PropertySource：导入properties文件配置。eg:<code>@PropertySource(value = { &quot;classpath:database-config.properties&quot; }, ignoreResourceNotFound = true)</code></li>
-<li>@Profile:为一个Bean配置多个不同的环境设置。</li>
-<li>@Conditional：通过条件配置装配Bean，需要实现Condition接口。eg:<code>@Conditional（{DataSourceCondition.class}）</code></li>
-<li>@Scope:设置Bean的作用域<ul>
-<li>singleton：单例，整个应用只生成一个Bean实例。</li>
-<li>prototype：原型，通过Spring IoC容器获取Bean是，都会为它创建一个新的实例。</li>
-<li>session：一个会话一个实例。</li>
-<li>request：一次请求中创建一个实例。</li>
+<p>上列内置的转换器都实现了接口：</p>
+<pre><code>/**
+ * A {@link GenericConverter} that may conditionally execute based on attributes
+ * of the {@code source} and {@code target} {@link TypeDescriptor}.
+ *
+ * &lt;p&gt;See {@link ConditionalConverter} for details.
+ *
+ * @author Keith Donald
+ * @author Phillip Webb
+ * @since 3.0
+ * @see GenericConverter
+ * @see ConditionalConverter
+ * 最常用的转换器接口，即能判断也能转换
+ */
+public interface ConditionalGenericConverter extends GenericConverter, ConditionalConverter {
+
+}
+
+//根据条件匹配，只有返回true才会转换
+public interface ConditionalConverter {
+    /**
+     * Should the conversion from {@code sourceType} to {@code targetType} currently under
+     * consideration be selected?
+     * @param sourceType 源数据类型
+     * @param targetType 目标数据类型
+     * @return true 进行下一步转换
+     * 
+     */
+    boolean matches(TypeDescriptor sourceType, TypeDescriptor targetType);
+
+}
+
+
+public interface GenericConverter {
+
+    /**
+     * 返回可接受的转换类型
+     */
+    Set&lt;ConvertiblePair&gt; getConvertibleTypes();
+
+    /**
+     * 转换方法
+     */
+    Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType);
+
+
+    /**
+     * 可转换匹配类
+     */
+    final class ConvertiblePair {
+        //源类型
+        private final Class&lt;?&gt; sourceType;
+        //目标类型
+        private final Class&lt;?&gt; targetType;
+
+        /**
+         * Create a new source-to-target pair.
+         * @param sourceType the source type
+         * @param targetType the target type
+         */
+        public ConvertiblePair(Class&lt;?&gt; sourceType, Class&lt;?&gt; targetType) {
+            Assert.notNull(sourceType, &quot;Source type must not be null&quot;);
+            Assert.notNull(targetType, &quot;Target type must not be null&quot;);
+            this.sourceType = sourceType;
+            this.targetType = targetType;
+        }
+
+        public Class&lt;?&gt; getSourceType() {
+            return this.sourceType;
+        }
+
+        public Class&lt;?&gt; getTargetType() {
+            return this.targetType;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || other.getClass() != ConvertiblePair.class) {
+                return false;
+            }
+            ConvertiblePair otherPair = (ConvertiblePair) other;
+            return (this.sourceType == otherPair.sourceType &amp;&amp; this.targetType == otherPair.targetType);
+        }
+
+        @Override
+        public int hashCode() {
+            return (this.sourceType.hashCode() * 31 + this.targetType.hashCode());
+        }
+
+        @Override
+        public String toString() {
+            return (this.sourceType.getName() + &quot; -&gt; &quot; + this.targetType.getName());
+        }
+    }
+
+}
+</code></pre><p>一般情况下使用Spring MVC提供的转换器已经足够。</p>
+<p>###4. 总结<br>Spring MVC框架提供了许多便利的功能让开发者修改或者增强功能。</p>
+<ul>
+<li>可以通过拦截器对控制器的方法的功能进行增强或者补充</li>
+<li>通过验证器解耦校验代码，进行复用</li>
+<li>转换器对自定义的数据结构进行转换成对象类型。</li>
 </ul>
-</li>
+<p>除了上述说明的，Spring MVC还提供了格式化器(Formatter),如常用的：</p>
+<ul>
+<li>@DataTimeFormat:日期格式化例如： @DataTimeFormat(iso = ISO.DATE)或者@DataTimeFormat(pattern = “yyyy-MM-dd”)）</li>
+<li>@NumberFormat:数值格式化（例如：金额 @NumberFormat(pattern=”#,###.##”)）</li>
 </ul>
-<p>###3.总结</p>
-<p>Spring框架主要是提供一个Spring IoC容器，用于装配和管理各种资源（Bean）。在程序开发中可以便捷的获取指定业务相关的Bean实例，加速开发和减少第三方库集成使用的难度。</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>– 2018.12.09</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>– Nowy <br><br>–2018.12.23</p>
 
         
         </div>
@@ -499,7 +746,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/09/Spring学习记录-01-——装配Spring-Bean/" data-id="cjq2k1vif001h70vwlsdz6fym" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" data-id="cjq2k1vi9001570vw32bccnri" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -574,19 +821,10 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         
 <nav id="article-nav">
     
-        <a href="/2018/12/12/Spring学习记录-02-——Spring-AOP/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Spring学习记录(02)——Spring AOP
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/12/08/MyBatis学习记录05——动态SQL/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">MyBatis学习记录05——动态SQL</div>
+            <div class="article-nav-title">SpringMVC学习记录03——Controller与页面数据传递</div>
         </a>
     
 </nav>
