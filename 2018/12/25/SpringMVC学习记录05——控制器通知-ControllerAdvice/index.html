@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2018 | Nowy_Blog</title>
+    <title>SpringMVC学习记录05——控制器通知(ControllerAdvice) | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/page/4/index.html">
+    <meta name="description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：Spring MVC 中控制器如何添加通知（类似Spring AOP）。  @ControllerAdvice:标识为通知类（拦截器），可设置作用范围。主要用于操作对应的控制器。 @InitBinder：用于注册页面参数传递到控制器的转换规则。">
+<meta name="keywords" content="SSM,SpringMVC学习记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC学习记录05——控制器通知(ControllerAdvice)">
+<meta property="og:url" content="http://yoursite.com/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：Spring MVC 中控制器如何添加通知（类似Spring AOP）。  @ControllerAdvice:标识为通知类（拦截器），可设置作用范围。主要用于操作对应的控制器。 @InitBinder：用于注册页面参数传递到控制器的转换规则。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-25T08:16:31.918Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="SpringMVC学习记录05——控制器通知(ControllerAdvice)">
+<meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：Spring MVC 中控制器如何添加通知（类似Spring AOP）。  @ControllerAdvice:标识为通知类（拦截器），可设置作用范围。主要用于操作对应的控制器。 @InitBinder：用于注册页面参数传递到控制器的转换规则。">
     
 
     
@@ -182,296 +187,268 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-SpringMVC学习记录05——控制器通知-ControllerAdvice" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/FrameLayout源码笔记/">FrameLayout源码笔记</a>
+        <h1 class="article-title" itemprop="name">
+            SpringMVC学习记录05——控制器通知(ControllerAdvice)
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/FrameLayout源码笔记/">
-            <time datetime="2018-10-15T09:30:30.000Z" itemprop="datePublished">2018-10-15</time>
+        <a href="/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/">
+            <time datetime="2018-12-25T06:59:21.000Z" itemprop="datePublished">2018-12-25</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
+        <a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/Android源码阅读/">Android源码阅读</a>, <a class="tag-link" href="/tags/FrameLayout/">FrameLayout</a>
+        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/Java-按值传递/">Java 按值传递</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
+<p>本文主要记录：Spring MVC 中控制器如何添加通知（类似Spring AOP）。</p>
+<ul>
+<li>@ControllerAdvice:标识为通知类（拦截器），可设置作用范围。主要用于操作对应的控制器。</li>
+<li>@InitBinder：用于注册页面参数传递到控制器的转换规则。如：<code>String -&gt; Date</code></li>
+<li>@ExceptionHandler：注册一个控制器异常,当控制器发生注册对应的异常时，跳到该方法。</li>
+<li>@ModelAttribute：在进入控制器方法前，保存数据到数据模型(Model)中</li>
+</ul>
+<p>###1. @InitBinder、@ExceptionHandler和@ModelAttribute<br>在控制器(Controller)中可以使用@InitBinder、@ExceptionHandler和@ModelAttribute对控制器的功能进行扩展和补充。注意，在Controller中配置这3个注解<strong>只作用于当前Controller</strong>。</p>
+<ul>
+<li>@InitBinder：扩展控制器的类型转换规则，使页面的传递到控制器的参数（String类型）可以转换为一些特殊类型（如：Date类型）。</li>
+<li>@ExceptionHandler：捕获控制器中的指定异常，并对异常进行处理</li>
+<li>@ModelAttribute：被注解的方法会在控制器方法运行之前执行。可以此方法中往数据模型(Model)添加参数。</li>
+</ul>
+<p><strong>示例代码：</strong></p>
+<pre><code>public class BaseController {
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java-按值传递/">
-            <time datetime="2018-10-15T08:13:14.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        //数据绑定加入字符串转Date类型规则（编辑器）
+        binder.registerCustomEditor(Date.class, new MyDateEditor());
+        // 数据绑定器加入验证器
+        binder.setValidator(new TransactionValidator());
+    }
 
+    //自定义时间类型的编辑器
+    private class MyDateEditor extends PropertyEditorSupport {
+        @Override
+        public void setAsText(String text) throws IllegalArgumentException {
+            SimpleDateFormat format = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+            Date date = null;
+            try {
+                date = format.parse(text);
+            } catch (ParseException e) {
+                format = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+                try {
+                    date = format.parse(text);
+                } catch (ParseException e1) {
+                }
+            }
+            setValue(date);
+        }
+    }
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
+    /**
+     * 在进入控制器方法前运行，先从数据库中获取数据，再设置到Model中
+     */
+    @ModelAttribute(&quot;testData&quot;)
+    public TestData getDate(Long id) {
+        TestData data = dataService.getData(id);
+        return data;
+    }
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/java基础/">java基础</a>
-    </div>
+    /**
+     * 在进入控制器方法前运行，设置到Model中，
+     */
+    @ModelAttribute
+    public void populateModel(Model model) {
+        model.addAttribute(&quot;test&quot;,&quot;populateModelValue&quot;);
+    }
 
-                </div>
-            </div>
+    //当前控制器发生Exception异常时，进入该方法(可以是自定义异常)
+    @ExceptionHandler(Exception.class)
+    public String HandleException(Exception e) {
+        //返回指定的页面，避免不友好
+        return &quot;exception&quot;;
+    }
+
+}
+</code></pre><p>上述代码中，在控制器中使用了3类注解，它们都只是作用于当前控制器。其中：</p>
+<ul>
+<li><code>@InitBinder</code>用于注册<strong>转换规则的编辑器</strong>和<strong>验证器</strong>到<code>WebDataBinder</code>中,主要作用需要绑定的数据的属性转换。</li>
+<li><code>@ModelAttribute</code>用于设置数据到数据模型(Model)中，以便控制器(Controller)的方法和页面数据绑定的使用。</li>
+<li><code>@ExceptionHandler</code>根据指定的Exception类型捕获和处理当前控制器(Controller)中的异常。</li>
+</ul>
+<p>在Spring中会将自身产生的错误转换为合适的状态码，通过这些状态码可以进一步的确认异常发生的原因。例如：</p>
+<ul>
+<li>BindException : 400-Bad Request,绑定数据异常</li>
+<li>ConversionNotSupportedException:500-Internal Server Error,数据类型转换异常</li>
+<li>…</li>
+</ul>
+<p><strong>自定义异常的方法：</strong></p>
+<pre><code>//新增Spring MVC的异常映射，code代表异常映射码，而reason则代表异常原因
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = &quot;找不到角色信息异常！！&quot;)
+public class RoleException extends RuntimeException  {
+    private static final long serialVersionUID = 5040949196309781680L;
+}
+</code></pre><p>###2. 添加通知<br>在一些业务场景，可能需要配置<strong>多个控制器同时使用</strong>的<code>@InitBinder</code>、<code>@ExceptionHandler</code>和<code>@ModelAttribute</code>。例如：配置通用的异常捕获，通用的数据转换规则等。那么就需要将功能模块化为一个通知类(@ControllerAdvice).</p>
+<p><strong>定义通知类（标注@ControllerAdvice）:</strong></p>
+<pre><code>//标识控制器通知，并且指定对应的包
+@ControllerAdvice(basePackages={&quot;com.ssm.chapter16.controller.advice&quot;})
+public class CommonControllerAdvice {
+
+    //定义HTTP对应参数处理规则
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        //针对日期类型的格式化，其中CustomDateEditor是客户自定义编辑器
+         //它的boolean参数表示是否允许为空
+        binder.registerCustomEditor(Date.class, 
+             new CustomDateEditor(new SimpleDateFormat(&quot;yyyy-MM-dd&quot;), false));
+    }
+
+     //处理数据模型，如果返回对象，则该对象会保存在
+    @ModelAttribute
+    public void populateModel(Model model) {
+        model.addAttribute(&quot;projectName&quot;, &quot;chapter16&quot;);
+    }
+
+    //异常处理，使得被拦截的控制器方法发生异常时，都能用相同的视图响应
+    @ExceptionHandler(Exception.class)
+    public String exception() {
+        return &quot;exception&quot;;
+    }
+
+}
+</code></pre><p>上述代码表示，通知类<code>CommonControllerAdvice</code>作用于<code>com.ssm.chapter16.controller.advice</code>目录下的所有控制器。因为<code>@ControllerAdvice</code>注解带有<code>@Component</code>标记，所以会自动被加入IoC容器中。</p>
+<p>###3.总结<br>Spring MVC为开发者提供了便利的数据绑定，但在一些特殊业务场景下可能无法满足需求，那么可以通过<code>@InitBinder</code>进行扩展。同时也可以通过<code>@ExceptionHandler</code>对控制器的异常进行处理。也可以使用<code>@ModelAttribute</code>为Model提前配置一些通用的参数。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy <br><br>–2018.12.25</p>
+
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/15/Java线程安全/">Java线程安全</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/Java线程安全/">
-            <time datetime="2018-10-15T08:03:08.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/多线程/">多线程</a>, <a class="tag-link" href="/tags/并发操作/">并发操作</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">Android工作记录整理-控件篇(1)--TextView</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">
-            <time datetime="2018-10-14T15:38:32.000Z" itemprop="datePublished">2018-10-14</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/TextView/">TextView</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/Android工作记录-0-前言/">Android工作记录-0 前言</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/Android工作记录-0-前言/">
-            <time datetime="2018-10-09T06:38:27.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/photoTest/">photoTest</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/photoTest/">
-            <time datetime="2018-10-08T18:05:50.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/08/categoriesTest/">CategoriesTest</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/categoriesTest/">
-            <time datetime="2018-10-08T15:54:32.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/hexo/">hexo</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo/">hexo</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/08/hello-world/">Hello World</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/hello-world/">
-            <time datetime="2018-10-08T10:43:42.955Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
 </div>
 
-    <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/page/3/">&laquo; 上一页</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><a class="page-number" href="/archives/2018/page/3/">3</a><span class="page-number current">4</span>
-    </nav>
+    <a data-url="http://yoursite.com/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" data-id="cjq3h8eu4000x94vw92cs90l7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">SpringMVC学习记录04——拦截器、验证器和转化器</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
