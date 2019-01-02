@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Nowy_Blog">
 <meta property="og:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：Spring MVC 中控制器如何添加通知（类似Spring AOP）。  @ControllerAdvice:标识为通知类（拦截器），可设置作用范围。主要用于操作对应的控制器。 @InitBinder：用于注册页面参数传递到控制器的转换规则。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-25T08:16:31.918Z">
+<meta property="og:updated_time" content="2019-01-02T09:55:01.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC学习记录05——控制器通知(ControllerAdvice)">
 <meta name="twitter:description" content="###0.前言《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》 本文主要记录：Spring MVC 中控制器如何添加通知（类似Spring AOP）。  @ControllerAdvice:标识为通知类（拦截器），可设置作用范围。主要用于操作对应的控制器。 @InitBinder：用于注册页面参数传递到控制器的转换规则。">
@@ -238,6 +238,7 @@
 <li>@ExceptionHandler：注册一个控制器异常,当控制器发生注册对应的异常时，跳到该方法。</li>
 <li>@ModelAttribute：在进入控制器方法前，保存数据到数据模型(Model)中</li>
 </ul>
+<a id="more"></a>
 <p>###1. @InitBinder、@ExceptionHandler和@ModelAttribute<br>在控制器(Controller)中可以使用@InitBinder、@ExceptionHandler和@ModelAttribute对控制器的功能进行扩展和补充。注意，在Controller中配置这3个注解<strong>只作用于当前Controller</strong>。</p>
 <ul>
 <li>@InitBinder：扩展控制器的类型转换规则，使页面的传递到控制器的参数（String类型）可以转换为一些特殊类型（如：Date类型）。</li>
@@ -620,7 +621,7 @@ public class CommonControllerAdvice {
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 Nowy<br>
+            &copy; 2019 Nowy<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
