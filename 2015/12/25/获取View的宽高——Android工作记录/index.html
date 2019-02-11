@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>获取View的宽高——Android工作记录 | Nowy_Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="###0.前言在Android开发中，许多场景都需要获取指定View的宽高来进行业务操作。但，有些时候在View的宽高不为0的情况下，通过View.getHeight()或者View.getMeasuredHeight()获取到的数值为0。这是为什么呢？ 其实，这种情况和Android的界面绘制流程有关，简单来说，就是View的宽高需要在测量(Measure)之后才确定。">
+<meta name="keywords" content="Android工作记录,View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="获取View的宽高——Android工作记录">
+<meta property="og:url" content="http://yoursite.com/2015/12/25/获取View的宽高——Android工作记录/index.html">
+<meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言在Android开发中，许多场景都需要获取指定View的宽高来进行业务操作。但，有些时候在View的宽高不为0的情况下，通过View.getHeight()或者View.getMeasuredHeight()获取到的数值为0。这是为什么呢？ 其实，这种情况和Android的界面绘制流程有关，简单来说，就是View的宽高需要在测量(Measure)之后才确定。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-11T07:26:08.829Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="获取View的宽高——Android工作记录">
+<meta name="twitter:description" content="###0.前言在Android开发中，许多场景都需要获取指定View的宽高来进行业务操作。但，有些时候在View的宽高不为0的情况下，通过View.getHeight()或者View.getMeasuredHeight()获取到的数值为0。这是为什么呢？ 其实，这种情况和Android的界面绘制流程有关，简单来说，就是View的宽高需要在测量(Measure)之后才确定。">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Nowy_Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Nowy</h2>
+            <h3 id="title">无名的Android开发者</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>GuangZhou(广州), China</span>
+            <a id="follow" target="_blank" href="https://github.com/NowyXC">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                41
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                28
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/NowyXC" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-获取View的宽高——Android工作记录" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            获取View的宽高——Android工作记录
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2015/12/25/获取View的宽高——Android工作记录/">
+            <time datetime="2015-12-25T05:28:27.000Z" itemprop="datePublished">2015-12-25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/View/">View</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>在Android开发中，许多场景都需要获取指定View的宽高来进行业务操作。但，有些时候在View的宽高不为0的情况下，通过View.getHeight()或者View.getMeasuredHeight()获取到的数值为0。这是为什么呢？</p>
+<p>其实，这种情况和Android的界面绘制流程有关，简单来说，就是View的宽高需要在测量(Measure)之后才确定。</p>
+<a id="more"></a>
+<p>###1.获取View的宽高的方法<br>大多数遇到数值为0的问题的，都是在获取在activity的onCreate中获取。而OnCreate方法的调用过程其实还没完成View的测量工作，所以获取数值为0.</p>
+<p>此时，如果还需要获取view的宽高，有3种方式：</p>
+<ol>
+<li>自己调用view的测量方法（view.measure(…)），提前进行测量</li>
+<li>使用ViewTreeObserve.OnGlobalLayoutListener进行视图树的监听，在监听回调中获取</li>
+<li>取巧方式,使用view.post(Runnable)获取（异步获取） </li>
+</ol>
+<p>####1.1 通过调用view.measure()实现</p>
+<pre><code>/**
+ * 测量view
+ * @param view
+ */
+public static void measureView(View view) {
+    ViewGroup.LayoutParams p = view.getLayoutParams();
+    if (p == null) {
+        p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0, p.width);
+    int lpHeight = p.height;
+    int childHeightSpec;
+    if (lpHeight &gt; 0) {
+        childHeightSpec = View.MeasureSpec.makeMeasureSpec(lpHeight, View.MeasureSpec.EXACTLY);
+    } else {
+        childHeightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+    }
+    view.measure(childWidthSpec, childHeightSpec);
+}
+
+/**
+ * 获取view的高度
+ * @param view
+ * @return
+ */
+public static int getViewHeight(View view) {
+    measureView(view);
+    return view.getMeasuredHeight();
+}
+</code></pre><p><strong>需要注意的是，如果LayoutParams中配置了宽高的值，那么需要传入此数值以保证测量的合理性和准确性。</strong></p>
+<p>###1.2 通过ViewTreeObserve.OnGlobalLayoutListener实现<br>当在一个视图树中全局布局发生改变或者视图树中的某个视图的可视状态发生改变时，所要调用的回调函数的接口类</p>
+<pre><code>int mHeaderViewHeight;
+mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(
+    new OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+
+            mHeaderViewHeight = mHeaderView.getHeight();
+            getViewTreeObserver()
+                    .removeGlobalOnLayoutListener(this);
+        }
+</code></pre><p><strong>需要注意的是，OnGlobalLayoutListener会被多次调用，所以在获取宽高后需要移除监听。</strong></p>
+<p>###1.3 view.post(Runnable)获取<br>其实，此方法是一个比较取巧的方式，通过view.post(Runnable)将获取宽高的Runnable放到消息队列中并执行，异步执行了获取宽高的代码。</p>
+<pre><code>int mHeaderViewHeight;
+mHeaderView.post(new Runnable(){
+        @Override
+        public void run() {
+             mHeaderViewHeight = mHeaderView.getHeight();
+        }
+
+});
+</code></pre><p>###2.在自定义控件中获取自身宽高</p>
+<ul>
+<li>onlayout方法中获取（这个方法是在onMeasure之后的）</li>
+<li>onSizeChanged也可以获取，这个方法只有在view改变之后才会回调，当然第一次也是会回调的。</li>
+</ul>
+<p>###4.总结</p>
+<ul>
+<li>在Android获取视图(View)的宽高需要遵循视图树的绘制流程，所以获取宽高需要在view被测量之后。</li>
+<li>使用<code>view.measure(0, 0);</code>可以非常简便的获取到view的宽高,但因为无视了view自身的配置和父类传入的限制，实际获取到的宽高可能存在一定的问题。</li>
+</ul>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy <br><br>–2019.02.11</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2015/12/25/获取View的宽高——Android工作记录/" data-id="cjs00keok0005q8vw9rwzkn7d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/12/25/scrollTo和scrollBy/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Android Scroller入门(一)之ScrollTo、ScrollBy（转）
+                
+            </div>
+        </a>
+    
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" class="title">OkHttp设置全局提交参数——基于拦截器（Interceptor）</a></p>
+                            <p class="item-date"><time datetime="2019-02-11T04:09:55.000Z" itemprop="datePublished">2019-02-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" class="title">SpringMVC学习记录05——控制器通知(ControllerAdvice)</a></p>
+                            <p class="item-date"><time datetime="2018-12-25T06:59:21.000Z" itemprop="datePublished">2018-12-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" class="title">SpringMVC学习记录04——拦截器、验证器和转化器</a></p>
+                            <p class="item-date"><time datetime="2018-12-23T13:06:55.000Z" itemprop="datePublished">2018-12-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" class="title">SpringMVC学习记录03——Controller与页面数据传递</a></p>
+                            <p class="item-date"><time datetime="2018-12-21T12:15:14.000Z" itemprop="datePublished">2018-12-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/20/SpringMVC学习记录02——使用配置/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/20/SpringMVC学习记录02——使用配置/" class="title">SpringMVC学习记录02——使用配置</a></p>
+                            <p class="item-date"><time datetime="2018-12-20T05:51:11.000Z" itemprop="datePublished">2018-12-20</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringMVC/">SpringMVC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OkHttp/">OkHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring学习记录/">Spring学习记录</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 16px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 14px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 16px;">MyBatis学习记录</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/React-Navigation/" style="font-size: 12px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a> <a href="/tags/SpringMVC学习记录/" style="font-size: 16px;">SpringMVC学习记录</a> <a href="/tags/Spring学习记录/" style="font-size: 14px;">Spring学习记录</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/View/" style="font-size: 12px;">View</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 16px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 18px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 Nowy<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
