@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>OkHttp设置全局提交参数——基于拦截器（Interceptor） | Nowy_Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="###0.前言在App与后端接口的交互中，后端许多时候都需要app传递一些通用的参数作为请求的标识。通常会选择在HTTP报文的请求头中添加，个别会GET、POST的请求参数中添加。 举个例子：后端需要通过请求报文判断当前请求的app版本、系统类别、系统版本、市场渠道等。那么就会要求app端将相关参数设置到请求头或者提交参数中，传递给后端。 APP端需要保证每一个接口都传递相关的参数，那么就有以下几">
+<meta name="keywords" content="Android工作记录,OkHttp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OkHttp设置全局提交参数——基于拦截器（Interceptor）">
+<meta property="og:url" content="http://yoursite.com/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/index.html">
+<meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0.前言在App与后端接口的交互中，后端许多时候都需要app传递一些通用的参数作为请求的标识。通常会选择在HTTP报文的请求头中添加，个别会GET、POST的请求参数中添加。 举个例子：后端需要通过请求报文判断当前请求的app版本、系统类别、系统版本、市场渠道等。那么就会要求app端将相关参数设置到请求头或者提交参数中，传递给后端。 APP端需要保证每一个接口都传递相关的参数，那么就有以下几">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-11T05:21:50.501Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OkHttp设置全局提交参数——基于拦截器（Interceptor）">
+<meta name="twitter:description" content="###0.前言在App与后端接口的交互中，后端许多时候都需要app传递一些通用的参数作为请求的标识。通常会选择在HTTP报文的请求头中添加，个别会GET、POST的请求参数中添加。 举个例子：后端需要通过请求报文判断当前请求的app版本、系统类别、系统版本、市场渠道等。那么就会要求app端将相关参数设置到请求头或者提交参数中，传递给后端。 APP端需要保证每一个接口都传递相关的参数，那么就有以下几">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Nowy_Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Nowy</h2>
+            <h3 id="title">无名的Android开发者</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>GuangZhou(广州), China</span>
+            <a id="follow" target="_blank" href="https://github.com/NowyXC">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                39
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                27
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/NowyXC" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-OkHttp设置全局提交参数——基于拦截器（Interceptor）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            OkHttp设置全局提交参数——基于拦截器（Interceptor）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/">
+            <time datetime="2019-02-11T04:09:55.000Z" itemprop="datePublished">2019-02-11</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/OkHttp/">OkHttp</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br>在App与后端接口的交互中，后端许多时候都需要app传递一些通用的参数作为请求的标识。通常会选择在HTTP报文的请求头中添加，个别会GET、POST的请求参数中添加。</p>
+<p>举个例子：<br>后端需要通过请求报文判断当前请求的app版本、系统类别、系统版本、市场渠道等。那么就会要求app端将相关参数设置到请求头或者提交参数中，传递给后端。</p>
+<p>APP端需要保证每一个接口都传递相关的参数，那么就有以下几种做法：</p>
+<ul>
+<li>每一个接口都添加通用参数</li>
+<li>封装通用的请求工具类，在工具类里面添加参数</li>
+<li>配置拦截器对请求拦截配置 </li>
+</ul>
+<p>本文采用Retrofit + OkHttp的网络请求框架进行讲解</p>
+<a id="more"></a>
+<p>###1.常规的参数设置</p>
+<pre><code>@FormUrlEncoded
+@POST(Api.User.LOGIN)
+@Headers({
+        &quot;Accept: application/json&quot;,
+        &quot;User-Agent: NowyApp&quot;
+})
+Observable&lt;BaseEntity&lt;LoginEntity&gt;&gt; login(@Field(&quot;phone&quot;) String mobile,
+                                          @Field(&quot;pwd&quot;) String psw);
+
+@FormUrlEncoded
+@POST(Api.User.GET_USER_INFO)
+Observable&lt;BaseEntity&lt;LoginEntity&gt;&gt; getUserInfo(
+                                        @Header(ReqHeader.Key.HTTP_AUTHORIZATION)String token,
+                                        @Field(&quot;userId&quot;) String userId);
+</code></pre><p>从上面代码实例可知，可以通过retrofit的@Headers注解或者@Header注解设置请求头，或者通过@Field、@Query设置提交参数。<br>所以，最适合初学者的方式就是每个接口配置通用参数。</p>
+<p><strong>需要注意的是：retrofit 2.0 以后提供了@HeaderMap注解。</strong></p>
+<p>###2.封装通用请求工具类<br>此处以post为例：</p>
+<pre><code>@FormUrlEncoded
+Observable&lt;BaseEntity&lt;String&gt;&gt; post(@Url String url,
+                                    @HeaderMap Map&lt;String,String&gt; headerMap, 
+                                    @FieldMap Map&lt;String,String&gt; postMap);
+</code></pre><p>通过编写一个通用的提交方法，再编写一个HttpUtil类：</p>
+<pre><code>public static Observable&lt;BaseEntity&lt;String&gt;&gt; post(String url,Map&lt;String,String&gt; postMap){
+       Map&lt;String,String&gt; header = new HashMap&lt;&gt;(); //配置通用参数
+       header.put(&quot;Accept&quot;,&quot;application/json&quot;);
+       header.put(&quot;User-Agent&quot;,&quot;NowyApp&quot;);
+       return ApiManager.getRxNetWorkApi().post(url,header,postMap)
+               .onErrorResumeNext(new HttpResponseFunc&lt;BaseEntity&lt;String&gt;&gt;())
+               .subscribeOn(Schedulers.io());
+   }
+</code></pre><p>通过上面的示例代码可知，我们可以通过封装将重复代码抽离，减少部分工作量。当然，缺点就是代码嵌套的深度更深了。</p>
+<p><strong>注意：由于retrofit使用的是动态代理的方式实现网络请求操作，所以接口声明不能使用泛型，否则会遭到类型擦除。</strong></p>
+<p>###3.使用OkHttp拦截器实现通用参数配置<br>在OkHttp中，提供了拦截器<code>addInterceptor</code>和<code>addNetworkInterceptor</code>让开发者对请求进行拦截和处理。其本质就是通过<strong>责任链</strong>的模式对OkHttp的<strong>request</strong>进行代理。具体源码可以查阅OkHttp的<code>RealInterceptorChain</code>类。</p>
+<p>所以，我们可以通过自定义拦截器Interceptor来封装通用参数。</p>
+<p>此处为GitHub上提供的拦截器：</p>
+<p><a href="https://github.com/jkyeo/okhttp-basicparamsinterceptor" target="_blank" rel="noopener">https://github.com/jkyeo/okhttp-basicparamsinterceptor</a></p>
+<p>基本思路就是在拦截器中重新拼接请求参数，再整合为完整的请求。</p>
+<p>不过，此方案的代码实现存在一个问题，那就是在拼接通用参数后没有动态更新报文长度，会造成后端接口参数不全问题。</p>
+<p>下面给出修改后的完整的<code>Basicparamsinterceptor</code>代码：</p>
+<pre><code>/**
+ * 设置全局通用的公共参数
+ * @link https://github.com/jkyeo/okhttp-basicparamsinterceptor
+ * post请求需要刷新Content-Length的数量
+ * MultipartBody拼装需要注意分割线（boundary）问题
+ *
+ */
+public class BasicParamsInterceptor implements Interceptor {
+
+    Map&lt;String, String&gt; queryParamsMap = new HashMap&lt;&gt;();
+    Map&lt;String, String&gt; paramsMap = new HashMap&lt;&gt;();
+    Map&lt;String, String&gt; headerParamsMap = new HashMap&lt;&gt;();
+    List&lt;String&gt; headerLinesList = new ArrayList&lt;&gt;();
+
+    private BasicParamsInterceptor() {
+
+    }
+
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+
+        Request request = chain.request();
+        Request.Builder requestBuilder = request.newBuilder();
+
+        // process header params inject
+        Headers.Builder headerBuilder = request.headers().newBuilder();
+        if (headerParamsMap.size() &gt; 0) {
+            Iterator iterator = headerParamsMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                headerBuilder.add((String) entry.getKey(), (String) entry.getValue());
+            }
+        }
+
+        //按行添加请求头
+        if (headerLinesList.size() &gt; 0) {
+            for (String line: headerLinesList) {
+                headerBuilder.add(line);
+            }
+        }
+
+        // process header params end
+
+
+        // process queryParams inject whatever it&apos;s GET or POST
+        if (queryParamsMap.size() &gt; 0) {
+            request = injectParamsIntoUrl(request.url().newBuilder(), requestBuilder, queryParamsMap);
+        }
+
+        // process post body inject
+        if (paramsMap != null &amp;&amp; paramsMap.size() &gt; 0
+                &amp;&amp; request != null &amp;&amp; request.method().equals(&quot;POST&quot;)) {
+            if (request.body() instanceof FormBody) {
+                FormBody.Builder newFormBodyBuilder = new FormBody.Builder();
+                if (paramsMap.size() &gt; 0) {
+                    Iterator iterator = paramsMap.entrySet().iterator();
+                    while (iterator.hasNext()) {
+                        Map.Entry entry = (Map.Entry) iterator.next();
+                        newFormBodyBuilder.add((String) entry.getKey(), (String) entry.getValue());
+                    }
+                }
+                FormBody oldFormBody = (FormBody) request.body();
+                int paramSize = oldFormBody == null ? 0 : oldFormBody.size();
+                if (paramSize &gt; 0) {
+                    for (int i=0;i&lt;paramSize;i++) {
+                        newFormBodyBuilder.add(oldFormBody.name(i), oldFormBody.value(i));
+                    }
+                }
+
+                FormBody newFormBody = newFormBodyBuilder.build();
+                long newContentLength = newFormBody.contentLength();
+                requestBuilder.post(newFormBody);
+
+
+                updateHeader(headerBuilder,requestBuilder,newContentLength);
+                request = requestBuilder.build();
+
+            } else if (request.body() instanceof MultipartBody) {
+                MultipartBody multipartBody = ((MultipartBody)request.body());
+                List&lt;MultipartBody.Part&gt; oldParts = null ;
+
+                String boundary = null;
+                if(multipartBody != null){
+                    boundary = multipartBody.boundary();
+                    oldParts =  multipartBody.parts();
+                }
+
+                /**
+                 * 保证分割线（boundary）与请求头相同
+                 */
+                MultipartBody.Builder multipartBuilder;
+                if(boundary != null){
+                    multipartBuilder = new MultipartBody.Builder(boundary).setType(MultipartBody.FORM);
+                }else{
+                    multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                }
+
+                Iterator iterator = paramsMap.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry entry = (Map.Entry) iterator.next();
+                    multipartBuilder.addFormDataPart((String) entry.getKey(), (String) entry.getValue());
+                }
+
+
+
+                if (oldParts != null &amp;&amp; oldParts.size() &gt; 0) {
+                    for (MultipartBody.Part part : oldParts) {
+                        multipartBuilder.addPart(part);
+                    }
+                }
+                MultipartBody newMultipartBody = multipartBuilder.build();
+                long newContentLength = newMultipartBody.contentLength();
+                requestBuilder.post(newMultipartBody);
+                updateHeader(headerBuilder,requestBuilder,newContentLength);
+                request = requestBuilder.build();
+            }
+
+        }else{
+            request = requestBuilder.build();
+        }
+
+        requestBuilder.headers(headerBuilder.build());
+
+        return chain.proceed(request);
+    }
+
+    private void updateHeader(Headers.Builder headerBuilder, Request.Builder requestBuilder, long newContentLength){
+        headerBuilder.set(&quot;Content-Length&quot;,String.valueOf(newContentLength));
+        requestBuilder.headers(headerBuilder.build());
+    }
+
+    private boolean canInjectIntoBody(Request request) {
+        if (request == null) {
+            return false;
+        }
+        if (!TextUtils.equals(request.method(), &quot;POST&quot;)) {
+            return false;
+        }
+        RequestBody body = request.body();
+        if (body == null) {
+            return false;
+        }
+        MediaType mediaType = body.contentType();
+        if (mediaType == null) {
+            return false;
+        }
+        if (!TextUtils.equals(mediaType.subtype(), &quot;x-www-form-urlencoded&quot;)) {
+            return false;
+        }
+        return true;
+    }
+
+    // func to inject params into url
+    private Request injectParamsIntoUrl(HttpUrl.Builder httpUrlBuilder, Request.Builder requestBuilder, Map&lt;String, String&gt; paramsMap) {
+        if (paramsMap.size() &gt; 0) {
+            Iterator iterator = paramsMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                httpUrlBuilder.addQueryParameter((String) entry.getKey(), (String) entry.getValue());
+            }
+            requestBuilder.url(httpUrlBuilder.build());
+            return requestBuilder.build();
+        }
+
+        return null;
+    }
+
+    private static String bodyToString(final RequestBody request){
+        try {
+            final RequestBody copy = request;
+            final Buffer buffer = new Buffer();
+            if(copy != null)
+                copy.writeTo(buffer);
+            else
+                return &quot;&quot;;
+            return buffer.readUtf8();
+        }
+        catch (final IOException e) {
+            return &quot;did not work&quot;;
+        }
+    }
+
+    public static class Builder {
+
+        BasicParamsInterceptor interceptor;
+
+        public Builder() {
+            interceptor = new BasicParamsInterceptor();
+        }
+
+        public Builder addParam(String key, String value) {
+            interceptor.paramsMap.put(key, value);
+            return this;
+        }
+
+        public Builder addParamsMap(Map&lt;String, String&gt; paramsMap) {
+            interceptor.paramsMap.putAll(paramsMap);
+            return this;
+        }
+
+        public Builder addHeaderParam(String key, String value) {
+            interceptor.headerParamsMap.put(key, value);
+            return this;
+        }
+
+        public Builder addHeaderParamsMap(Map&lt;String, String&gt; headerParamsMap) {
+            interceptor.headerParamsMap.putAll(headerParamsMap);
+            return this;
+        }
+
+        public Builder addHeaderLine(String headerLine) {
+            int index = headerLine.indexOf(&quot;:&quot;);
+            if (index == -1) {
+                throw new IllegalArgumentException(&quot;Unexpected header: &quot; + headerLine);
+            }
+            interceptor.headerLinesList.add(headerLine);
+            return this;
+        }
+
+        public Builder addHeaderLinesList(List&lt;String&gt; headerLinesList) {
+            for (String headerLine: headerLinesList) {
+                int index = headerLine.indexOf(&quot;:&quot;);
+                if (index == -1) {
+                    throw new IllegalArgumentException(&quot;Unexpected header: &quot; + headerLine);
+                }
+                interceptor.headerLinesList.add(headerLine);
+            }
+            return this;
+        }
+
+        public Builder addQueryParam(String key, String value) {
+            interceptor.queryParamsMap.put(key, value);
+            return this;
+        }
+
+        public Builder addQueryParamsMap(Map&lt;String, String&gt; queryParamsMap) {
+            interceptor.queryParamsMap.putAll(queryParamsMap);
+            return this;
+        }
+
+        public BasicParamsInterceptor build() {
+            return interceptor;
+        }
+
+    }
+}
+</code></pre><p>使用方式：</p>
+<pre><code>private static OkHttpClient.Builder buildOkHttp()  {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.addInterceptor(createHttpLog());
+        builder.addNetworkInterceptor(
+                new BasicParamsInterceptor.Builder()
+                        //-----------------------------header-----------------------
+                        //添加手机型号
+                        .addHeaderParam(ReqHeader.Key.HTTP_PHONETYPE, Build.MODEL)
+                        .addHeaderParam(ReqHeader.Key.HTTP_PHONE_TYPE, &quot;android&quot;)
+
+                        //-----------------------------POST-----------------------
+                        .addParam(ReqHeader.Key.HTTP_PHONETYPE, &quot;android&quot;)
+                        .build());
+        return builder;
+    }
+</code></pre><p><strong>注意点：如果通用参数是动态变化的，需要重新配置拦截器。</strong></p>
+<p>###4.总结<br>OkHttp通过拦截器让开发者更加灵活的扩展请求，实现个性化定制需求。前提是熟悉OkHttp项目。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy <br><br>–2019.02.11</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" data-id="cjrzw4m3m000pk8vwnhglnwkd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">SpringMVC学习记录05——控制器通知(ControllerAdvice)</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" class="title">OkHttp设置全局提交参数——基于拦截器（Interceptor）</a></p>
+                            <p class="item-date"><time datetime="2019-02-11T04:09:55.000Z" itemprop="datePublished">2019-02-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" class="title">SpringMVC学习记录05——控制器通知(ControllerAdvice)</a></p>
+                            <p class="item-date"><time datetime="2018-12-25T06:59:21.000Z" itemprop="datePublished">2018-12-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" class="title">SpringMVC学习记录04——拦截器、验证器和转化器</a></p>
+                            <p class="item-date"><time datetime="2018-12-23T13:06:55.000Z" itemprop="datePublished">2018-12-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" class="title">SpringMVC学习记录03——Controller与页面数据传递</a></p>
+                            <p class="item-date"><time datetime="2018-12-21T12:15:14.000Z" itemprop="datePublished">2018-12-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/20/SpringMVC学习记录02——使用配置/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
+                            <p class="item-title"><a href="/2018/12/20/SpringMVC学习记录02——使用配置/" class="title">SpringMVC学习记录02——使用配置</a></p>
+                            <p class="item-date"><time datetime="2018-12-20T05:51:11.000Z" itemprop="datePublished">2018-12-20</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringMVC/">SpringMVC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OkHttp/">OkHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring学习记录/">Spring学习记录</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 14px;">Android工作记录</a> <a href="/tags/Android控件/" style="font-size: 14px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 16px;">MyBatis学习记录</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/React-Navigation/" style="font-size: 12px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a> <a href="/tags/SpringMVC学习记录/" style="font-size: 16px;">SpringMVC学习记录</a> <a href="/tags/Spring学习记录/" style="font-size: 14px;">Spring学习记录</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 16px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 18px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 Nowy<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
