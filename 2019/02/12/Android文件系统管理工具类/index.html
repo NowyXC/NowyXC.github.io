@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: Android工作记录 | Nowy_Blog</title>
+    <title>Android文件系统管理工具类 | Nowy_Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Nowy_Blog">
-<meta property="og:url" content="http://yoursite.com/tags/Android工作记录/index.html">
+    <meta name="description" content="###0. 前言App在许多情况下都需要对数据进行缓存，通常存储的路径分为：  内部存储(context上下文获取) 外部存储(SDCard)  作为开发者，我们需要根据业务场景选定存储方式对数据进行存储。而主要分析的场景有以下几点：  缓存文件的大小 缓存文件是否跟随APP删除而清除 缓存文件所在位置的读写、执行权限问题  缓存文件的类型 Android的”清除数据”功能带来的影响 针对没有外部">
+<meta name="keywords" content="Android工具类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android文件系统管理工具类">
+<meta property="og:url" content="http://yoursite.com/2019/02/12/Android文件系统管理工具类/index.html">
 <meta property="og:site_name" content="Nowy_Blog">
+<meta property="og:description" content="###0. 前言App在许多情况下都需要对数据进行缓存，通常存储的路径分为：  内部存储(context上下文获取) 外部存储(SDCard)  作为开发者，我们需要根据业务场景选定存储方式对数据进行存储。而主要分析的场景有以下几点：  缓存文件的大小 缓存文件是否跟随APP删除而清除 缓存文件所在位置的读写、执行权限问题  缓存文件的类型 Android的”清除数据”功能带来的影响 针对没有外部">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-12T16:02:14.193Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nowy_Blog">
+<meta name="twitter:title" content="Android文件系统管理工具类">
+<meta name="twitter:description" content="###0. 前言App在许多情况下都需要对数据进行缓存，通常存储的路径分为：  内部存储(context上下文获取) 外部存储(SDCard)  作为开发者，我们需要根据业务场景选定存储方式对数据进行存储。而主要分析的场景有以下几点：  缓存文件的大小 缓存文件是否跟随APP删除而清除 缓存文件所在位置的读写、执行权限问题  缓存文件的类型 Android的”清除数据”功能带来的影响 针对没有外部">
     
 
     
@@ -182,194 +187,226 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#Android工作记录</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-Android文件系统管理工具类" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/">OkHttp设置全局提交参数——基于拦截器（Interceptor）</a>
+        <h1 class="article-title" itemprop="name">
+            Android文件系统管理工具类
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/">
-            <time datetime="2019-02-11T04:09:55.000Z" itemprop="datePublished">2019-02-11</time>
+        <a href="/2019/02/12/Android文件系统管理工具类/">
+            <time datetime="2019-02-12T08:28:21.000Z" itemprop="datePublished">2019-02-12</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
         <a class="article-category-link" href="/categories/Android/">Android</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/OkHttp/">OkHttp</a>
+        <a class="tag-link" href="/tags/Android工具类/">Android工具类</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">Android工作记录整理-控件篇(1)--TextView</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0. 前言<br>App在许多情况下都需要对数据进行缓存，通常存储的路径分为：</p>
+<ul>
+<li>内部存储(context上下文获取)</li>
+<li>外部存储(SDCard)</li>
+</ul>
+<p>作为开发者，我们需要根据业务场景选定存储方式对数据进行存储。而主要分析的场景有以下几点：</p>
+<ul>
+<li>缓存文件的大小</li>
+<li>缓存文件是否跟随APP删除而清除</li>
+<li>缓存文件所在位置的读写、执行权限问题 </li>
+<li>缓存文件的类型</li>
+<li>Android的”清除数据”功能带来的影响</li>
+<li>针对没有外部存储的手机的兼容问题</li>
+</ul>
+<a id="more"></a>
+<p>###1.1 内部存储<br>内部存储指的是App的内部存储空间，路径通常为：<code>/data/data/&lt;包名&gt;/...</code>，Android中的SharedPreferences、database、so库文件等都存放于此。</p>
+<ol>
+<li>/data/data/&lt;包名&gt;/cache:缓存部分APP运行中产生的临时文件</li>
+<li>/data/data/&lt;包名&gt;/databases：数据库默认的生成目录（可以通过重写ContextWrapper修改）</li>
+<li>/data/data/&lt;包名&gt;/files：App项目的assets中的文件</li>
+<li>/data/data/&lt;包名&gt;/lib：存放so库文件</li>
+<li>/data/data/&lt;包名&gt;/shared_prefs：存放SharedPreferences产生的xml文件</li>
+<li>/data/data/&lt;包名&gt;/app_webview：webView的缓存目录（HTML5使用的LocalStorage也是存放于此）</li>
+</ol>
+<p>###1.2 外部存储<br>外部存储指的是Android手机自身扩展的存储空间或者外部插入SDCard的存储空间，路径通常为：<code>/storage/sdcard</code>、<code>/mnt/sdcard</code>、<code>/storage/emulated/0</code>、<code>/sdcard</code>等,这些路径全部都是指向同一个存储空间地址。</p>
+<p>外部存储还包括手机外部SDCard插槽插入的SDCard和通过OTG线插入的移动U盘。它们的挂载路径以打印为准，不同品牌的手机可能不一样。</p>
+<p><strong>在访问外部存储时，需要声明SDCard的读写权限。</strong></p>
+<ul>
+<li><code>&lt; uses-permission android:name =&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&gt;</code></li>
+<li><code>&lt; uses-permission android:name =&quot;android.permissions.READ_EXTERNAL_STORAGE&quot; /&gt;</code></li>
+</ul>
+<p>###1.3 App数据存储路径</p>
+<ul>
+<li><code>/data/data/&lt;包名&gt;/</code></li>
+<li><code>/storage/emulated/0/Android/data/&lt;包名&gt;/</code></li>
+</ul>
+<p>在App被删除的时候，上面两个相关的路径会被移除。</p>
+<p>在android系统设置的应用列表详情页里，有一个<strong>清除数据</strong>的功能，同样也是移除上述两个路径的全部数据。</p>
+<p>所以，在保存App相关的缓存文件时，首要选择就是这两个文件目录。其中，由于内部存储空间较小，通常会优先采用外部存储路径存储文件，在找不到外部存储时才存储必要文件到内部存储空间中。</p>
+<p>###1.4 公共存储<br>如果保存的是一些可以共享的文件，例如：图片、音频、视频文件等，可以直接存储在公共的标准目录中。谷歌提供了一套存放的标准目录给开发者选择。</p>
+<p>以下都是Environment中的dir的参数type的类型（例如：<code>context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)</code>）:</p>
+<ul>
+<li>android.os.Environment.DIRECTORY_MUSIC     //音乐存放的标准目录</li>
+<li>android.os.Environment.DIRECTORY_PODCASTS  //系统广播存放的标准目录</li>
+<li>android.os.Environment.DIRECTORY_RINGTONES //系统铃声存放的标准目录</li>
+<li>android.os.Environment.DIRECTORY_ALARMS    // 系统提醒铃声存放的标准目录。</li>
+<li>android.os.Environment.DIRECTORY_NOTIFICATIONS //系统通知铃声存放的标准目录</li>
+<li>android.os.Environment.DIRECTORY_PICTURES  //图片存放的标准目录</li>
+<li>android.os.Environment.DIRECTORY_DCIM      //相机拍摄照片和视频的标准目录</li>
+<li>android.os.Environment.DIRECTORY_MOVIES    //电影存放的标准目录</li>
+<li>android.os.Environment.DIRECTORY_DOCUMENTS //文档</li>
+<li>android.os.Environment.DIRECTORY_DOWNLOADS //下载的标准目录</li>
+</ul>
+<p>当然，也可以自己创建新目录到SdCard中，对数据进行存储。</p>
+<p>###1.5 文件夹权限<br>Android的文件系统可以参考linux的文件系统的权限。</p>
+<p>例如：一个目录的权限为： d rwx rwx –x</p>
+<ul>
+<li>第一个字符d代表目录<ul>
+<li>目录：d</li>
+<li>文件：-</li>
+<li>连结档(link file):l (通常app的lib目录就是此类型)</li>
+</ul>
+</li>
+<li>可读：r</li>
+<li>可写：w</li>
+<li>可执行：x</li>
+<li>无权限：-    </li>
+</ul>
+<p>权限组分为3组：<br>d rwx（1.拥有者） rwx(2.同一群组用户) –x（3.其他用户）</p>
+<p>###2.0 附</p>
+<p>通用的文件路径工具类，优先采用外部存储目录: <a href="https://github.com/NowyXC/BaseLib/blob/master/baselib/src/main/java/com/nowy/baselib/manager/FileManager.java" target="_blank" rel="noopener">FileManager</a> </p>
+<ul>
+<li><a href="https://github.com/NowyXC/BaseLib/blob/master/baselib/src/main/java/com/nowy/baselib/utils/FileUtil.java" target="_blank" rel="noopener">FileUtil</a></li>
+</ul>
+<p>###3.0 总结<br>Android的文件系统的使用需要根据业务场景进行选择，同时得考虑在不同品牌、系统的机型中的不同表现。所以，需要多测试。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy  <br><br>–2019.02.12</p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/14/Android工作记录整理-控件篇-1-TextView/">
-            <time datetime="2018-10-14T15:38:32.000Z" itemprop="datePublished">2018-10-14</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/Android控件/">Android控件</a>, <a class="tag-link" href="/tags/TextView/">TextView</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/10/09/Android工作记录-0-前言/">Android工作记录-0 前言</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/09/Android工作记录-0-前言/">
-            <time datetime="2018-10-09T06:38:27.000Z" itemprop="datePublished">2018-10-09</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2015/12/25/scrollTo和scrollBy/">Android Scroller入门(一)之ScrollTo、ScrollBy（转）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2015/12/25/scrollTo和scrollBy/">
-            <time datetime="2015-12-25T06:35:15.000Z" itemprop="datePublished">2015-12-25</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/View/">View</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2015/12/25/获取View的宽高——Android工作记录/">获取View的宽高——Android工作记录</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2015/12/25/获取View的宽高——Android工作记录/">
-            <time datetime="2015-12-25T05:28:27.000Z" itemprop="datePublished">2015-12-25</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android工作记录/">Android工作记录</a>, <a class="tag-link" href="/tags/View/">View</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
 </div>
+
+    <a data-url="http://yoursite.com/2019/02/12/Android文件系统管理工具类/" data-id="cjs1ygbb70003ogvwps6jnt62" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">OkHttp设置全局提交参数——基于拦截器（Interceptor）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
