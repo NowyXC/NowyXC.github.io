@@ -154,7 +154,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                42
+                43
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -183,6 +183,366 @@
 
             
             <section id="main">
+    <article id="post-Android吸顶效果——Smartrefresh-ScrollView-ViewPager-RecylerView" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2019/02/19/Android吸顶效果——Smartrefresh-ScrollView-ViewPager-RecylerView/">Android吸顶效果——Smartrefresh+ScrollView+ViewPager+Fragment+RecylerView(NestedScrollView)</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/02/19/Android吸顶效果——Smartrefresh-ScrollView-ViewPager-RecylerView/">
+            <time datetime="2019-02-19T06:18:49.000Z" itemprop="datePublished">2019-02-19</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>###0.前言<br><img src="https://i.imgur.com/XWODzhT.gif" alt="吸顶效果图"></p>
+<p>###1.实现思路</p>
+<ol>
+<li>布局的嵌套层级为：<ul>
+<li>FrameLayout<ul>
+<li>SmartRefreshLayout<ul>
+<li>ScrollView<ul>
+<li>LinearLayout<ul>
+<li>HeaderView</li>
+<li>TabLayout</li>
+<li>ViewPager</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><br></p>
+<ol start="2">
+<li>显示的默认状态和吸顶状态图<br><img src="https://i.imgur.com/si1O51u.png" alt="吸顶效果思路图"></li>
+</ol>
+<p>实现思路：</p>
+<p><strong>第一步：吸顶效果</strong></p>
+<ul>
+<li><strong>吸顶标题栏高度+内容页高度+状态栏高度=屏幕高度</strong>时,可以达到吸顶效果。</li>
+</ul>
+<p>通俗的解释就是ScrollView滑动到底部且再也不能滑动了，此时，吸顶标题栏刚好处于屏幕最上方。</p>
+<p>怎么实现呢？</p>
+<ul>
+<li>就是通过动态计算内容页的高度：<strong>内容页高度 = 屏幕高度 - 状态栏高度 - 吸顶标题栏高度</strong></li>
+</ul>
+<p><br><br><strong>第二步：吸顶后的内容页滑动</strong></p>
+<ul>
+<li>明确什么时候滑动外部的ScrollView,什么时候滑动内容页中的滑动控件（如RecycleView、NestedScrollView）</li>
+</ul>
+<p><br><br>本篇例子的滑动分配思路如下：</p>
+<ul>
+<li>当内容页未达到最顶部（系统状态栏高度+吸顶标题栏高度）时，滑动事件由顶层的ScrollView处理</li>
+<li>当内容页到达最顶部时，滑动事件分配给内容页内部处理</li>
+<li>内容页内部处理滑动事件分两种状况<ul>
+<li>正常上下滑动（内部自消化）</li>
+<li>滑动到顶部后继续向上滑动（无法消化，重新交给顶层ScrollView）</li>
+</ul>
+</li>
+</ul>
+<p>以上就是实现吸顶效果的全部思路。</p>
+<p>###2.Smartrefresh+ScrollView+ViewPager+Fragment+RecylerView实现示例</p>
+<p>第一步思路的核心实现为<strong>内容页</strong>，即此示例的<strong>ViewPager</strong></p>
+<p>ViewPager计算高度的核心方法：</p>
+<pre><code>//MatchViewPager.java
+private int calcHeight(){
+        ViewGroup parent = (ViewGroup) getParent();
+        int height = DeviceUtil.getDeviceHeight(getContext()) - mStatusBarHeight;
+        if(parent != null &amp;&amp; mTargetId  &gt; 0){
+            View targetView = parent.findViewById(mTargetId);
+            if(targetView != null){
+                mTargetViewHeight = targetView.getHeight();
+                if(mTargetViewHeight &lt;= 0){
+                    mTargetViewHeight =  ViewUtil.getViewHeight(targetView);
+                }
+                height = height - mTargetViewHeight;
+            }
+        }
+        height = height - mRemoveHeight;//扣除偏移量
+        return height;
+    }
+</code></pre><ul>
+<li>mStatusBarHeight：状态栏高度</li>
+<li>mTargetId：标记控件的ID，此处为吸顶标题栏</li>
+<li>mRemoveHeight：需要额外移除的高度（例如：吸顶标题栏上方可能存在Toolbar，此处可以设置Toolbar的高度进行移除）</li>
+</ul>
+<p>1.ViewPager计算高度</p>
+<ul>
+<li><p>方案一：重写onMeasure进行测量</p>
+<pre><code>//MatchViewPager.java
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    int height = calcHeight() + 1;//滑动判断需要，事件处理时讲解
+    heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST);
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+}
+</code></pre></li>
+</ul>
+<ul>
+<li><p>方案二：设置viewpager的LayoutParams</p>
+<pre><code>//MatchViewPager.java
+private void initHeight(){ //在自定义控件的构造器中调用
+    post(new Runnable() {
+        @Override
+        public void run() {
+            ViewGroup.LayoutParams params = getLayoutParams();
+            params.height = calcHeight()+1;//滑动判断需要，事件处理时讲解
+            setLayoutParams(params);
+        }
+    });
+}
+</code></pre></li>
+</ul>
+<p>其中，方案一在onMeasure进行测量时，需要获取targetView（吸顶标题栏）的高度，所以会通过<code>view.measure(childWidthSpec, childHeightSpec);</code>计算一次控件宽高。但因为获取的是<code>view.getMeasuredHeight()</code>所以与实际显示时存在一定偏差。此处使用TabLayout表现出来的效果是：TabLayout的子控件全部居左且不等分布局宽度，滑动布局后恢复正常。</p>
+<p>而方案二因为是通过post()异步设置ViewPager高度，所以不存在此问题。</p>
+<p>2.事件的分发处理</p>
+<p>步骤一：自定义顶层ScrollView，处理什么时候分配给内容页处理</p>
+<p>核心是重写<code>onInterceptTouchEvent(MotionEvent ev)</code>,在此方法中进行拦截：</p>
+<pre><code> //DetailScrollView.java
+ public boolean onInterceptTouchEvent(MotionEvent ev) {
+    int action = ev.getAction();
+    if(action == MotionEvent.ACTION_DOWN){//按下
+        downY = ev.getRawY();
+    }else if(action == MotionEvent.ACTION_MOVE){//移动
+        float dy = ev.getRawY() - downY;
+        //1.判断上下滑动
+        //2.通过mIsInterceptTouchEvent将是否中断交给外部实现
+        if(Math.abs(dy) &gt; mTouchSlop &amp;&amp;  mIsInterceptTouchEvent){//是否中断事件向下分发
+            return true;
+        }else{
+            if(mScrollStateListener != null){
+                //3.页面滑向顶部时，子页面不能处理则交给父控件
+                if(dy &gt; 0 &amp;&amp; !mScrollStateListener.isChildTouchEvent()){//手指向下滑（即页面滑向顶部）
+                    return true;
+                }
+            }
+        }
+    }
+    return super.onInterceptTouchEvent(ev);
+}
+
+public void setInterceptTouchEvent(boolean isInterceptTouchEvent) {
+    this.mIsInterceptTouchEvent = isInterceptTouchEvent;
+}
+</code></pre><ul>
+<li>mTouchSlop：configuration.getScaledTouchSlop();//移动距离要大于这个距离才开始移动控件</li>
+<li>mIsInterceptTouchEvent：变量，提供外部动态设置是否拦截事件</li>
+<li>mScrollStateListener：监听子控件触摸事件消化情况</li>
+</ul>
+<p>外部实现拦截：</p>
+<pre><code>//MainActivity.java
+ private void initScrollView(){
+    mSvFirst.setInterceptTouchEvent(true);//设置默认为ScrollView滑动
+    mSvFirst.setDetailScrollStateListener(this);//设置滑动状态监听
+    mSvFirst.setScrollViewListener(this);//ScrollView滑动是否分发给子控件
+ }
+
+ @Override
+ public void updateTouchEvent(boolean isInterceptTouchEvent) {
+     if(mSvFirst != null)
+         mSvFirst.setInterceptTouchEvent(isInterceptTouchEvent);
+ }
+
+ @Override
+ public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+     int[] location = new int[2];
+     mVpMain.getLocationOnScreen(location);
+     int yPosition = location[1];
+     if (yPosition &lt; mVpMain.getHeightOffset()) {//移动到顶部，小于顶部偏移量(ViewPager完全显示)
+         updateTouchEvent(false);
+     } else {
+         updateTouchEvent(true);
+     }
+ }
+</code></pre><p>通过ScrollView的滑动监听<code>onScrollChanged(...)</code>,监听子控件ViewPager当前的Y轴坐标是否达到最顶部去(即ViewPager完全显示)，<br>当ViewPager完全显示则通知ScrollView不要拦截事件。</p>
+<p><code>calcHeight() + 1</code>的问题：<br>由于滑动是否拦截的判断条件为<code>yPosition &lt; mVpMain.getHeightOffset()</code>，yPosition能达到的临界值恒大于等于<code>mVpMain.getHeightOffset()</code>，所以条件恒为false。如果不写<code>calcHeight() + 1</code>那么可以将条件改为：<code>yPosition &lt;= mVpMain.getHeightOffset()</code>(加上等于判断)</p>
+<p>步骤二：子控件是否处理滑动事件</p>
+<p>核心在于将子控件的事件处理状况通知ScrollView，即实现<code>mScrollStateListener.isChildTouchEvent()</code>方法。代码如下：</p>
+<pre><code>//MainActivity.java
+@Override
+public boolean isChildTouchEvent() {
+    Fragment fragment =  mFragments.get(mVpMain.getCurrentItem());
+    if(fragment instanceof BaseDetailFrag){
+        return ((BaseDetailFrag)fragment).canChildTouch();
+    }
+    return false;
+}
+</code></pre><p>BaseDetailFrag类集成子控件的滑动监听实现：</p>
+<pre><code>//BaseDetailFrag.java
+protected void updateCanTouch(boolean canTouch){
+       this.canTouch = canTouch;
+   }
+   public boolean canChildTouch() {
+       return canTouch;
+   }
+   protected RecyclerView.OnScrollListener getOnScrollListener(){
+       return new RecyclerView.OnScrollListener() {
+           @Override
+           public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+               super.onScrolled(recyclerView, dx, dy);
+               if(!recyclerView.canScrollVertically(-1)){//在顶部，且当前View已经允许可滑动
+                   if(dy &lt; 0){//向上滑，应该直接滑动父容器
+                       updateCanTouch(false);
+                   }else{//向下滑，直接滑动
+                       updateCanTouch(true);
+                   }
+               }else{
+                   updateCanTouch(true);
+               }
+           }
+       };
+   }
+</code></pre><p>Fragment实现类中的使用：</p>
+<pre><code>ListFragment.java
+private void initRecyclerView(){
+  //...
+  //设置RecyclerView的滑动监听，在基类中已有默认方法
+  recyclerView.addOnScrollListener(getOnScrollListener());
+}
+
+NestedScrollView.java
+private void initView(View rootView){
+  //设置NestedScrollView的滑动监听，在基类中已有默认方法
+  mScrollView.setOnScrollChangeListener(getNestedScrollListener());
+}
+</code></pre><p>###3.总结</p>
+<ul>
+<li>Android手机的兼容问题，部分手机的naigationbar是可以隐藏的，需要注意！</li>
+<li>沉浸式的时候需要注意在onScrollChanged(…)中对吸顶的标题栏进行处理<ul>
+<li>处理方案一：动态扩展吸顶状态栏高度（paddingTop）</li>
+<li>处理方案二：一直隐藏一个吸顶状态栏在顶部，到达顶部时显示，否则隐藏（很粗暴但很实用）</li>
+</ul>
+</li>
+<li>仿美团的条件筛选栏+recylerView的也可以通过此方式实现：（查看示例代码）<ul>
+<li>MatchViewPager -&gt; MatchFrameLayout</li>
+<li>不使用BaseDetailFrag，直接为本页面RecycleView添加滑动监听</li>
+</ul>
+</li>
+</ul>
+<p>###4.附</p>
+<p><a href="https://github.com/NowyXC/FloatBarDemo" target="_blank" rel="noopener">示例代码源码路径</a></p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>–Nowy<br><br>–2019.02.19</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2019/02/19/Android吸顶效果——Smartrefresh-ScrollView-ViewPager-RecylerView/" data-id="cjsbjdngx0009w0vw7aijocm4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Android文件系统管理工具类" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -251,7 +611,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2019/02/12/Android文件系统管理工具类/" data-id="cjs1ygbb70003ogvwps6jnt62" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2019/02/12/Android文件系统管理工具类/" data-id="cjsbjdngp0003w0vwvgzpe7od" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -390,7 +750,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" data-id="cjs1ygbby0013ogvwyncqn1pa" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2019/02/11/OkHttp设置全局提交参数——基于拦截器（Interceptor）/" data-id="cjsbjdnhi0015w0vwu79bju3e" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -528,7 +888,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" data-id="cjs1ygbc7001kogvwmitq2ypg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/25/SpringMVC学习记录05——控制器通知-ControllerAdvice/" data-id="cjsbjdnht001qw0vw9h54qoac" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -665,7 +1025,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" data-id="cjs1ygbc10018ogvwozki9zay" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/23/SpringMVC学习记录04-拦截器和转化器/" data-id="cjsbjdnhp001iw0vweorecglj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -820,7 +1180,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" data-id="cjs1ygbbz0016ogvwsq3c13oi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" data-id="cjsbjdnhn001ew0vw1v5hstzi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -960,7 +1320,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/20/SpringMVC学习记录02——使用配置/" data-id="cjs1ygbc3001cogvwoyzupkof" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/20/SpringMVC学习记录02——使用配置/" data-id="cjsbjdnhh0012w0vwad3n2gcd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1093,7 +1453,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/19/SpringMVC学习记录01——处理流程/" data-id="cjs1ygbbw0011ogvwex6d0mxi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/19/SpringMVC学习记录01——处理流程/" data-id="cjsbjdnhl001aw0vwu4wjypfx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1230,7 +1590,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/" data-id="cjs1ygbca001qogvwp4e79ws0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/13/Spring学习记录-03-——MyBatis-Spring项目/" data-id="cjsbjdni20025w0vwc27ilrpo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1362,139 +1722,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/12/12/Spring学习记录-02-——Spring-AOP/" data-id="cjs1ygbc8001mogvw1frg4517" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Spring学习记录-01-——装配Spring-Bean" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/">Spring学习记录(01)——装配Spring Bean</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/">
-            <time datetime="2018-12-09T13:06:23.000Z" itemprop="datePublished">2018-12-09</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Spring/">Spring</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/SSM/">SSM</a>, <a class="tag-link" href="/tags/Spring学习记录/">Spring学习记录</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>###0.前言<br>《Java EE互联网轻量级框架整合开发——SSM框架(Spring MVC+Spring+MyBatis)和Redis实现》</p>
-<p>本文主要记录装配Spring Bean的学习笔记。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/12/09/Spring学习记录-01-——装配Spring-Bean/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/12/09/Spring学习记录-01-——装配Spring-Bean/" data-id="cjs1ygbc5001gogvw1deel18i" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/12/12/Spring学习记录-02-——Spring-AOP/" data-id="cjsbjdnhr001mw0vwyodrl2o5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1587,6 +1815,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2019/02/19/Android吸顶效果——Smartrefresh-ScrollView-ViewPager-RecylerView/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2019/02/19/Android吸顶效果——Smartrefresh-ScrollView-ViewPager-RecylerView/" class="title">Android吸顶效果——Smartrefresh+ScrollView+ViewPager+Fragment+RecylerView(NestedScrollView)</a></p>
+                            <p class="item-date"><time datetime="2019-02-19T06:18:49.000Z" itemprop="datePublished">2019-02-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2019/02/12/Android文件系统管理工具类/" class="thumbnail">
     
     
@@ -1660,25 +1907,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/SpringMVC/">SpringMVC</a></p>
-                            <p class="item-title"><a href="/2018/12/21/SpringMVC学习记录03——Controller与页面数据传递/" class="title">SpringMVC学习记录03——Controller与页面数据传递</a></p>
-                            <p class="item-date"><time datetime="2018-12-21T12:15:14.000Z" itemprop="datePublished">2018-12-21</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1688,7 +1916,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringMVC/">SpringMVC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringMVC/">SpringMVC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react-native/">react-native</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springMVC/">springMVC</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1697,7 +1925,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1706,7 +1934,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工具类/">Android工具类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OkHttp/">OkHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring学习记录/">Spring学习记录</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工作记录/">Android工作记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android工具类/">Android工具类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android控件/">Android控件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android框架/">Android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android源码阅读/">Android源码阅读</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Databinding/">Databinding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fetch/">Fetch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FrameLayout/">FrameLayout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis学习记录/">MyBatis学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OkHttp/">OkHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React Navigation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reference/">Reference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC学习记录/">SpringMVC学习记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring学习记录/">Spring学习记录</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextView/">TextView</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native实践记录/">react-native实践记录</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC学习记录/">springMVC学习记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发操作/">并发操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引用类型/">引用类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料整理/">资料整理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题记录/">问题记录</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1715,7 +1943,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 16px;">Android工作记录</a> <a href="/tags/Android工具类/" style="font-size: 10px;">Android工具类</a> <a href="/tags/Android控件/" style="font-size: 14px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 16px;">MyBatis学习记录</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/React-Navigation/" style="font-size: 12px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a> <a href="/tags/SpringMVC学习记录/" style="font-size: 16px;">SpringMVC学习记录</a> <a href="/tags/Spring学习记录/" style="font-size: 14px;">Spring学习记录</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/View/" style="font-size: 12px;">View</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 16px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 18px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
+            <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android工作记录/" style="font-size: 16px;">Android工作记录</a> <a href="/tags/Android工具类/" style="font-size: 10px;">Android工具类</a> <a href="/tags/Android控件/" style="font-size: 14px;">Android控件</a> <a href="/tags/Android框架/" style="font-size: 10px;">Android框架</a> <a href="/tags/Android源码阅读/" style="font-size: 10px;">Android源码阅读</a> <a href="/tags/Databinding/" style="font-size: 10px;">Databinding</a> <a href="/tags/Fetch/" style="font-size: 10px;">Fetch</a> <a href="/tags/FrameLayout/" style="font-size: 10px;">FrameLayout</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/MyBatis学习记录/" style="font-size: 16px;">MyBatis学习记录</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/React-Navigation/" style="font-size: 12px;">React Navigation</a> <a href="/tags/Reference/" style="font-size: 10px;">Reference</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a> <a href="/tags/SpringMVC学习记录/" style="font-size: 16px;">SpringMVC学习记录</a> <a href="/tags/Spring学习记录/" style="font-size: 14px;">Spring学习记录</a> <a href="/tags/TextView/" style="font-size: 10px;">TextView</a> <a href="/tags/View/" style="font-size: 12px;">View</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/react-native实践记录/" style="font-size: 16px;">react-native实践记录</a> <a href="/tags/springMVC学习记录/" style="font-size: 10px;">springMVC学习记录</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/学习笔记/" style="font-size: 18px;">学习笔记</a> <a href="/tags/并发操作/" style="font-size: 10px;">并发操作</a> <a href="/tags/引用类型/" style="font-size: 10px;">引用类型</a> <a href="/tags/资料整理/" style="font-size: 10px;">资料整理</a> <a href="/tags/问题记录/" style="font-size: 10px;">问题记录</a>
         </div>
     </div>
 
